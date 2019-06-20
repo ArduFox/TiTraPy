@@ -1,0 +1,21 @@
+# .gitignore
+
+#ignore html
+*.html
+
+#ignore binaries
+*.bin
+
+#ignore contact files
+*.vcf
+
+*.pyc
+
+
+#ignore ./doxy
+**/doxy
+**/html
+**/data
+**/latex
+**/__pycache__
+#**/.vscode

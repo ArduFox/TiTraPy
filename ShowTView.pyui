@@ -1,0 +1,487 @@
+[
+  {
+    "nodes" : [
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 156}, {393, 606}}",
+        "class" : "TableView",
+        "attributes" : {
+          "flex" : "HR",
+          "data_source_items" : "Row 1\nRow 2 >\nRow 3 (i)",
+          "enabled" : true,
+          "data_source_font_size" : 14,
+          "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
+          "data_source_number_of_lines" : 1,
+          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+          "data_source_delete_enabled" : true,
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "name" : "tableview1",
+          "row_height" : 44
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 118}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "flex" : "",
+          "border_width" : 1,
+          "enabled" : true,
+          "action" : "self.bt_task_action",
+          "title" : "Tasks",
+          "border_color" : "RGBA(0.000000,0.000000,1.000000,1.000000)",
+          "font_bold" : false,
+          "corner_radius" : 5,
+          "uuid" : "B18F462E-0334-4FC5-9808-4FCAB5466EC3",
+          "font_size" : 15,
+          "name" : "bt_task"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 566}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "8FED7A39-74EE-4C2E-A6FE-C3A4D9943237",
+          "font_size" : 15,
+          "corner_radius" : 5,
+          "background_color" : "RGBA(0.929293,1.000000,0.787879,1.000000)",
+          "border_color" : "RGBA(0.019608,0.666667,0.235294,1.000000)",
+          "border_width" : 2,
+          "tint_color" : "RGBA(0.019608,0.666667,0.235294,1.000000)",
+          "title" : "TestInit",
+          "action" : "self.bt_InitTest_action",
+          "enabled" : true,
+          "font_bold" : true,
+          "name" : "bt_InitTest",
+          "flex" : ""
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 614}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "54B6B933-686C-40DD-B40D-EE82A349E951",
+          "font_size" : 15,
+          "corner_radius" : 5,
+          "background_color" : "RGBA(0.919192,1.000000,0.757576,1.000000)",
+          "border_color" : "RGBA(0.019608,0.666667,0.235294,1.000000)",
+          "border_width" : 2,
+          "tint_color" : "RGBA(0.019608,0.666667,0.235294,1.000000)",
+          "title" : "Picture",
+          "action" : "self.bt_picture_action",
+          "enabled" : true,
+          "font_bold" : false,
+          "name" : "bt_picture",
+          "flex" : ""
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{114, 118}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "border_width" : 1,
+          "action" : "self.bt_cal_action",
+          "frame" : "{{344, 464}, {80, 32}}",
+          "title" : "Calender",
+          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
+          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
+          "class" : "Button",
+          "corner_radius" : 5,
+          "name" : "bt_cal",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 6}, {269, 105}}",
+        "class" : "DatePicker",
+        "attributes" : {
+          "class" : "DatePicker",
+          "frame" : "{{224, 372}, {320, 216}}",
+          "action" : "self.dapi_action",
+          "name" : "datepicker",
+          "mode" : 2,
+          "uuid" : "0B42DD7D-F07B-4557-A978-A65A19698BE1"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 176}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "font_size" : 15,
+          "corner_radius" : 3,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(0.905660,0.905660,0.905660,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "Edit",
+          "class" : "Button",
+          "image_name" : "iob:document_24",
+          "name" : "bt_edit"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 224}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "font_size" : 15,
+          "corner_radius" : 3,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(0.089623,0.032590,0.032590,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "Add Action",
+          "action" : "self.bt_add_action",
+          "class" : "Button",
+          "image_name" : "iob:ios7_star_outline_24",
+          "name" : "bt_add_action"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 272}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "image_name" : "iob:eject_24",
+          "corner_radius" : 3,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(1.000000,-0.060606,-0.060606,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "Delete",
+          "action" : "self.bt_delete_action",
+          "font_bold" : true,
+          "class" : "Button",
+          "name" : "Delete",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 662}, {100, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "frame" : "{{467, 466}, {150, 32}}",
+          "uuid" : "A198A91F-7767-40D6-9CEF-7E3F5246F89A",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Datumlabel",
+          "name" : "l_date",
+          "font_name" : "<System-Bold>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 422}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "font_size" : 15,
+          "corner_radius" : 8,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(0.017010,0.561321,0.198447,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "save",
+          "action" : "self.bt_save",
+          "font_bold" : true,
+          "class" : "Button",
+          "image_name" : "iob:archive_24",
+          "name" : "bt_save"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 382}, {100, 32}}",
+        "class" : "TextField",
+        "attributes" : {
+          "font_size" : 17,
+          "frame" : "{{442, 466}, {200, 32}}",
+          "spellchecking_type" : "default",
+          "class" : "TextField",
+          "uuid" : "66F66424-CFCC-4758-80CB-65B7184EC7D9",
+          "alignment" : "left",
+          "text" : "new.csv",
+          "autocorrection_type" : "default",
+          "name" : "t_fname",
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{330, 118}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "border_width" : 1,
+          "action" : "self.bt_dur_week_action",
+          "frame" : "{{344, 464}, {80, 32}}",
+          "title" : "Hours Week",
+          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
+          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
+          "class" : "Button",
+          "corner_radius" : 5,
+          "name" : "bt_dur_month",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{222, 118}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "border_width" : 1,
+          "action" : "self.bt_dur_day_action",
+          "frame" : "{{344, 464}, {80, 32}}",
+          "title" : "Hours Day",
+          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
+          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
+          "class" : "Button",
+          "corner_radius" : 5,
+          "name" : "bt_dur_day",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{283, 5}, {379, 105}}",
+        "class" : "Label",
+        "attributes" : {
+          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
+          "font_size" : 10,
+          "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
+          "frame" : "{{467, 466}, {150, 32}}",
+          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
+          "number_of_lines" : 17,
+          "text" : "Label kkkkkkkk",
+          "alignment" : "left",
+          "class" : "Label",
+          "name" : "l_msg",
+          "font_name" : "AppleSDGothicNeo-UltraLight"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 118}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "border_width" : 2,
+          "action" : "self.bt_save_all_action",
+          "image_name" : "iob:archive_24",
+          "frame" : "{{344, 464}, {80, 32}}",
+          "title" : "Save All",
+          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
+          "border_color" : "RGBA(0.311828,-0.032258,1.000000,1.000000)",
+          "class" : "Button",
+          "corner_radius" : 5,
+          "font_size" : 15,
+          "name" : "bt_save_all"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{438, 176}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "border_width" : 1,
+          "action" : "self.bt_read_all_action",
+          "frame" : "{{344, 464}, {80, 32}}",
+          "title" : "Read All",
+          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
+          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
+          "class" : "Button",
+          "corner_radius" : 5,
+          "name" : "bt_read_all",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 518}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "54B6B933-686C-40DD-B40D-EE82A349E951",
+          "flex" : "",
+          "corner_radius" : 5,
+          "background_color" : "RGBA(0.878788,0.878788,1.000000,1.000000)",
+          "border_color" : "RGBA(0.019608,0.019608,0.666667,1.000000)",
+          "border_width" : 2,
+          "tint_color" : "RGBA(0.019608,0.019608,0.666667,1.000000)",
+          "title" : "Copy *.py",
+          "action" : "self.bt_CopyPy_action",
+          "enabled" : true,
+          "font_bold" : false,
+          "name" : "bt_CopyPy",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 470}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "corner_radius" : 8,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(0.017010,0.561321,0.198447,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "backup Mon",
+          "action" : "self.bt_backup_action",
+          "font_bold" : false,
+          "class" : "Button",
+          "name" : "bt_BackupMonth",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{546, 320}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "font_size" : 15,
+          "corner_radius" : 3,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(1.000000,-0.060606,-0.060606,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "Clear+-70",
+          "action" : "self.bt_delete_all_action",
+          "font_bold" : true,
+          "class" : "Button",
+          "image_name" : "iob:alert_24",
+          "name" : "bt_clear"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{438, 118}, {100, 30}}",
+        "class" : "Button",
+        "attributes" : {
+          "border_width" : 1,
+          "action" : "self.bt_dur_month_action",
+          "frame" : "{{344, 464}, {80, 32}}",
+          "title" : "Hours Month",
+          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
+          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
+          "class" : "Button",
+          "corner_radius" : 5,
+          "name" : "bt_dur_month",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{438, 224}, {100, 40}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
+          "name" : "bt_now",
+          "corner_radius" : 3,
+          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "frame" : "{{502, 466}, {80, 32}}",
+          "tint_color" : "RGBA(0.089623,0.032590,0.032590,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
+          "title" : "Jetzt",
+          "action" : "self.bt_now_action",
+          "class" : "Button",
+          "image_name" : "iob:ios7_clock_outline_24",
+          "font_size" : 15
+        },
+        "selected" : true
+      }
+    ],
+    "frame" : "{{0, 0}, {670, 768}}",
+    "class" : "View",
+    "attributes" : {
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "enabled" : true,
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "name" : "TiTra",
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "flex" : ""
+    },
+    "selected" : false
+  }
+]
