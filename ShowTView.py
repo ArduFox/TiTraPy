@@ -31,7 +31,6 @@ class ShowTableView(object):
         self.view = ui.load_view('ShowTView')
         self.view.present('fullscreen')
         #self.view.name = 'ShowTableView'
-        self.bt_empty_action(None)
         self.labelcounter = 0
         self.msglist=list()
         self.state=0
@@ -46,14 +45,18 @@ class ShowTableView(object):
         #tv1.data_source_font_size=12
         #tv1.data_source.font_size=12
         #tv1.data_source.data_source_font_size=12
-        
+
+        tv2 = self.view['tableview2']
+        tv2.row_height=24        
+                        
         # (font_name, font_size). In addition to regular font names, you can also use ('<system>',14) or '<system-bold>'
         
         # Button.font
         # The font for the button’s title as a tuple (font_name, font_size). In addition to regular font names, you can also
         # use '<system>' or '<system-bold>' to get the default regular or bold font.
 
-        
+        self.bt_task_action(None)        
+        self.bt_cal2_action(None)        
         VersionInStatusBar(version=version)
         self.LogMessage("init done.")
         
@@ -86,9 +89,9 @@ class ShowTableView(object):
         self.state=1
         self.selected_row=-1
         tv1.reload_data()
-        tv1.row_height=22
         tv1.font=('<system>',12)
         self.get_available_memory()
+
 
     def bt_cal_action(self, sender):
         now=self.view['datepicker'].date
@@ -110,6 +113,21 @@ class ShowTableView(object):
         tv1.reload_data()
         self.get_available_memory()
 
+    def bt_cal2_action(self, sender):
+        now=self.view['datepicker'].date
+        # datetime.datetime.today()
+        
+        dl=g_cal.UIActionsOfDayList(now)
+        lst = MyCalDataSource(g_cal.UIActionsOfDayList(now))
+        tv2 = self.view['tableview2']
+        tv2.data_source = tv2.delegate = lst
+        tv2.data_source.delete_enabled = tv2.editing = False
+        lst.action = self.tv2_action
+#        self.state=2
+#        self.selected_row=-1
+        tv2.reload_data()
+        self.get_available_memory()
+
     def bt_dur_day_action(self, sender):
         '''Anzeigen welche Zeiten für welche Tasks gebraucht wurden '''
         start=self.view["datepicker"].date
@@ -129,11 +147,14 @@ class ShowTableView(object):
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
         tv1.data_source.delete_enabled = tv1.editing = False
-        self.state=3
         self.selected_row=-1        
         tv1.reload_data()
+        
         self.get_available_memory()
-
+        if self.state==2 :
+            self.save_cal_work()
+        self.state=3
+        
     def bt_dur_week_action(self,sender):
         start=self.view["datepicker"].date
         start=start.replace(hour=0,minute=0,second=0,microsecond=0)
@@ -151,11 +172,13 @@ class ShowTableView(object):
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
         tv1.data_source.delete_enabled = tv1.editing = False
-        self.state=4
         self.selected_row=-1        
         tv1.reload_data()
         self.get_available_memory()
-        
+        if self.state==2 :
+            self.save_cal_work()
+        self.state=4
+               
     def bt_dur_month_action(self, sender):
         start=self.view["datepicker"].date
         self.view["datepicker"].font=("<system>",12)
@@ -187,24 +210,45 @@ class ShowTableView(object):
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
         tv1.data_source.delete_enabled = tv1.editing = False
-        self.state=5
         self.selected_row=-1        
         tv1.reload_data()
         self.get_available_memory()
+        if self.state==2 :
+            self.save_cal_work()
+        self.state=5
 
     def bt_save_all_action(self,sender) :
         """Alle Daten in die Standarddateien speichern
         """
+# TODO Mehrere Backup Dateien behalten und mit Datum versehen
+        if os.path.exists("tasks.json"):
+            shutil.copy2("./tasks.json","./tasks.bak.json")
         with open('tasks.json', 'w') as f:
             TiTra.Task.WriteAllTasksToJSON(f)
+
+        if os.path.exists("prj.json"):
+            shutil.copy2("./prj.json","./prj.bak.json")
         with open('prj.json', 'w') as f:
             TiTra.Project.WriteAllProjectsToJSON(f)
-        
+
+        if os.path.exists("cal.csv"):
+            shutil.copy2("./cal.csv","./cal.bak.csv")        
         with open("cal.csv", "w" ) as f:
             g_cal.WriteCalToCSV(f)
             
         self.LogMessage("Alles gespeichert: task.json, prj.json, cal.csv")
         print("Alles gespeichert: task.json, prj.json, cal.csv")
+        
+    def save_cal_work(self) :
+        '''Speichert den Calender in cal.work.csv
+           nachdem das stabil läuft, könnte auch direkt in den Originalkalender geschrieben werden
+           NACHTEIL: sehr häufiges Schreiben, Fehleranfällig?'''
+
+# TODO brauche ein dirtyflag, das nach Add / Delete gesetzt wird und nur dann wird wirklich der Kalender gespeichert        
+        with open("cal.work.csv", "w" ) as f:
+            g_cal.WriteCalToCSV(f)
+        self.LogMessage("saved cal.work.csv")                    
+            
         
     def bt_delete_all_action(self,sender) :
         """Alles löschen
@@ -291,14 +335,15 @@ class ShowTableView(object):
             task=TiTra.Task.FindTaskid(id)
             g_cal.add(task.NewAction(self.view["datepicker"].date))
             
-            self.bt_cal_action(sender)
-        
+#            self.bt_cal_action(sender)
+            self.bt_cal2_action(sender)
+                    
     def bt_delete_action(self, sender) :
         """Lösche die selektierte Action aus dem Calender
            enthält das dict auch die zeit in geeigneter Form?
            g_cal kann removeBetween(fro,til)
         """
-        self.LogMessage(f"add sel={self.selected_row} in state {self.state}")
+        self.LogMessage(f"delete sel={self.selected_row} in state {self.state}")
         
         if self.state == 2 and self.selected_row!=-1 :
             tv1 = self.view['tableview1']
@@ -314,7 +359,8 @@ class ShowTableView(object):
             g_cal.removeBetween(time-timedelta(seconds=59),time+timedelta(seconds=59))
             
             self.bt_cal_action(sender)
-            
+            self.bt_cal2_action(sender)
+                        
     def bt_save(self, sender):
         fn=self.view['t_fname'].text
         print (f"Save as {fn}")
@@ -356,7 +402,8 @@ class ShowTableView(object):
         '''Button now clicked, sets Datepicker to today()
         '''
         self.view["datepicker"].date=datetime.datetime.today()
-        
+        label.text=sender.date.strftime("%d.%m.%Y")
+                
         if self.state == 2 :
             self.bt_cal_action(sender)
         elif self.state == 3 :
@@ -365,7 +412,8 @@ class ShowTableView(object):
             self.bt_dur_week_action(sender)
         elif self.state == 5 :
             self.bt_dur_month_action(sender)
-            
+        self.bt_cal2_action(sender)
+                    
     def dapi_action(self,sender):
         # print(f"\n Gewähltes Datum {sender.date}")
         # Wichtig hier in der zugehörigen View anhand des Namens die Subview finden!
@@ -380,6 +428,7 @@ class ShowTableView(object):
             self.bt_dur_week_action(sender)
         elif self.state == 5 :
             self.bt_dur_month_action(sender)
+        self.bt_cal2_action(sender)
                         
 		# Anderes Popup für die ersten Listen
 		# sender.selected_row enthält den Index des gewählten Eintrags
@@ -389,7 +438,7 @@ class ShowTableView(object):
 
     def bt_CopyPy_action(self,sender):
 	    CopyFileList(("ShowTView.py", "ShowTView.pyui", "NewTask.py", "VersionInStatusBar.py", "TiTra.py"))
-	    self.LogMessage(f"Dateien von Entwicklung in Produktion kopiert")
+	    self.LogMessage("Dateien von Entwicklung in Produktion kopiert")
 	    
     def will_close(self):
         """ This will be called when a presented view is about to be dismissed.
@@ -398,8 +447,10 @@ class ShowTableView(object):
         print("\n\n***** Methode will_close called * * * * * * * * * *")    
         
     def tableview_delete(self, tableview, section, row):
+        '''Wird hier nie aufgerufen, weil es eigentlich in die TableView gehört'''
+# TODO Methode entfernen        
         # Called when the user confirms deletion of the given row.
-	    self.LogMessage(f"delete called!")	    			
+        self.LogMessage("*** tableview_delete called!")	    			
 	    
 	    
     @ui.in_background
@@ -407,7 +458,7 @@ class ShowTableView(object):
         info = sender.items[sender.selected_row]
         self.selected=info
         self.selected_row=sender.selected_row
-        self.LogMessage('selected_row {} = {}'.format(sender.selected_row, info))
+        self.LogMessage('selected_row {}'.format(sender.selected_row))
         
         # console.alert('info', 'selected_row {} = {}'.format(sender.selected_row, info))
         						
@@ -467,9 +518,6 @@ class ShowTableView(object):
         host_port = mach_host_self(None)
         host_size = c_uint(int(sizeof(c_vm_statistics) / sizeof(c_int)))
         host_page_size(host_port, byref(page_size))
-    
-        
-        
         vm_stat = c_vm_statistics()
         
         HOST_VM_INFO = c_int(2) # This is a c macro
@@ -502,6 +550,8 @@ class ShowTableView(object):
         
         self.LogMessage(f"used {mem_used} free {mem_free} total {mem_total}")
         # NSProcessInfo.processInfo().activeProcessorCount()        
+
+# TODO My***DataSource auslagern in eigene Datei
 
 
 # =============================== MyTaskDataSource ================================
@@ -611,7 +661,7 @@ class MyTaskDataSource(ui.ListDataSource):
 		
 	def tableview_delete(self, tableview, section, row):
 		# Called when the user confirms deletion of the given row.
-		print(f"delete called! {section} {row}")	    	
+		print(f"Task delete called! {section} {row}")	    	
 		pass
 		
 	def tableview_move_row(self, tableview, from_section, from_row, to_section, to_row):
@@ -752,7 +802,7 @@ class MyCalDataSource(ui.ListDataSource):
 		time=datetime.datetime.strptime(f"{a['date']} {a['time']}", "%Y-%m-%d %H:%M")
         
 		# self.LogMessage(time.strftime("%d.%m.%Y %H:%M:%S"))
-		print(f"\ntableview_delete: {a['date']} {a['time']} {a['title']} ", time.strftime("%d.%m.%Y %H:%M:%S"))
+		# print(f"\ntableview_delete: {a['date']} {a['time']} {a['titl']} ", time.strftime("%d.%m.%Y %H:%M:%S"))
         
 		g_cal.removeIDAtTime(a['id'] , time)		
 		ui.ListDataSource.tableview_delete(self,tableview,section,row)
@@ -861,7 +911,7 @@ class MyDurDataSource(ui.ListDataSource):
 		
 	def tableview_can_move(self, tableview, section, row):
 		# Return True if a reordering control should be shown for the given row (in editing mode).
-		return True
+		return False
 		
 # TableViewCell.content_view
 # (readonly) The cell’s content view, which is resized automatically when the cell enters editing mode. 
@@ -870,7 +920,7 @@ class MyDurDataSource(ui.ListDataSource):
 		
 	def tableview_delete(self, tableview, section, row):
 		# Called when the user confirms deletion of the given row.
-		print(f"delete called! {section} {row}")	    	
+		# print(f"delete called! {section} {row}")	    	
 		pass
 		
 	def tableview_move_row(self, tableview, from_section, from_row, to_section, to_row):
@@ -970,7 +1020,8 @@ def InitForTest():
     
 print("\n\nShowTable View")
 s=ShowTableView()
+print(type(s))
 if s != None :
-    s.bt_save_all_action
+    s.bt_save_all_action(None)
     
-print("\n\n   Exit TableView")
+print("\n\n   Exit ShowTableView")
