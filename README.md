@@ -13,9 +13,11 @@ Do they ever change? Don't think so
 
 * [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py)
 * [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/ShowTView.pyui](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/ShowTView.pyui)
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py)
 
 # ToDo
 
+* Transport File [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) to this git or integrate in own code
 * collect and publish code for testing classes in TiTra.py
 * write a short but instructive user manual - even if it will bei soon outdated
 * Make class Calender containing alls Tasks, Projects and Actions
