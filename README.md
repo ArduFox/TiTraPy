@@ -7,9 +7,43 @@ Testing new repository to publish my ongoing work in progress
 
 Code and Documentation are mixed in German and English, but mostly German!
 
+# urls to raw files
+
+Do they ever change? Don't think so
+
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py)
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/ShowTView.pyui](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/ShowTView.pyui)
+
 # ToDo
 
+* collect and publish code for testing classes in TiTra.py
+* write a short but instructive user manual - even if it will bei soon outdated
+* Make class Calender containing alls Tasks, Projects and Actions
+
 # Aktueller Stand
+
+## 21.06.2019
+
+* TiTraPy.py enthält jetzt den aktuellen Code für die UI und die Anwendung und die DOCStrings darin sind verbessert and mostly in english
+* DataSources.py enthält meine drei DataSources
+* BEIDES IST NOCHT NICHT GETESTET
+
+## 18.06.2019 Nutzung im realen Leben
+
+Ich nutze das Tool bereits im realen Leben und notiere, was mir auffällt
+
+* Save nach schließen über X funktioniert nicht zuverlässig. In der Console sehe ich den print aus der Routine aber nach wieder öffnen sind neue Einträge nicht mehr da. Wenn ich aktiv den save button nutze, dann klappt es
+* Blöd ist auch, dass ich nach X auf die Console zurückfalle und zwei aktive Anwendungen sehe.
+* Bei mehrfachem Aufruf des Shortcuts kann ich auch mehrere TiTras hintereinander sehen / schließen
+* In der Section / Titel sollte auch das Datum angezeigt werden. Dafür ggf. über parent nach oben bis Datepicker hangeln
+* save work funktioniert mit den beiden Tabellen auch nicht mehr sinnvoll
+* Die beiden Tabellen stilistisch etwas unterschiedlich gestalten
+* für iPhone ein alternatives Layout erstellen mit beiden Tabellen untereinander
+* Anleitung.md als Minibedienungsanleitung erstellen
+* Ansonsten ist die Anwendung stabil
+* Pflege und Änderung von Tasks und Projekten zunächst als eigene Anwendung? Das würde es erstmal einfacher machen
+    * Darin sollte das Nullprojekt obligatorisch sein und nur anders gestaltet werden können.
+
 
 ## 15 & 16.06.2019 ShowTView
 
