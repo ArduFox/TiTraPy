@@ -17,10 +17,11 @@ import random
 import re
 #import csv
 import os
+import sys
 import shutil
 
 import TiTra
-import DataSources
+import DataSources as MDS
 
 from VersionInStatusBar import VersionInStatusBar
 version = '00.7'
@@ -39,14 +40,35 @@ class ShowTableView(object):
            self.state        wich view is activ? whats the content of the tableview
         '''
         self.view = ui.load_view('ShowTView')
-        self.view.present('fullscreen')
         #self.view.name = 'ShowTableView'
         self.labelcounter = 0
         self.msglist=list()
+        self.ui_lmsg=self.view['l_msg']
         self.state=0
         self.selected_row=-1
         self.selected=None
-        self.ui_lmsg=self.view['l_msg']
+        
+        self.view.present('fullscreen')        
+        
+# can't see any right_button_items!! why? Because this is a object not a ui.view
+# but it has a view :-). self.view
+
+        root, ext = os.path.splitext(sys.argv[0])  # script path without .py
+        script_name = os.path.basename(root)  # script name without the path
+        self.LogMessage(script_name)
+        
+        listOfDirs=root.split('/')
+        l=len(listOfDirs)-1
+        
+        version_button = ui.ButtonItem()
+        version_button.title = f"{listOfDirs[l-1]}/{listOfDirs[l]} V {version}"
+        version_button.tint_color = 'red'
+#        version_button.background_color=(1,1,0.90)
+#        version_button.font=self.ui_lmsg.font
+        print(f"feiner font in msg_log {self.ui_lmsg.font}")
+#        version_button.action = self.clear_action
+        self.view.right_button_items = [version_button]
+        
         tv1 = self.view['tableview1']
         # print("\ntableview ...")
         # print(tv1.__dict__)
@@ -69,7 +91,8 @@ class ShowTableView(object):
         self.bt_cal2_action(None)        
         VersionInStatusBar(version=version)
         self.LogMessage("init done.")
-        
+
+                        
     def LogMessage(self,line:str) :
         '''log a message to large label to show the user / developer what happend
         '''
@@ -97,7 +120,7 @@ class ShowTableView(object):
     def bt_task_action(self, sender):
         ''' fill "tableview1" with List of Tasks
         '''
-        lst = MyTaskDataSource(TiTra.Task.UITasksList())
+        lst = MDS.MyTaskDataSource(TiTra.Task.UITasksList())
         #print(f"\nShow tasks {TiTra.Task.UITasksList()}")
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
@@ -122,7 +145,7 @@ class ShowTableView(object):
         #print(f"\nActionsOfDay {now}\n{dl}")
         # self.LogMessage(f"ActionsOfDay")
 
-        lst = MyCalDataSource(g_cal.UIActionsOfDayList(now))
+        lst = MDS.MyCalDataSource(g_cal.UIActionsOfDayList(now))
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
         tv1.data_source.delete_enabled = tv1.editing = False
@@ -139,7 +162,7 @@ class ShowTableView(object):
         # datetime.datetime.today()
         
         dl=g_cal.UIActionsOfDayList(now)
-        lst = MyCalDataSource(g_cal.UIActionsOfDayList(now))
+        lst = MDS.MyCalDataSource(g_cal.UIActionsOfDayList(now))
         tv2 = self.view['tableview2']
         tv2.data_source = tv2.delegate = lst
         tv2.data_source.delete_enabled = tv2.editing = False
@@ -165,7 +188,7 @@ class ShowTableView(object):
         self.LogMessage(f"dur_day_action len {len(l)}")
             
         #self.LogMessage(f"dur_day_action liste {len(l)}")    
-        lst = MyDurDataSource("daily",l)
+        lst = MDS.MyDurDataSource("daily",l)
         lst.highlight_color=(1.0, 0.9, 0.3, 1.0)        
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
@@ -192,7 +215,7 @@ class ShowTableView(object):
         self.LogMessage(f"dur_week_action len {len(l)} {monday.strftime('%a %d.%m.%y')}")
             
         #self.LogMessage(f"dur_day_action liste {len(l)}")    
-        lst = MyDurDataSource("weekly",l)
+        lst = MDS.MyDurDataSource("weekly",l)
         lst.highlight_color=(1.0, 0.9, 0.3, 1.0)
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
@@ -218,7 +241,7 @@ class ShowTableView(object):
         l=lc.UICalcDurations()
                 
         self.LogMessage(f"dur_month_action len {len(l)}")
-        lst = MyDurDataSource("monthly",l)
+        lst = MDS.MyDurDataSource("monthly",l)
         
         #lst.font=("<system>",12)
         lst.highlight_color=(1.0, 0.9, 0.3, 1.0)
@@ -399,8 +422,10 @@ class ShowTableView(object):
     def bt_now_action(self,sender):
         '''Button now clicked, sets Datepicker to today()
         '''
-        self.view["datepicker"].date=datetime.datetime.today()
-        label.text=sender.date.strftime("%d.%m.%Y")
+        label = self.view['l_date']
+        d=datetime.datetime.today()
+        self.view["datepicker"].date=d
+        label.text=d.strftime("%d.%m.%Y")
                 
         if self.state == 2 :
             self.bt_cal_action(sender)

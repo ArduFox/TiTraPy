@@ -60,7 +60,7 @@ class MyTaskDataSource(ui.ListDataSource):
 		#
 		if row % 2:
 			cell.background_color=(0.94,0.96,1.0)
-
+			
 		v= cell.content_view
 		
 		label2 = ui.Label(name='l_task')
@@ -72,8 +72,13 @@ class MyTaskDataSource(ui.ListDataSource):
 		label2.width=180
 		label2.font=("<system>",16)
 #		label2.bg_color=(0.90, 0.95 ,1.0,1.0)
-		label2.text_color=(0)
-		label2.tint_color=(0)
+		if self.itemlist [row] ["id"] == 0 :
+			label2.text_color=((0,0,0.8))
+			label2.tint_color=((0,0,0.8))
+		else :
+			label2.text_color=(0)
+			label2.tint_color=(0)
+			
 		v.add_subview(label2)
 
 		
@@ -86,8 +91,12 @@ class MyTaskDataSource(ui.ListDataSource):
 		label2.width=150
 		label2.font=("<system>",16)
 #		label2.bg_color=(0.90, 0.95 ,1.0,1.0)
-		label2.text_color=(0)
-		label2.tint_color=(0)
+		if self.itemlist [row] ["id"] == 0 :
+			label2.text_color=((0,0,0.8))
+			label2.tint_color=((0,0,0.8))
+		else :
+			label2.text_color=(0)
+			label2.tint_color=(0)
 		v.add_subview(label2)		
 				
 		label2 = ui.Label(name='col')
@@ -176,9 +185,9 @@ class MyCalDataSource(ui.ListDataSource):
 		
 		cell = ui.ListDataSource.tableview_cell_for_row(self,tableview,section,row)
 		#
-		if row % 2:
-			cell.background_color=(0.94,0.96,1.0)
-
+		if row % 2==0 : 
+			cell.background_color=(1,1,0.90)
+			
 		v= cell.content_view
 		
 		

@@ -771,7 +771,7 @@ class Calender:
             td = (a._start - dstart)
             mi= round(td.total_seconds()/60)
 #            dlist.append((mi, a._task._farbe ,a._start.strftime("%H:%M"), a._task._name, a._task._projectName,a._start.strftime("%Y-%m-%d")))
-            d={'title':f"{a._start.strftime('%H:%M')} {a._task._name} [{a._task._projectName}]",
+            d={'long':f"{a._start.strftime('%H:%M')} {a._task._name} [{a._task._projectName}]",
                'task':a._task._name,
                'prj': a._task._projectName,
                'id': a._task._id,
