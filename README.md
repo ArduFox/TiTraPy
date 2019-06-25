@@ -17,6 +17,7 @@ Do they ever change? Don't think so
 
 # ToDo
 
+* **Commit & push** this git !!!
 * :ok: DataSources dont have access to global var g_cal for delete entries! New class variable in ShowTView!
 * New Name for class ShowTView >> TiTraPyGUI & :ok: rename pyui file
 * :ok: Transport File [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) to this git or integrate in own code
