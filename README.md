@@ -17,6 +17,8 @@ Do they ever change? Don't think so
 
 # ToDo
 
+* DataSources dont have access to global var g_cal for delete entries! New class variable in ShowTView!
+* New Name for class ShowTView >> TiTraPyGUI & rename pyui file
 * Transport File [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) to this git or integrate in own code
 * collect and publish code for testing classes in TiTra.py
 * write a short but instructive user manual - even if it will bei soon outdated
