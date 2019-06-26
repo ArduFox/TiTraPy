@@ -7,6 +7,8 @@ Testing new repository to publish my ongoing work in progress
 
 Code and Documentation are mixed in German and English, but mostly German!
 
+Started the first [stubble](doc.md) of user manual and code documenation in doc.md
+
 # urls to raw files
 
 Do they ever change? Don't think so
