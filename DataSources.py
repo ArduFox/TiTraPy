@@ -16,7 +16,7 @@ from datetime import date
 import TiTra
 
 
-
+ 
 
 # =============================== MyTaskDataSource ================================
 
@@ -161,11 +161,11 @@ class MyCalDataSource(ui.ListDataSource):
 	'''
     
     
-	def __init__(self, items, *args, **kwargs ):
+	def __init__(self,calender:TiTra.Calender, items, *args, **kwargs ):
 		ui.ListDataSource.__init__(self, items, *args, **kwargs)
 		self.itemlist=items
 		self.total=0
-		
+		self.myCalender=calender
 		
 	def tableview_number_of_sections(self, tableview):
 		# Return the number of sections (defaults to 1)
@@ -277,7 +277,7 @@ class MyCalDataSource(ui.ListDataSource):
 		# self.LogMessage(time.strftime("%d.%m.%Y %H:%M:%S"))
 		# print(f"\ntableview_delete: {a['date']} {a['time']} {a['titl']} ", time.strftime("%d.%m.%Y %H:%M:%S"))
         
-		g_cal.removeIDAtTime(a['id'] , time)		
+		self.myCalender.removeIDAtTime(a['id'] , time)		
 		ui.ListDataSource.tableview_delete(self,tableview,section,row)
 		
 		

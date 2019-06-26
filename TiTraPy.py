@@ -5,6 +5,9 @@
 # part of TiTraPy
 # contains code for UI and initialization
 #
+# Changes in V 00.71
+# - added class variable myCalender in ShowTView, to contain the instance of TiTra.Calender
+#
 # 21. Juni 2019
 
 import console, os, ui
@@ -24,7 +27,7 @@ import TiTra
 import DataSources as MDS
 
 from VersionInStatusBar import VersionInStatusBar
-version = '00.7'
+version = '00.71'
 # VersionInStatusBar doesn't work! Why? TODO
 
 # for get_available_memory
@@ -32,14 +35,14 @@ from ctypes import *
 from objc_util import ObjCClass
 
 class ShowTableView(object):
-    def __init__(self):
+    def __init__(self, cal:TiTra.Calender):
         '''init UI, load pyui file
            keeps a list of messages for LogMessage(line:str) 
 
            self.selected_row
            self.state        wich view is activ? whats the content of the tableview
         '''
-        self.view = ui.load_view('ShowTView')
+        self.view = ui.load_view('TiTraPy.pyui')
         #self.view.name = 'ShowTableView'
         self.labelcounter = 0
         self.msglist=list()
@@ -47,6 +50,7 @@ class ShowTableView(object):
         self.state=0
         self.selected_row=-1
         self.selected=None
+        self.myCalender=cal
         
         self.view.present('fullscreen')        
         
@@ -139,13 +143,13 @@ class ShowTableView(object):
         now=self.view['datepicker'].date
         # datetime.datetime.today()
         
-        dl=g_cal.UIActionsOfDayList(now)
+        dl=self.myCalender.UIActionsOfDayList(now)
         ''' TODO UI Actions umbauen, so dass die Komponenten einzeln im Dict sind'''
                 
         #print(f"\nActionsOfDay {now}\n{dl}")
         # self.LogMessage(f"ActionsOfDay")
 
-        lst = MDS.MyCalDataSource(g_cal.UIActionsOfDayList(now))
+        lst = MDS.MyCalDataSource(self.myCalender, self.myCalender.UIActionsOfDayList(now))
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
         tv1.data_source.delete_enabled = tv1.editing = False
@@ -161,8 +165,8 @@ class ShowTableView(object):
         now=self.view['datepicker'].date
         # datetime.datetime.today()
         
-        dl=g_cal.UIActionsOfDayList(now)
-        lst = MDS.MyCalDataSource(g_cal.UIActionsOfDayList(now))
+        dl=self.myCalender.UIActionsOfDayList(now)
+        lst = MDS.MyCalDataSource(self.myCalender, self.myCalender.UIActionsOfDayList(now))
         tv2 = self.view['tableview2']
         tv2.data_source = tv2.delegate = lst
         tv2.data_source.delete_enabled = tv2.editing = False
@@ -182,7 +186,7 @@ class ShowTableView(object):
         start=start.replace(hour=0, minute=0, second=0, microsecond=0)
         end=start+timedelta(days=1)  
                         
-        lc=g_cal.findBetween(start, end)
+        lc=self.myCalender.findBetween(start, end)
         l=lc.UICalcDurations()
         
         self.LogMessage(f"dur_day_action len {len(l)}")
@@ -209,7 +213,7 @@ class ShowTableView(object):
         monday=start-timedelta(days=start.weekday())
         satday=monday+timedelta(days=5)
             
-        lc=g_cal.findBetween(monday,satday)
+        lc=self.myCalender.findBetween(monday,satday)
         l=lc.UICalcDurations()
         
         self.LogMessage(f"dur_week_action len {len(l)} {monday.strftime('%a %d.%m.%y')}")
@@ -237,7 +241,7 @@ class ShowTableView(object):
         mend=mstart+timedelta(weeks=0, days=32, hours=0, minutes=0, seconds=0)  
         mend=mend.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
                         
-        lc=g_cal.findBetween(mstart, mend)
+        lc=self.myCalender.findBetween(mstart, mend)
         l=lc.UICalcDurations()
                 
         self.LogMessage(f"dur_month_action len {len(l)}")
@@ -284,7 +288,7 @@ class ShowTableView(object):
         if os.path.exists("cal.csv"):
             shutil.copy2("./cal.csv","./cal.bak.csv")        
         with open("cal.csv", "w" ) as f:
-            g_cal.WriteCalToCSV(f)
+            self.myCalender.WriteCalToCSV(f)
             
         self.LogMessage("Alles gespeichert: task.json, prj.json, cal.csv")
         print("Alles gespeichert: task.json, prj.json, cal.csv")
@@ -296,7 +300,7 @@ class ShowTableView(object):
 
 # TODO brauche ein dirtyflag, das nach Add / Delete gesetzt wird und nur dann wird wirklich der Kalender gespeichert        
         with open("cal.work.csv", "w" ) as f:
-            g_cal.WriteCalToCSV(f)
+            self.myCalender.WriteCalToCSV(f)
         self.LogMessage("saved cal.work.csv")                    
             
         
@@ -310,7 +314,7 @@ class ShowTableView(object):
         
         now=self.view["datepicker"].date
         
-        g_cal.removeBetween(now-timedelta(days=70),now+timedelta(days=70))
+        self.myCalender.removeBetween(now-timedelta(days=70),now+timedelta(days=70))
         self.LogMessage(f"Alle Actions +/- 70 Tage {self.view['datepicker'].date} gelöscht")
         
     def bt_backup_action(self,sender) :
@@ -324,7 +328,7 @@ class ShowTableView(object):
         
         now=self.view["datepicker"].date
         
-        g_cal.SaveAndRemoveMonth(now,"./")
+        self.myCalender.SaveAndRemoveMonth(now,"./")
         self.LogMessage(f"SaveAndRemoveMonth {self.view['datepicker'].date}")
                                 
     def bt_read_all_action(self,sender) :
@@ -336,7 +340,7 @@ class ShowTableView(object):
         now=datetime.datetime.today()
         now=now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         
-        g_cal.removeBetween(now,now+timedelta(days=40))
+        self.myCalender.removeBetween(now,now+timedelta(days=40))
         
         with open('tasks.json', 'r') as f:
             all_tasks=TiTra.Task.ReadAllTasksFromJSON(f)
@@ -344,7 +348,7 @@ class ShowTableView(object):
             all_projects=TiTra.Project.ReadAllProjectsFromJSON(f)
         
         with open("cal.csv", "r" ) as f:
-            g_cal.ReadCalFromCSV(f)
+            self.myCalender.ReadCalFromCSV(f)
             
         self.LogMessage("NICHT gelöscht, alles gelesen: task.json, prj.json, cal.csv")
         
@@ -369,7 +373,7 @@ class ShowTableView(object):
             
             id=int(a["id"])
             task=TiTra.Task.FindTaskid(id)
-            g_cal.add(task.NewAction(self.view["datepicker"].date))
+            self.myCalender.add(task.NewAction(self.view["datepicker"].date))
             
 #            self.bt_cal_action(sender)
             self.bt_cal2_action(sender)
@@ -392,7 +396,7 @@ class ShowTableView(object):
             
             self.LogMessage(time.strftime("%d.%m.%Y %H:%M:%S"))
             
-            g_cal.removeBetween(time-timedelta(seconds=59),time+timedelta(seconds=59))
+            self.myCalender.removeBetween(time-timedelta(seconds=59),time+timedelta(seconds=59))
             
             self.bt_cal_action(sender)
             self.bt_cal2_action(sender)
@@ -401,7 +405,7 @@ class ShowTableView(object):
         fn=self.view['t_fname'].text
         print (f"Save as {fn}")
         with open(fn, "w") as f :
-            g_cal.WriteCalToCSV(f)
+            self.myCalender.WriteCalToCSV(f)
             
         label2=self.view['save_done']
         if label2 :    
@@ -463,7 +467,7 @@ class ShowTableView(object):
 		# Ja das geht ohne zu 
 
     def bt_CopyPy_action(self,sender):
-	    CopyFileList(("ShowTView.py", "ShowTView.pyui", "NewTask.py", "VersionInStatusBar.py", "TiTra.py"))
+	    CopyFileList(("ShowTView.py", "ShowTView.pyui", "NewTask.py", "VersionInStatusBar.py", "TiTra.py", "TiTraPy.py", "DataSources.py", "TiTraPy.pyui"))
 	    self.LogMessage("Dateien von Entwicklung in Produktion kopiert")
 	    
     def will_close(self):
@@ -592,8 +596,8 @@ def CopyFileList(filelist):
     	    
     	    shutil.copy2(fromdir+fi,todir+fi)
 
-global g_cal
-g_cal=TiTra.Calender()
+global cal
+cal=TiTra.Calender()
 
 
 # InitTaskProjects(False)
@@ -609,7 +613,7 @@ with open('prj.json', 'r') as f:
     all_projects=TiTra.Project.ReadAllProjectsFromJSON(f)
 
 with open("cal.csv", "r" ) as f:
-    g_cal.ReadCalFromCSV(f)
+    cal.ReadCalFromCSV(f)
 
 
 # print ("\nAlle Projekte:\n")    
@@ -627,7 +631,7 @@ def InitForTest():
     
     print (f"\n*** Actions löschen zwischen {now} und {now+timedelta(days=40)}")
     
-    g_cal.removeBetween(now,now+timedelta(days=40))
+    cal.removeBetween(now,now+timedelta(days=40))
     
     print (f"\n*** Zufällig Tasks in diesen Monat füllen")
     print (f"Monatsstart = {now}")
@@ -639,25 +643,25 @@ def InitForTest():
         t=TiTra.Task.FindTaskName("BL")
         
         if None != t :
-            g_cal.add(t.NewAction(zufallz))
+            cal.add(t.NewAction(zufallz))
             
             for z in range(0,5) :
                 zufallz= zufallz + timedelta(weeks=0, days=0, hours=0, minutes=30+random.randrange(50), seconds=3)  
                 t=TiTra.Task.FindTaskid(random.randrange(10)+1)
-                g_cal.add(t.NewAction(zufallz))
+                cal.add(t.NewAction(zufallz))
     
             t=TiTra.Task.FindTaskName("stopper")
     
             if None != t :
                 zufallz=zufallz.replace(hour=18)
-                g_cal.add(t.NewAction(zufallz))
+                cal.add(t.NewAction(zufallz))
     
         zufallz=zufallz.replace(hour=9, minute=0, second=0)
         zufallz=zufallz + timedelta(days=1, hours=0, minutes=1, seconds=0)  
            
     
 print("\n\nShowTable View")
-s=ShowTableView()
+s=ShowTableView(cal)
 print(type(s))
 if s != None :
     s.bt_save_all_action(None)

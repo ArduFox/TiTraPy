@@ -5,20 +5,20 @@
         "nodes" : [
 
         ],
-        "frame" : "{{384, 156}, {370, 606}}",
+        "frame" : "{{384, 156}, {370, 426}}",
         "class" : "TableView",
         "attributes" : {
           "flex" : "HR",
           "data_source_items" : "Tasks & Reports\ntableview1",
           "enabled" : true,
+          "data_source_font_size" : 14,
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-          "data_source_number_of_lines" : 1,
-          "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
+          "data_source_number_of_lines" : 1,
           "name" : "tableview1",
-          "row_height" : 44
+          "row_height" : 24
         },
         "selected" : false
       },
@@ -61,7 +61,7 @@
           "name" : "bt_cal",
           "font_size" : 15
         },
-        "selected" : true
+        "selected" : false
       },
       {
         "nodes" : [
@@ -70,10 +70,10 @@
         "frame" : "{{6, 6}, {269, 105}}",
         "class" : "DatePicker",
         "attributes" : {
-          "class" : "DatePicker",
+          "name" : "datepicker",
           "frame" : "{{224, 372}, {320, 216}}",
           "action" : "self.dapi_action",
-          "name" : "datepicker",
+          "class" : "DatePicker",
           "mode" : 2,
           "uuid" : "0B42DD7D-F07B-4557-A978-A65A19698BE1"
         },
@@ -83,7 +83,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{283, 54}, {100, 40}}",
+        "frame" : "{{384, 618}, {123, 40}}",
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
@@ -97,8 +97,8 @@
           "title" : "Add Action",
           "action" : "self.bt_add_action",
           "class" : "Button",
-          "image_name" : "iob:ios7_star_outline_24",
-          "name" : "bt_add_action"
+          "name" : "bt_add_action",
+          "image_name" : "iob:ios7_star_outline_24"
         },
         "selected" : false
       },
@@ -109,13 +109,13 @@
         "frame" : "{{918, 483}, {100, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "l_date",
           "frame" : "{{467, 466}, {150, 32}}",
           "uuid" : "A198A91F-7767-40D6-9CEF-7E3F5246F89A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Datumlabel",
-          "name" : "l_date",
+          "font_size" : 18,
           "font_name" : "<System-Bold>"
         },
         "selected" : false
@@ -139,8 +139,8 @@
           "action" : "self.bt_save",
           "font_bold" : true,
           "class" : "Button",
-          "image_name" : "iob:archive_24",
-          "name" : "bt_save"
+          "name" : "bt_save",
+          "image_name" : "iob:archive_24"
         },
         "selected" : false
       },
@@ -151,7 +151,7 @@
         "frame" : "{{918, 232}, {100, 32}}",
         "class" : "TextField",
         "attributes" : {
-          "font_size" : 17,
+          "name" : "t_fname",
           "frame" : "{{442, 466}, {200, 32}}",
           "spellchecking_type" : "default",
           "class" : "TextField",
@@ -159,7 +159,7 @@
           "alignment" : "left",
           "text" : "new.csv",
           "autocorrection_type" : "default",
-          "name" : "t_fname",
+          "font_size" : 17,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -211,14 +211,14 @@
         "frame" : "{{397, 6}, {621, 105}}",
         "class" : "Label",
         "attributes" : {
-          "class" : "Label",
+          "alignment" : "left",
           "font_size" : 10,
           "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
           "frame" : "{{467, 466}, {150, 32}}",
           "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
+          "class" : "Label",
           "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "number_of_lines" : 17,
-          "alignment" : "left",
           "text" : "Label kkkkkkkk",
           "name" : "l_msg",
           "font_name" : "AppleSDGothicNeo-UltraLight"
@@ -241,8 +241,8 @@
           "border_color" : "RGBA(0.311828,-0.032258,1.000000,1.000000)",
           "class" : "Button",
           "corner_radius" : 5,
-          "font_size" : 15,
-          "name" : "bt_save_all"
+          "name" : "bt_save_all",
+          "font_size" : 15
         },
         "selected" : false
       },
@@ -331,8 +331,8 @@
           "action" : "self.bt_delete_all_action",
           "font_bold" : true,
           "class" : "Button",
-          "image_name" : "iob:alert_24",
-          "name" : "bt_clear"
+          "name" : "bt_clear",
+          "image_name" : "iob:alert_24"
         },
         "selected" : false
       },
@@ -364,7 +364,7 @@
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
-          "name" : "bt_now",
+          "image_name" : "iob:ios7_clock_outline_24",
           "corner_radius" : 3,
           "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
           "frame" : "{{502, 466}, {80, 32}}",
@@ -374,7 +374,7 @@
           "title" : "Jetzt",
           "action" : "self.bt_now_action",
           "class" : "Button",
-          "image_name" : "iob:ios7_clock_outline_24",
+          "name" : "bt_now",
           "font_size" : 15
         },
         "selected" : false
@@ -389,14 +389,31 @@
           "flex" : "HR",
           "data_source_items" : "calender\ntableview2",
           "enabled" : true,
-          "row_height" : 44,
+          "row_height" : 24,
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-          "data_source_number_of_lines" : 1,
           "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
+          "data_source_number_of_lines" : 1,
           "name" : "tableview2"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{384, 666}, {370, 29}}",
+        "class" : "SegmentedControl",
+        "attributes" : {
+          "flex" : "RB",
+          "segments" : "Tasks|Hours Day|Hours Week|Hours Month",
+          "frame" : "{{452, 370}, {120, 29}}",
+          "tint_color" : "RGBA(0.299528,0.299528,0.299528,1.000000)",
+          "class" : "SegmentedControl",
+          "uuid" : "26B23118-1221-45FB-B534-E81FA3E1B1C4",
+          "name" : "segmentedcontrol1"
         },
         "selected" : false
       }
@@ -404,11 +421,11 @@
     "frame" : "{{0, 0}, {1024, 768}}",
     "class" : "View",
     "attributes" : {
-      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
-      "enabled" : true,
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
-      "name" : "TiTra",
+      "enabled" : true,
       "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "name" : "TiTra",
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "flex" : ""
     },
     "selected" : false
