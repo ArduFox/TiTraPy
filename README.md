@@ -12,16 +12,15 @@ Code and Documentation are mixed in German and English, but mostly German!
 Do they ever change? Don't think so
 
 * [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py)
-* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/ShowTView.pyui](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/ShowTView.pyui)
 * [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py)
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.pyui](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.pyui)
 
 # ToDo
 
-* **Commit & push** this git !!!
 * :ok: DataSources dont have access to global var g_cal for delete entries! New class variable in ShowTView!
 * New Name for class ShowTView >> TiTraPyGUI & :ok: rename pyui file
 * :ok: Transport File [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) to this git or integrate in own code
-* remove ShowTView Files
+* :ok: remove ShowTView Files
 * collect and publish code for testing classes in TiTra.py
 * write a short but instructive user manual - even if it will bei soon outdated
 * Make class Calender containing alls Tasks, Projects and Actions
@@ -32,7 +31,7 @@ Do they ever change? Don't think so
 
 * TiTraPy.py enthält jetzt den aktuellen Code für die UI und die Anwendung und die DOCStrings darin sind verbessert and mostly in english
 * DataSources.py enthält meine drei DataSources
-* BEIDES IST NOCHT NICHT GETESTET
+* BEIDES GETESTET :ok: 
 
 ## 18.06.2019 Nutzung im realen Leben
 
