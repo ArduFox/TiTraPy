@@ -11,14 +11,14 @@
           "flex" : "HR",
           "data_source_items" : "Tasks & Reports\ntableview1",
           "enabled" : true,
-          "data_source_font_size" : 14,
+          "name" : "tableview1",
+          "data_source_number_of_lines" : 1,
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
-          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "data_source_delete_enabled" : true,
-          "data_source_number_of_lines" : 1,
-          "name" : "tableview1",
-          "row_height" : 24
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "row_height" : 26,
+          "data_source_font_size" : 14
         },
         "selected" : false
       },
@@ -26,48 +26,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{330, 119}, {100, 30}}",
-        "class" : "Button",
-        "attributes" : {
-          "flex" : "",
-          "border_width" : 1,
-          "enabled" : true,
-          "action" : "self.bt_task_action",
-          "title" : "Tasks",
-          "border_color" : "RGBA(0.000000,0.000000,1.000000,1.000000)",
-          "font_bold" : false,
-          "corner_radius" : 5,
-          "uuid" : "B18F462E-0334-4FC5-9808-4FCAB5466EC3",
-          "font_size" : 15,
-          "name" : "bt_task"
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
-        "frame" : "{{114, 118}, {100, 30}}",
-        "class" : "Button",
-        "attributes" : {
-          "border_width" : 1,
-          "action" : "self.bt_cal_action",
-          "frame" : "{{344, 464}, {80, 32}}",
-          "title" : "Calender",
-          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
-          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
-          "class" : "Button",
-          "corner_radius" : 5,
-          "name" : "bt_cal",
-          "font_size" : 15
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
-        "frame" : "{{6, 6}, {269, 105}}",
+        "frame" : "{{6, 6}, {269, 152}}",
         "class" : "DatePicker",
         "attributes" : {
           "name" : "datepicker",
@@ -83,7 +42,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{384, 618}, {123, 40}}",
+        "frame" : "{{384, 627}, {123, 40}}",
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
@@ -168,46 +127,6 @@
         "nodes" : [
 
         ],
-        "frame" : "{{546, 119}, {100, 30}}",
-        "class" : "Button",
-        "attributes" : {
-          "border_width" : 1,
-          "action" : "self.bt_dur_week_action",
-          "frame" : "{{344, 464}, {80, 32}}",
-          "title" : "Hours Week",
-          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
-          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
-          "class" : "Button",
-          "corner_radius" : 5,
-          "name" : "bt_dur_month",
-          "font_size" : 15
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
-        "frame" : "{{438, 118}, {100, 30}}",
-        "class" : "Button",
-        "attributes" : {
-          "border_width" : 1,
-          "action" : "self.bt_dur_day_action",
-          "frame" : "{{344, 464}, {80, 32}}",
-          "title" : "Hours Day",
-          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
-          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
-          "class" : "Button",
-          "corner_radius" : 5,
-          "name" : "bt_dur_day",
-          "font_size" : 15
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
         "frame" : "{{397, 6}, {621, 105}}",
         "class" : "Label",
         "attributes" : {
@@ -215,11 +134,11 @@
           "font_size" : 10,
           "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
           "frame" : "{{467, 466}, {150, 32}}",
-          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
           "class" : "Label",
-          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "number_of_lines" : 17,
           "text" : "Label kkkkkkkk",
+          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
+          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "name" : "l_msg",
           "font_name" : "AppleSDGothicNeo-UltraLight"
         },
@@ -340,26 +259,6 @@
         "nodes" : [
 
         ],
-        "frame" : "{{654, 119}, {100, 29}}",
-        "class" : "Button",
-        "attributes" : {
-          "border_width" : 1,
-          "action" : "self.bt_dur_month_action",
-          "frame" : "{{344, 464}, {80, 32}}",
-          "title" : "Hours Month",
-          "uuid" : "EBF81284-3E48-4FAF-85A7-6ECEDD1815AE",
-          "border_color" : "RGBA(0.353535,0.030303,1.000000,1.000000)",
-          "class" : "Button",
-          "corner_radius" : 5,
-          "name" : "bt_dur_month",
-          "font_size" : 15
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
         "frame" : "{{283, 6}, {100, 40}}",
         "class" : "Button",
         "attributes" : {
@@ -383,20 +282,20 @@
         "nodes" : [
 
         ],
-        "frame" : "{{6, 156}, {370, 606}}",
+        "frame" : "{{6, 156}, {370, 578}}",
         "class" : "TableView",
         "attributes" : {
           "flex" : "HR",
           "data_source_items" : "calender\ntableview2",
           "enabled" : true,
-          "row_height" : 24,
+          "data_source_font_size" : 14,
+          "data_source_number_of_lines" : 1,
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
-          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-          "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
-          "data_source_number_of_lines" : 1,
-          "name" : "tableview2"
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "name" : "tableview2",
+          "row_height" : 26
         },
         "selected" : false
       },
@@ -404,16 +303,17 @@
         "nodes" : [
 
         ],
-        "frame" : "{{384, 666}, {370, 29}}",
+        "frame" : "{{384, 119}, {370, 29}}",
         "class" : "SegmentedControl",
         "attributes" : {
           "flex" : "RB",
+          "action" : "self.seg_view_action",
           "segments" : "Tasks|Hours Day|Hours Week|Hours Month",
           "frame" : "{{452, 370}, {120, 29}}",
           "tint_color" : "RGBA(0.299528,0.299528,0.299528,1.000000)",
           "class" : "SegmentedControl",
           "uuid" : "26B23118-1221-45FB-B534-E81FA3E1B1C4",
-          "name" : "segmentedcontrol1"
+          "name" : "segmentedcontrol"
         },
         "selected" : false
       }
@@ -421,12 +321,13 @@
     "frame" : "{{0, 0}, {1024, 768}}",
     "class" : "View",
     "attributes" : {
-      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "flex" : "",
+      "custom_class" : "MyView",
       "enabled" : true,
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-      "name" : "TiTra",
       "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
-      "flex" : ""
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "name" : "TiTra"
     },
     "selected" : false
   }

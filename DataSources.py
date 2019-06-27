@@ -280,6 +280,10 @@ class MyCalDataSource(ui.ListDataSource):
 		self.myCalender.removeIDAtTime(a['id'] , time)		
 		ui.ListDataSource.tableview_delete(self,tableview,section,row)
 		
+		# TODO set flag (ShowTableView.CalChanged=True) to True if an Delete has ocurred -> in DataSources.py 
+		# not a good design! 
+		# this class already knows the calender -> the calender not the UI should be aware if there were changes, that need saving
+		
 		
 	def tableview_move_row(self, tableview, from_section, from_row, to_section, to_row):
 		# Called when the user moves a row with the reordering control (in editing mode).

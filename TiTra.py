@@ -478,6 +478,7 @@ class Calender:
 
     def __init__(self) :
         self.__actions=list()
+        self.__notsorted=False
 
     def append(self, act: Action) :
         """Eine Action anfügen ohne Prüfung z.B. auf Doppelte Einträge bzw. Einträge mit zu geringem Abstand

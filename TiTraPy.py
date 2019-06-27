@@ -5,10 +5,15 @@
 # part of TiTraPy
 # contains code for UI and initialization
 #
+# Changes in V 00.72
+# - using now a segemented control to change view in second pane
+# - remaining code of VersionInStatusbar eliminated
+# 
 # Changes in V 00.71
 # - added class variable myCalender in ShowTView, to contain the instance of TiTra.Calender
+# - load TiTraPy.pyui
 #
-# 21. Juni 2019
+# Copyright?
 
 import console, os, ui
 import datetime
@@ -26,13 +31,104 @@ import shutil
 import TiTra
 import DataSources as MDS
 
-from VersionInStatusBar import VersionInStatusBar
-version = '00.71'
-# VersionInStatusBar doesn't work! Why? TODO
+version = '00.72b'
 
 # for get_available_memory
 from ctypes import *
 from objc_util import ObjCClass
+
+import ui
+
+class MyView (ui.View):
+    '''from pythonista ui documentation
+       I need it to implement will_close() to save the data when ui is exited
+       
+       Lessons learned
+       - ui.loadview is not a method of View but returns a View instance!!
+       - View is the only ui class that can be subclassed - tells the doc
+       - How can I load a pyui file in my own class
+         In the GUI Editor use the field Custom View Class at the bottom
+         
+       - See https://forum.omz-software.com/topic/989/any-ui-module-tutorials-out-there/29
+       - there are best practice rules in that thread
+       - and a tutorial  
+    '''
+    
+    def __init__(self):
+        # This will also be called without arguments when the view is loaded from a UI file.
+        # You don't have to call super. Note that this is called *before* the attributes
+        # defined in the UI file are set. Implement `did_load` to customize a view after
+        # it's been fully loaded from a UI file.
+        self.cal=None
+        pass
+        
+    def setCalender(self, cal:TiTra.Calender):
+        
+        self.cal=cal
+
+    def did_load(self):
+        # This will be called when a view has been fully loaded from a UI file.
+        pass
+
+    def will_close(self):
+        # This will be called when a presented view is about to be dismissed.
+        # You might want to save data here.
+        
+        
+        print("My_View.will_close called at ",datetime.datetime.now().strftime("%H:%M:%S"))
+        if None != self.cal :
+        # TODO move this task into class Calender
+            if os.path.exists("cal.csv"):
+                shutil.copy2("./cal.csv","./cal.bak.csv")        
+            with open("cal.csv", "w" ) as f:
+                self.cal.WriteCalToCSV(f)
+                
+            print("Calender gespeichert: cal.csv")
+    
+            self.CalChanged=False                        
+
+    def draw(self):
+        # This will be called whenever the view's content needs to be drawn.
+        # You can use any of the ui module's drawing functions here to render
+        # content into the view's visible rectangle.
+        # Do not call this method directly, instead, if you need your view
+        # to redraw its content, call set_needs_display().
+        # Example:
+        # path = ui.Path.oval(0, 0, self.width, self.height)
+        # ui.set_color('red')
+        # path.fill()
+        # img = ui.Image.named('ionicons-beaker-256')
+        # img.draw(0, 0, self.width, self.height)
+        pass
+
+    def layout(self):
+        # This will be called when a view is resized. You should typically set the
+        # frames of the view's subviews here, if your layout requirements cannot
+        # be fulfilled with the standard auto-resizing (flex) attribute.
+        pass
+
+    def touch_began(self, touch):
+        # Called when a touch begins.
+        pass
+
+    def touch_moved(self, touch):
+        # Called when a touch moves.
+        pass
+
+    def touch_ended(self, touch):
+        # Called when a touch ends.
+        pass
+
+    def keyboard_frame_will_change(self, frame):
+        # Called when the on-screen keyboard appears/disappears
+        # Note: The frame is in screen coordinates.
+        pass
+
+    def keyboard_frame_did_change(self, frame):
+        # Called when the on-screen keyboard appears/disappears
+        # Note: The frame is in screen coordinates.
+        pass
+
 
 class ShowTableView(object):
     def __init__(self, cal:TiTra.Calender):
@@ -40,10 +136,9 @@ class ShowTableView(object):
            keeps a list of messages for LogMessage(line:str) 
 
            self.selected_row
-           self.state        wich view is activ? whats the content of the tableview
+           self.state        which view is activ? whats the content of the second / right tableview
         '''
         self.view = ui.load_view('TiTraPy.pyui')
-        #self.view.name = 'ShowTableView'
         self.labelcounter = 0
         self.msglist=list()
         self.ui_lmsg=self.view['l_msg']
@@ -51,12 +146,12 @@ class ShowTableView(object):
         self.selected_row=-1
         self.selected=None
         self.myCalender=cal
+        self.CalChanged=False
+        
+        self.view.setCalender(self.myCalender)
         
         self.view.present('fullscreen')        
         
-# can't see any right_button_items!! why? Because this is a object not a ui.view
-# but it has a view :-). self.view
-
         root, ext = os.path.splitext(sys.argv[0])  # script path without .py
         script_name = os.path.basename(root)  # script name without the path
         self.LogMessage(script_name)
@@ -76,14 +171,14 @@ class ShowTableView(object):
         tv1 = self.view['tableview1']
         # print("\ntableview ...")
         # print(tv1.__dict__)
-        tv1.row_height=24
+        tv1.row_height=26
         #tv1.font=('<system>',12)
         #tv1.data_source_font_size=12
         #tv1.data_source.font_size=12
         #tv1.data_source.data_source_font_size=12
 
         tv2 = self.view['tableview2']
-        tv2.row_height=24        
+        tv2.row_height=26        
                         
         # (font_name, font_size). In addition to regular font names, you can also use ('<system>',14) or '<system-bold>'
         
@@ -92,8 +187,7 @@ class ShowTableView(object):
         # use '<system>' or '<system-bold>' to get the default regular or bold font.
 
         self.bt_task_action(None)        
-        self.bt_cal2_action(None)        
-        VersionInStatusBar(version=version)
+        self.bt_cal2_action(None)                
         self.LogMessage("init done.")
 
                         
@@ -271,10 +365,28 @@ class ShowTableView(object):
             self.save_cal_work()
         self.state=5
 
+    def seg_view_action(self,sender):
+        '''Manage selections in segmented control to chose view of second pane
+        '''
+        i = self.view['segmentedcontrol'].selected_index
+        if i == 0:
+            self.bt_task_action(None)
+        elif i == 1:
+            self.bt_dur_day_action(None)    		
+        elif i == 2:
+            self.bt_dur_week_action(None)    		
+        elif i == 3:
+            self.bt_dur_month_action(None)    		
+
+            
+                        
+                                                
     def bt_save_all_action(self,sender) :
         """Alle Daten in die Standarddateien speichern
         """
 # TODO Mehrere Backup Dateien behalten und mit Datum versehen
+# TODO move Code to class calender, maintain a prefix for the files in each instance of calender
+
         if os.path.exists("tasks.json"):
             shutil.copy2("./tasks.json","./tasks.bak.json")
         with open('tasks.json', 'w') as f:
@@ -292,7 +404,9 @@ class ShowTableView(object):
             
         self.LogMessage("Alles gespeichert: task.json, prj.json, cal.csv")
         print("Alles gespeichert: task.json, prj.json, cal.csv")
-        
+
+        self.CalChanged=False
+                                
     def save_cal_work(self) :
         '''Speichert den Calender in cal.work.csv
            nachdem das stabil läuft, könnte auch direkt in den Originalkalender geschrieben werden
@@ -374,9 +488,17 @@ class ShowTableView(object):
             id=int(a["id"])
             task=TiTra.Task.FindTaskid(id)
             self.myCalender.add(task.NewAction(self.view["datepicker"].date))
+            self.CalChanged=True
+            
+            # TODO set flag to True if an Delete has ocurred -> in DataSources.py
+            # TODO Save Calender (no method to save the calender alone) if Flag is True! When??
+    		# not a good design! 
+    		# this class already knows the calender -> the calender not the UI should be aware if there were changes, that need saving            
             
 #            self.bt_cal_action(sender)
+            print("add_action ",datetime.datetime.now().strftime("%H:%M:%S"))
             self.bt_cal2_action(sender)
+            
                     
     def bt_delete_action(self, sender) :
         """Lösche die selektierte Action aus dem Calender
@@ -474,9 +596,9 @@ class ShowTableView(object):
         """ This will be called when a presented view is about to be dismissed.
         You might want to save data here.
         """
-# TODO This never happens
+# TODO This never happens, cause this class is no view!
 #         
-        print("\n\n***** Methode will_close called * * * * * * * * * *")    
+        print("\n\n***** method will_close called * * * * * * * * * *")    
 
 
 	    
@@ -662,8 +784,10 @@ def InitForTest():
     
 print("\n\nShowTable View")
 s=ShowTableView(cal)
-print(type(s))
+#print(type(s))
 if s != None :
     s.bt_save_all_action(None)
     
-print("\n\n   Exit ShowTableView")
+# TODO saving seems to happen asynchronus before the UI realy exits!
+    
+print("\n\n   Exit ShowTableView",datetime.datetime.now().strftime("%H:%M:%S"))
