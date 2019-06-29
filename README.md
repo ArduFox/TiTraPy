@@ -19,15 +19,37 @@ Do they ever change? Don't think so
 
 # ToDo
 
-* :ok: DataSources dont have access to global var g_cal for delete entries! New class variable in ShowTView!
+* Make class Calender containing alls Tasks, Projects and Actions
 * New Name for class ShowTView >> TiTraPyGUI & :ok: rename pyui file
+* rework test.py - test everything and translate / give useful feedback about tests
+* :ok: Add Tool to download the 3 main files (Titra.py, TiTraPy.py, TiTraPy.pui, DataSources.py, TiTra.py,README.md) from this git 
+* :ok: DataSources dont have access to global var g_cal for delete entries! New class variable in ShowTView!
 * :ok: Transport File [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) to this git or integrate in own code
 * :ok: remove ShowTView Files
-* collect and publish code for testing classes in TiTra.py
-* write a short but instructive user manual - even if it will bei soon outdated
-* Make class Calender containing alls Tasks, Projects and Actions
+* :ok: collect and publish code for testing classes in TiTra.py
+* :ok: write a short but instructive user manual - even if it will bei soon outdated
 
-# Aktueller Stand
+# Status
+
+## 29.06.2019
+
+* TiTra.py in den Basisklassen um Methoden zum Laden und Speichern der Tasks, Projects und Calender sowie Zeiten erweitert
+* test.py erweitert und es läuft jetzt sinnvoll durch
+    * noch zu viele Ausgaben / prints
+    * Keine Vollständigkeit
+    * tests eher wenig dokumentiert / erklärt
+    * zu selten 
+        * Ankündigung, was getestet wird
+        * Ergebnisse durch asserts geprüft
+        * positives Feedback, falls asserts fehlerfrei waren
+* Rework GUI for APP 00.72
+    * using now a segemented control to change view in second pane
+    * remaining code of VersionInStatusbar eliminated
+    * Using custom view for main view to trap will_change() for saving the calender just before app exits
+    * cleaning up the ui
+    * added controls for saving and mailing calculated hours per day/week/month
+    * added non working stubble of code to realy save the hours
+
 
 ## 21.06.2019
 

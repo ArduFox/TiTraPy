@@ -9,6 +9,7 @@ import datetime
 from datetime import timedelta
 from datetime import date
 
+import os, shutil
 import random
 #import json
 import re
@@ -143,16 +144,17 @@ p.addTask(t)
 print("TiTra.Task.AllTasksStr()",TiTra.Task.AllTasksStr())
 
 
-global g_cal
-g_cal=TiTra.Calender()
+testCal=TiTra.Calender("test")
 
-testCal=TiTra.Calender()
+testCal.SaveTasks()
+testCal.SaveProjects()
 
 print("\nLeerer Testcalender \n",testCal,"\n")
 
 InitForTest(testCal)
 print("\nGefüllter Testcalender \n",testCal,"\n")
 
+testCal.SaveCal()
 
 '''
 ## Teste ...
@@ -174,7 +176,7 @@ print("\nGefüllter Testcalender \n",testCal,"\n")
 #help(TiTra.Calender)
 
 now=datetime.datetime.today()
-now=now.replace(microsecond=0)
+now=now.replace(second=0, microsecond=0)
 
 s=TiTra.Task.StopAction(now)
 
@@ -186,7 +188,13 @@ testCal.add(s)
 
 print(f"\nStopAction hinzugefügt {s}")
 pp.pprint(testCal)
-assert 1 == testCal.removeIDAtTime(s._id,now), "Sollte einen Eintrag finden und löschen"
+t=testCal.removeIDAtTime(s._id,now)
+
+assert None != t, "Sollte etwas Eintrag finden und löschen"
+#assert t._id== 0, "Sollte genau den Task mit id==0 finden und loschen"
+
+print(f"\nfound task {t}")
+
 pp.pprint(testCal)
 
 
@@ -197,7 +205,7 @@ print(f"\nStopAction WIEDER hinzugefügt {s}")
 
 found=testCal.findExact(now)
 print(f"\nfindeExact = {now} == {found}\n ")
-assert "stopper" == found._task._name , "Test auf < til : die Anzahl der Treffer sollte Länge 1 haben"
+assert 0== found._task._id , "Exakte suche sollte wieder id==0 finden"
 
 
 
@@ -260,10 +268,12 @@ pp.pprint(tl)
 
 
 t=TiTra.Task.FindTaskName("sports")
+
+print(f"\nFound Task{t} project='{t._project}'")
 p=t._project
 
-print("\n\nTasks von Standard vor Anfügen")
-all_projects["Standard"].print_tasks()
+print(f"\n\nTasks von {p._name} vor Anfügen")
+all_projects[p._name].print_tasks()
 
 print("\nStandard.UITasksList\n")
 pp.pprint(p.UITasksList())
@@ -303,14 +313,13 @@ if testCal.len() > 0 :
     erg=testCal.CalcDurations()
     pp.pprint(erg)
     
-    import csv
+    
+    print("\n>>> Save Durations to 'test.minutes.csv'\n")
 
-    with open('testcal.minuten.csv', 'w', newline='') as csvfile:
-        spamwriter = csv.writer(csvfile,delimiter=";")
-        # Durch dict iterieren und den Wert = Liste mit TaskName und Minuten in csv schreiben
-        spamwriter.writerow(("Minuten","Aktivität","Projekt"))
-        for k, v in erg.items():
-            spamwriter.writerow(v)
+    with open('test.minutes.csv', 'w', newline='') as csvfile:
+        testCal.WriteDurationsToCSV(csvfile)
     
 else:
     print("\ntestCal Calender erst füllen, dann klappt es auch mit dem Auswerten!")
+
+

@@ -8,6 +8,18 @@
 # 21. Juni 2019
 #
 
+#TODO error when deleting last action in day -- NOT ALWAYS -- not with id==0 ?? Maybe only when task.id = max??
+
+# delete called! 0 6
+
+# Traceback (most recent call last):
+#  File "/private/var/mobile/Containers/Shared/AppGroup/24F5E5AD-C71D-4B25-92EF-6D14C753D158/Pythonista3/Documents/TiTra.prod/DataSources.py", line 280, in tableview_delete
+#    self.myCalender.removeIDAtTime(a['id'] , time)
+#  File "/private/var/mobile/Containers/Shared/AppGroup/24F5E5AD-C71D-4B25-92EF-6D14C753D158/Pythonista3/Documents/TiTra.prod/TiTra.py", line 521, in removeIDAtTime
+#    return self.__actions[i]
+#IndexError: list index out of range
+
+
 import ui
 import datetime
 from datetime import timedelta
@@ -277,6 +289,8 @@ class MyCalDataSource(ui.ListDataSource):
 		# self.LogMessage(time.strftime("%d.%m.%Y %H:%M:%S"))
 		# print(f"\ntableview_delete: {a['date']} {a['time']} {a['titl']} ", time.strftime("%d.%m.%Y %H:%M:%S"))
         
+# TODO ERROR when deleting last entry in TiTry.py removeIDAtTime
+		print(f"MyCalDataSource delete {a['task']}={a['id']}")        
 		self.myCalender.removeIDAtTime(a['id'] , time)		
 		ui.ListDataSource.tableview_delete(self,tableview,section,row)
 		

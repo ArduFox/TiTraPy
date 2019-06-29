@@ -8,12 +8,27 @@
 # Changes in V 00.72
 # - using now a segemented control to change view in second pane
 # - remaining code of VersionInStatusbar eliminated
+# - Using custom view for main view to trap will_change() for saving the calender just before app exits
+# - cleaning up the ui
+# - added controls for saving and mailing calculated hours per day/week/month
+# - added stubble of code to realy save the hours
 # 
 # Changes in V 00.71
 # - added class variable myCalender in ShowTView, to contain the instance of TiTra.Calender
 # - load TiTraPy.pyui
 #
 # Copyright?
+
+#TODO error when deleting last action in day -- NOT ALWAYS -- not with id==0 ?? Maybe only when task.id = max??
+
+# delete called! 0 6
+
+# Traceback (most recent call last):
+#  File "/private/var/mobile/Containers/Shared/AppGroup/24F5E5AD-C71D-4B25-92EF-6D14C753D158/Pythonista3/Documents/TiTra.prod/DataSources.py", line 280, in tableview_delete
+#    self.myCalender.removeIDAtTime(a['id'] , time)
+#  File "/private/var/mobile/Containers/Shared/AppGroup/24F5E5AD-C71D-4B25-92EF-6D14C753D158/Pythonista3/Documents/TiTra.prod/TiTra.py", line 521, in removeIDAtTime
+#    return self.__actions[i]
+#IndexError: list index out of range
 
 import console, os, ui
 import datetime
@@ -31,7 +46,7 @@ import shutil
 import TiTra
 import DataSources as MDS
 
-version = '00.72b'
+version = '00.72c'
 
 # for get_available_memory
 from ctypes import *
@@ -275,7 +290,6 @@ class ShowTableView(object):
         Anzeigen welche Zeiten für welche Tasks gebraucht wurden
         '''
         start=self.view["datepicker"].date
-        self.view["datepicker"].font=("<system>",12)
 
         start=start.replace(hour=0, minute=0, second=0, microsecond=0)
         end=start+timedelta(days=1)  
@@ -329,7 +343,7 @@ class ShowTableView(object):
         ''' fill "tableview1" with list of duration of tasks in the month, the selected day is in
         '''
         start=self.view["datepicker"].date
-        self.view["datepicker"].font=("<system>",12)
+#        self.view["datepicker"].font=("<system>",12). # WHAT is THIS ??
 
         mstart=start.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         mend=mstart+timedelta(weeks=0, days=32, hours=0, minutes=0, seconds=0)  
@@ -364,7 +378,54 @@ class ShowTableView(object):
         if self.state==2 :
             self.save_cal_work()
         self.state=5
-
+        
+    def bt_save_hours_action(self, sender):
+        '''save the content of the actual view of hours per day/week/month to csv.file
+        '''
+        
+        start=self.view["datepicker"].date
+                    
+        if self.state==5 :  # month
+            mstart=start.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            mend=mstart+timedelta(weeks=0, days=32, hours=0, minutes=0, seconds=0)  
+            mend=mend.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+                            
+            lc=self.myCalender.findBetween(mstart, mend)            
+            self.LogMessage(f"save week of {mstart.strftime('%a %d.%m.%y')}")
+            fname=f"{mstart.strftime('%y-%m-%d')}_month_hours.cvs"
+                
+        elif self.state==4: # week
+            start=start.replace(hour=0,minute=0,second=0,microsecond=0)
+            monday=start-timedelta(days=start.weekday())
+            satday=monday+timedelta(days=5)
+                
+            lc=self.myCalender.findBetween(monday,satday)
+            
+            self.LogMessage(f"save week of {monday.strftime('%a %d.%m.%y')}")        
+            fname=f"{monday.strftime('%y-%m-%d')}_week_hours.cvs"
+                        
+        elif self.state==3: #day
+            start=start.replace(hour=0,minute=0,second=0,microsecond=0)
+            end=start+timedelta(days=1)                  
+            
+            lc=self.myCalender.findBetween(start,end)
+            
+            self.LogMessage(f"save day of {start.strftime('%a %d.%m.%y')}")
+            fname=f"{start.strftime('%y-%m-%d')}_day_hours.cvs"
+                    
+        else :
+            self.LogMessage(f"cant save this view")                 
+            return
+                  
+        l=lc.CalcDurations()
+        
+        # generate csv file
+        # with open ... as f:           
+        self.LogMessage("File="+fname)
+        
+        # check if mail hours is set, then generate email with file as attachement
+                        
+                                                
     def seg_view_action(self,sender):
         '''Manage selections in segmented control to chose view of second pane
         '''
@@ -403,7 +464,7 @@ class ShowTableView(object):
             self.myCalender.WriteCalToCSV(f)
             
         self.LogMessage("Alles gespeichert: task.json, prj.json, cal.csv")
-        print("Alles gespeichert: task.json, prj.json, cal.csv")
+        print("Alles gespeichert: task.json, prj.json, cal.csv ",datetime.datetime.now().strftime("%H:%M:%S"))
 
         self.CalChanged=False
                                 
@@ -784,10 +845,4 @@ def InitForTest():
     
 print("\n\nShowTable View")
 s=ShowTableView(cal)
-#print(type(s))
-if s != None :
-    s.bt_save_all_action(None)
-    
-# TODO saving seems to happen asynchronus before the UI realy exits!
-    
-print("\n\n   Exit ShowTableView",datetime.datetime.now().strftime("%H:%M:%S"))
+

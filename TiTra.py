@@ -11,6 +11,10 @@ import datetime
 from datetime import timedelta
 from datetime import date
 
+import os, shutil
+
+
+
 import random
 import json
 import re
@@ -202,7 +206,6 @@ class Task:
         json.dump(out_dict, filehandle, sort_keys=True, indent=2)
 
         JSONstr = json.dumps(out_dict, sort_keys=True, indent=2)
-
         # TestCode, der wieder einliest und nochmal schreibt, um die Ergebnisse vergleichen zu können
 
         # print(JSONstr)
@@ -294,8 +297,8 @@ class Project:
         'Fügt einen Task zu einem Project hinzu, d.h. ein weiterer Eintrag im Dictionary. KEINE CHECKS'
         if None != task :
             self.__tasks[task._name]=task
-            if task._project == 0 :
-                task.SetProject(self) # TODO führt in Recursion ohne Abbruch !!!
+            if task._project == None :
+                task.SetProject(self) 
 
     def removeTask(self,task):
         'Löscht einen Task aus einem Project KEINE CHECKS'
@@ -476,9 +479,21 @@ class Calender:
     'Sammelt die Actions und verwaltet die Einträge und kann vermutlich auch zukünftig Berichte erstellen'
 
 
-    def __init__(self) :
+    def __init__(self,prefix="tt") :
+        '''
+        Init the calender
+
+        attributes:
+            private: 
+                __acttions_list
+                __notsorted
+                __prefix
+                __dirty
+        '''
         self.__actions=list()
         self.__notsorted=False
+        self.__prefix=prefix
+        self.__dirty=False 
 
     def append(self, act: Action) :
         """Eine Action anfügen ohne Prüfung z.B. auf Doppelte Einträge bzw. Einträge mit zu geringem Abstand
@@ -486,6 +501,7 @@ class Calender:
            Kein Test ob act != None -> das geht nämlich nicht!"""
         self.__actions.append(act)
         self.__notsorted=True
+        self.__dirty=True 
 
     def add(self, act: Action) :
         """TODO to be discontinued"""
@@ -495,13 +511,15 @@ class Calender:
         'Eine Action aus der Liste der Aktionen entfernen'
 
         self.__actions.remove(act)
+        self.__dirty=True
 
     def removeAtTime(self, time: datetime) :
         'Die Action zu einer bestimmten Zeit aus der Liste der Aktionen entfernen'
         act=self.findExact(time)
         self.__actions.remove(act)
+        self.__dirty=True
 
-    def removeIDAtTime(self, id_, time: datetime) :
+    def removeIDAtTime(self, id_, time: datetime) -> Task:
         ''' Finde genau die Action, mit genau der Uhrzeit und lösche sie
          return:
              die gefundene Action'''
@@ -518,6 +536,7 @@ class Calender:
 #                if self.__actions[i]._task._id == id_ :
                 if self.__actions[i]._id== id_ :
                     self.__actions.remove(self.__actions[i])
+                    self.__dirty=True
                     return self.__actions[i]
         'Wenn die Schleife komplett durchläuft dann wurde nichts gefunden'
 
@@ -534,6 +553,7 @@ class Calender:
         i=0
         for _a in fcal.__actions :
             self.__actions.remove(_a)
+            self.__dirty=True
             i=i+1
             
         return i
@@ -549,7 +569,6 @@ class Calender:
         'return'
         '  Anzahl der Actions im Calender'
         return len(self.__actions)
-
 
     def sort(self):
         'sortiere die Liste der Actions nach _start (=Zeit)'
@@ -670,6 +689,18 @@ class Calender:
                 minu[_a._id]= ((round(td.total_seconds()/60)), _a._task._name, _a._task._projectName)
                 # print(f"{index}: neu erzeugt: {minu[_a._id]}")
         return minu
+
+
+    def WriteDurationsToCSV(self, filehandle):
+
+        erg = self.CalcDurations();
+    
+        spamwriter = csv.writer(filehandle,delimiter=";")
+        # Durch dict iterieren und den Wert = Liste mit TaskName und Minuten in csv schreiben
+        spamwriter.writerow(("Minuten","Aktivität","Projekt"))
+        for k, v in erg.items():
+            spamwriter.writerow(v)
+
 
     def UICalcDurations(self) -> list :
         """Addding times for actions in this calender and
@@ -825,6 +856,22 @@ class Calender:
                 return (_a)
         return(None)
 
+    def SaveCal(self) -> int :
+        '''Save the Calender Data to CSV
+            filename <prefix>.cal.csv
+
+            check if __dirty
+            check if file exists, then copy to *bak.csv
+        '''
+
+        if self.__dirty :
+            if os.path.exists(self.__prefix +".cal.csv"):
+                shutil.copy2(self.__prefix +".cal.csv",self.__prefix +".cal.bak.csv")        
+            with open(self.__prefix +".cal.csv", "w" ) as f:
+                i=self.WriteCalToCSV(f)
+                self.__dirty=False
+                return i
+
     def WriteCalToCSV(self,filehandle) -> int :
         """Schreibt den Calender d.h. alle Action Einträge als csv Datei raus
             return
@@ -845,6 +892,10 @@ class Calender:
             written +=1
 
         return written
+
+    def LoadCal(self):
+        with open(self.__prefix +".cal.csv", "r" ) as f:
+            self.ReadCalFromCSV(f)
 
 
     def ReadCalFromCSV(self,filehandle):
@@ -869,6 +920,53 @@ class Calender:
         except csv.Error as e:
             print('file {}, line {}: {}'.format(filehandle, reader.line_num, e))
             exit(1)
+
+
+
+    def SaveTasks(self) -> int :
+        '''Save the tasks data to json
+            filename <prefix>.tasks.json
+
+            check if file exists, then copy to *bak.json
+        '''
+
+        if True :
+            if os.path.exists(self.__prefix +".tasks.json"):
+                shutil.copy2(self.__prefix +".tasks.json",self.__prefix +".tasks.bak.json")        
+            with open(self.__prefix +".tasks.json", "w" ) as f:
+                return len(Task.WriteAllTasksToJSON(f))
+
+    def LoadTasks(self) -> int :
+        '''Load the tasks data from json
+            filename <prefix>.tasks.json
+        '''
+        with open(self.__prefix +".tasks.json", 'r') as f:
+            at=Task.ReadAllTasksFromJSON(f)
+            return len(at)
+
+    def SaveProjects(self) -> int :
+        '''Save the tasks data to json
+            filename <prefix>.prj.json
+
+            check if file exists, then copy to *bak.csv
+        '''
+
+        if True :
+            if os.path.exists(self.__prefix +".prj.json"):
+                shutil.copy2(self.__prefix +".prj.json",self.__prefix +".prj.bak.json")        
+            with open(self.__prefix +".prj.json", "w" ) as f:
+                return len(Project.WriteAllProjectsToJSON(f))
+
+    def LoadProjects(self) -> int:            
+        '''Load the projects data from json
+            filename <prefix>.tasks.json
+        '''            
+        with open(self.__prefix +".prj.json", 'r') as f:
+            ap=Project.ReadAllProjectsFromJSON(f)
+            return len(ap)
+
+
+
 
 
 
