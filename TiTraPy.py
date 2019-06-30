@@ -5,6 +5,13 @@
 # part of TiTraPy
 # contains code for UI and initialization
 #
+# Changes in V 00.73
+# - using the new Calender methods for reading and saving tasks, projects, calender
+# - at the end of the file, the Calender instance will be set to prefix DEV. All saved files will therfore start with DEV.
+# - coded sharing of hours .csv
+# - TODO in TiTra.py Calender calculate hours and sort Output of CalcDurations
+# - enabling / disabling buttons and hiding labels depending whats to see in right / second tableview
+#
 # Changes in V 00.72
 # - using now a segemented control to change view in second pane
 # - remaining code of VersionInStatusbar eliminated
@@ -46,7 +53,7 @@ import shutil
 import TiTra
 import DataSources as MDS
 
-version = '00.72c'
+version = '00.73'
 
 # for get_available_memory
 from ctypes import *
@@ -92,14 +99,8 @@ class MyView (ui.View):
         
         print("My_View.will_close called at ",datetime.datetime.now().strftime("%H:%M:%S"))
         if None != self.cal :
-        # TODO move this task into class Calender
-            if os.path.exists("cal.csv"):
-                shutil.copy2("./cal.csv","./cal.bak.csv")        
-            with open("cal.csv", "w" ) as f:
-                self.cal.WriteCalToCSV(f)
-                
-            print("Calender gespeichert: cal.csv")
-    
+            cal.SaveCal()
+#            print("Calender gespeichert: cal.csv")
             self.CalChanged=False                        
 
     def draw(self):
@@ -179,7 +180,7 @@ class ShowTableView(object):
         version_button.tint_color = 'red'
 #        version_button.background_color=(1,1,0.90)
 #        version_button.font=self.ui_lmsg.font
-        print(f"feiner font in msg_log {self.ui_lmsg.font}")
+#        print(f"feiner font in msg_log {self.ui_lmsg.font}")
 #        version_button.action = self.clear_action
         self.view.right_button_items = [version_button]
         
@@ -187,11 +188,7 @@ class ShowTableView(object):
         # print("\ntableview ...")
         # print(tv1.__dict__)
         tv1.row_height=26
-        #tv1.font=('<system>',12)
-        #tv1.data_source_font_size=12
-        #tv1.data_source.font_size=12
-        #tv1.data_source.data_source_font_size=12
-
+ 
         tv2 = self.view['tableview2']
         tv2.row_height=26        
                         
@@ -229,6 +226,8 @@ class ShowTableView(object):
         tv1.data_source = tv1.delegate = ui.ListDataSource([])
         tv1.data_source.delete_enabled = tv1.editing = False
         tv1.reload_data()
+        self.view['bt_save_hours'].enabled=False
+        self.view['bt_add'].enabled=False
 
     def bt_task_action(self, sender):
         ''' fill "tableview1" with List of Tasks
@@ -242,32 +241,20 @@ class ShowTableView(object):
         self.state=1
         self.selected_row=-1
         tv1.reload_data()
-        tv1.font=('<system>',12)
+#        tv1.font=('<system>',12)
+        self.view['bt_add'].enabled=True
+        self.view['bt_save_hours'].enabled=False
+        self.view['label_up'].hidden=False
+        self.view['label_left'].hidden=False        
         self.get_available_memory()
 
 
     def bt_cal_action(self, sender):
         ''' fill "tableview1" with List of calender entries = actions
         '''
-        now=self.view['datepicker'].date
-        # datetime.datetime.today()
+        pass
         
-        dl=self.myCalender.UIActionsOfDayList(now)
-        ''' TODO UI Actions umbauen, so dass die Komponenten einzeln im Dict sind'''
-                
-        #print(f"\nActionsOfDay {now}\n{dl}")
-        # self.LogMessage(f"ActionsOfDay")
-
-        lst = MDS.MyCalDataSource(self.myCalender, self.myCalender.UIActionsOfDayList(now))
-        tv1 = self.view['tableview1']
-        tv1.data_source = tv1.delegate = lst
-        tv1.data_source.delete_enabled = tv1.editing = False
-        lst.action = self.tv2_action
-        self.state=2
-        self.selected_row=-1
-        tv1.reload_data()
-        self.get_available_memory()
-
+        
     def bt_cal2_action(self, sender):
         ''' fill "tableview2" with list of calender entries = actions
         '''
@@ -307,7 +294,10 @@ class ShowTableView(object):
         tv1.data_source.delete_enabled = tv1.editing = False
         self.selected_row=-1        
         tv1.reload_data()
-        
+        self.view['bt_save_hours'].enabled=True
+        self.view['bt_add'].enabled=False
+        self.view['label_up'].hidden=True
+        self.view['label_left'].hidden=True
         self.get_available_memory()
         if self.state==2 :
             self.save_cal_work()
@@ -334,6 +324,10 @@ class ShowTableView(object):
         tv1.data_source.delete_enabled = tv1.editing = False
         self.selected_row=-1        
         tv1.reload_data()
+        self.view['bt_save_hours'].enabled=True
+        self.view['bt_add'].enabled=False
+        self.view['label_up'].hidden=True
+        self.view['label_left'].hidden=True        
         self.get_available_memory()
         if self.state==2 :
             self.save_cal_work()
@@ -357,23 +351,15 @@ class ShowTableView(object):
         
         #lst.font=("<system>",12)
         lst.highlight_color=(1.0, 0.9, 0.3, 1.0)
-# ListDataSource.font
-# The font for displaying each row in the TableView. This is a 2-tuple of font name and size, e.g. ('<system>', 20).
-
-# ListDataSource.highlight_color
-# The highlight/selection color that the data source uses for the background of the cells that it’s creating.
-
-# When setting this attribute, you can pass a string (CSS color name or hex, e.g. 'red' or '#ff0000'), a tuple 
-# (e.g. (1.0, 0.0, 0.0, 0.5) for half-transparent red), or a number (e.g. 0.5 for 50% gray). Internally, all colors are 
-# converted to RGBA tuples, so when you access the color later, 
-# you’ll get (1.0, 1.0, 1.0, 1.0), no matter if you set the color to 'white', 
-# '#ffffff' or just 1.0.        
-        
         tv1 = self.view['tableview1']
         tv1.data_source = tv1.delegate = lst
         tv1.data_source.delete_enabled = tv1.editing = False
         self.selected_row=-1        
         tv1.reload_data()
+        self.view['bt_save_hours'].enabled=True
+        self.view['bt_add'].enabled=False
+        self.view['label_up'].hidden=True
+        self.view['label_left'].hidden=True        
         self.get_available_memory()
         if self.state==2 :
             self.save_cal_work()
@@ -392,7 +378,7 @@ class ShowTableView(object):
                             
             lc=self.myCalender.findBetween(mstart, mend)            
             self.LogMessage(f"save week of {mstart.strftime('%a %d.%m.%y')}")
-            fname=f"{mstart.strftime('%y-%m-%d')}_month_hours.cvs"
+            fname=f"{mstart.strftime('%y-%m-%d')}_month_hours.csv"
                 
         elif self.state==4: # week
             start=start.replace(hour=0,minute=0,second=0,microsecond=0)
@@ -402,7 +388,7 @@ class ShowTableView(object):
             lc=self.myCalender.findBetween(monday,satday)
             
             self.LogMessage(f"save week of {monday.strftime('%a %d.%m.%y')}")        
-            fname=f"{monday.strftime('%y-%m-%d')}_week_hours.cvs"
+            fname=f"{monday.strftime('%y-%m-%d')}_week_hours.csv"
                         
         elif self.state==3: #day
             start=start.replace(hour=0,minute=0,second=0,microsecond=0)
@@ -411,17 +397,19 @@ class ShowTableView(object):
             lc=self.myCalender.findBetween(start,end)
             
             self.LogMessage(f"save day of {start.strftime('%a %d.%m.%y')}")
-            fname=f"{start.strftime('%y-%m-%d')}_day_hours.cvs"
+            fname=f"{start.strftime('%y-%m-%d')}_day_hours.csv"
                     
         else :
             self.LogMessage(f"cant save this view")                 
             return
                   
-        l=lc.CalcDurations()
-        
+        with open(fname,"w") as f:
+            lc.WriteDurationsToCSV(f)        
         # generate csv file
         # with open ... as f:           
-        self.LogMessage("File="+fname)
+        self.LogMessage(f"File {fname} with hours written")
+        if self.view['switch_share_hours'].value:
+            console.open_in(fname)
         
         # check if mail hours is set, then generate email with file as attachement
                         
@@ -447,26 +435,12 @@ class ShowTableView(object):
         """
 # TODO Mehrere Backup Dateien behalten und mit Datum versehen
 # TODO move Code to class calender, maintain a prefix for the files in each instance of calender
+        self.myCalender.SaveTasks()
+        self.myCalender.SaveProjects()
+        self.myCalender.SaveCal()
 
-        if os.path.exists("tasks.json"):
-            shutil.copy2("./tasks.json","./tasks.bak.json")
-        with open('tasks.json', 'w') as f:
-            TiTra.Task.WriteAllTasksToJSON(f)
-
-        if os.path.exists("prj.json"):
-            shutil.copy2("./prj.json","./prj.bak.json")
-        with open('prj.json', 'w') as f:
-            TiTra.Project.WriteAllProjectsToJSON(f)
-
-        if os.path.exists("cal.csv"):
-            shutil.copy2("./cal.csv","./cal.bak.csv")        
-        with open("cal.csv", "w" ) as f:
-            self.myCalender.WriteCalToCSV(f)
-            
         self.LogMessage("Alles gespeichert: task.json, prj.json, cal.csv")
         print("Alles gespeichert: task.json, prj.json, cal.csv ",datetime.datetime.now().strftime("%H:%M:%S"))
-
-        self.CalChanged=False
                                 
     def save_cal_work(self) :
         '''Speichert den Calender in cal.work.csv
@@ -650,18 +624,9 @@ class ShowTableView(object):
 		# Ja das geht ohne zu 
 
     def bt_CopyPy_action(self,sender):
-	    CopyFileList(("ShowTView.py", "ShowTView.pyui", "NewTask.py", "VersionInStatusBar.py", "TiTra.py", "TiTraPy.py", "DataSources.py", "TiTraPy.pyui"))
+	    CopyFileList(("TiTra.py", "TiTraPy.py", "DataSources.py", "TiTraPy.pyui"))
 	    self.LogMessage("Dateien von Entwicklung in Produktion kopiert")
 	    
-    def will_close(self):
-        """ This will be called when a presented view is about to be dismissed.
-        You might want to save data here.
-        """
-# TODO This never happens, cause this class is no view!
-#         
-        print("\n\n***** method will_close called * * * * * * * * * *")    
-
-
 	    
     @ui.in_background
     def tv2_action(self, sender):
@@ -749,15 +714,11 @@ class ShowTableView(object):
         mem_total = byteCountFormtter.stringFromByteCount_(mem_total)
         physical_memory = byteCountFormtter.stringFromByteCount_(physical_memory)
         
-#        print('used:  ', mem_used)
-#        print('free:  ', mem_free)
-#        print('total: ', mem_total)
-#        print('total (according to Cocoa): ', physical_memory)
-        
         self.LogMessage(f"used {mem_used} free {mem_free} total {mem_total}")
-        # NSProcessInfo.processInfo().activeProcessorCount()        
 
 
+
+# ======= End of Class ShowTView ===============================================
 
 
 def CopyFileList(filelist):
@@ -779,70 +740,23 @@ def CopyFileList(filelist):
     	    
     	    shutil.copy2(fromdir+fi,todir+fi)
 
-global cal
-cal=TiTra.Calender()
-
-
-# InitTaskProjects(False)
-# DebugMiniAgenda(False)
-# TiTra.ReadTasksProjects()
-
-all_projects=dict()
-all_task=dict()
-
-with open('tasks.json', 'r') as f:
-    all_tasks=TiTra.Task.ReadAllTasksFromJSON(f)
-with open('prj.json', 'r') as f:
-    all_projects=TiTra.Project.ReadAllProjectsFromJSON(f)
-
-with open("cal.csv", "r" ) as f:
-    cal.ReadCalFromCSV(f)
-
-
-# print ("\nAlle Projekte:\n")    
-# print(all_projects)
-# print ("\nAlle Tasks:\n")    
-# print(all_tasks)    
 
 
 
-def InitForTest():
-    now=datetime.datetime.today()
-    now=now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    mlater=now+timedelta(weeks=0, days=32, hours=0, minutes=0, seconds=0)  
-    mlater=mlater.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    
-    print (f"\n*** Actions löschen zwischen {now} und {now+timedelta(days=40)}")
-    
-    cal.removeBetween(now,now+timedelta(days=40))
-    
-    print (f"\n*** Zufällig Tasks in diesen Monat füllen")
-    print (f"Monatsstart = {now}")
-    print (f"+1Monat     = {mlater}\n")
-    
-    zufallz=now.replace(hour=9, minute=0, second=0)
-    
-    for d in range (1,35) :
-        t=TiTra.Task.FindTaskName("BL")
-        
-        if None != t :
-            cal.add(t.NewAction(zufallz))
-            
-            for z in range(0,5) :
-                zufallz= zufallz + timedelta(weeks=0, days=0, hours=0, minutes=30+random.randrange(50), seconds=3)  
-                t=TiTra.Task.FindTaskid(random.randrange(10)+1)
-                cal.add(t.NewAction(zufallz))
-    
-            t=TiTra.Task.FindTaskName("stopper")
-    
-            if None != t :
-                zufallz=zufallz.replace(hour=18)
-                cal.add(t.NewAction(zufallz))
-    
-        zufallz=zufallz.replace(hour=9, minute=0, second=0)
-        zufallz=zufallz + timedelta(days=1, hours=0, minutes=1, seconds=0)  
-           
-    
-print("\n\nShowTable View")
+global cal        
+
+if os.path.exists("prefix.txt"):
+    with open("prefix.txt","r") as f:
+        prefix=f.readline()[0:-1]
+#    print (f"\n** prefix.txt gefunden prefix='{prefix}'\n") 
+    cal=TiTra.Calender(prefix)
+else :    
+    cal=TiTra.Calender("test")
+
+# here can result a problem, if done in other sequence
+cal.LoadTasks()
+cal.LoadProjects()
+cal.LoadCal()
+
 s=ShowTableView(cal)
 

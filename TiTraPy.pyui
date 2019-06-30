@@ -11,14 +11,14 @@
           "flex" : "RB",
           "data_source_items" : "Tasks & Reports\ntableview1",
           "enabled" : true,
-          "data_source_font_size" : 14,
+          "name" : "tableview1",
           "data_source_number_of_lines" : 1,
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+          "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
-          "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
-          "name" : "tableview1",
-          "row_height" : 26
+          "row_height" : 26,
+          "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F"
         },
         "selected" : false
       },
@@ -29,10 +29,10 @@
         "frame" : "{{6, 6}, {254, 152}}",
         "class" : "DatePicker",
         "attributes" : {
-          "class" : "DatePicker",
+          "name" : "datepicker",
           "frame" : "{{224, 372}, {320, 216}}",
           "action" : "self.dapi_action",
-          "name" : "datepicker",
+          "class" : "DatePicker",
           "mode" : 2,
           "uuid" : "0B42DD7D-F07B-4557-A978-A65A19698BE1"
         },
@@ -56,8 +56,8 @@
           "title" : "Add Action",
           "action" : "self.bt_add_action",
           "class" : "Button",
-          "image_name" : "iob:ios7_star_outline_24",
-          "name" : "bt_add_action"
+          "name" : "bt_add",
+          "image_name" : "iob:ios7_star_outline_24"
         },
         "selected" : false
       },
@@ -68,13 +68,13 @@
         "frame" : "{{918, 483}, {100, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "l_date",
           "frame" : "{{467, 466}, {150, 32}}",
           "uuid" : "A198A91F-7767-40D6-9CEF-7E3F5246F89A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Datumlabel",
-          "name" : "l_date",
+          "font_size" : 18,
           "font_name" : "<System-Bold>"
         },
         "selected" : false
@@ -98,8 +98,8 @@
           "action" : "self.bt_save",
           "font_bold" : true,
           "class" : "Button",
-          "image_name" : "iob:archive_24",
-          "name" : "bt_save"
+          "name" : "bt_save",
+          "image_name" : "iob:archive_24"
         },
         "selected" : false
       },
@@ -110,7 +110,7 @@
         "frame" : "{{918, 232}, {100, 32}}",
         "class" : "TextField",
         "attributes" : {
-          "font_size" : 17,
+          "name" : "t_fname",
           "frame" : "{{442, 466}, {200, 32}}",
           "spellchecking_type" : "default",
           "class" : "TextField",
@@ -118,7 +118,7 @@
           "alignment" : "left",
           "text" : "new.csv",
           "autocorrection_type" : "default",
-          "name" : "t_fname",
+          "font_size" : 17,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -130,15 +130,15 @@
         "frame" : "{{384, 601.03979126682566}, {634, 105}}",
         "class" : "Label",
         "attributes" : {
-          "number_of_lines" : 17,
+          "alignment" : "left",
           "font_size" : 10,
           "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
           "frame" : "{{467, 466}, {150, 32}}",
           "class" : "Label",
+          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
+          "number_of_lines" : 17,
           "text" : "Label kkkkkkkk",
           "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
-          "alignment" : "left",
-          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "name" : "l_msg",
           "font_name" : "AppleSDGothicNeo-UltraLight"
         },
@@ -160,8 +160,8 @@
           "border_color" : "RGBA(0.311828,-0.032258,1.000000,1.000000)",
           "class" : "Button",
           "corner_radius" : 5,
-          "font_size" : 15,
-          "name" : "bt_save_all"
+          "name" : "bt_save_all",
+          "font_size" : 15
         },
         "selected" : false
       },
@@ -219,7 +219,7 @@
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
-          "name" : "bt_now",
+          "image_name" : "iob:ios7_clock_outline_24",
           "corner_radius" : 3,
           "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
           "frame" : "{{502, 466}, {80, 32}}",
@@ -229,7 +229,7 @@
           "title" : "Jetzt",
           "action" : "self.bt_now_action",
           "class" : "Button",
-          "image_name" : "iob:ios7_clock_outline_24",
+          "name" : "bt_now",
           "font_size" : 15
         },
         "selected" : false
@@ -244,14 +244,14 @@
           "flex" : "RB",
           "data_source_items" : "calender\ntableview2",
           "enabled" : true,
-          "row_height" : 26,
+          "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_number_of_lines" : 54,
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
-          "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
-          "name" : "tableview2"
+          "name" : "tableview2",
+          "row_height" : 26
         },
         "selected" : false
       },
@@ -280,16 +280,16 @@
         "frame" : "{{268, 532}, {38, 40}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "label1",
+          "font_size" : 36,
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "A6BE213B-94D5-473F-9D4B-2EBB15CA0B9C",
           "class" : "Label",
           "alignment" : "left",
           "text" : "⬅️",
-          "font_size" : 36,
+          "name" : "label_left",
           "font_name" : "<System>"
         },
-        "selected" : false
+        "selected" : true
       },
       {
         "nodes" : [
@@ -304,8 +304,8 @@
           "class" : "Label",
           "alignment" : "left",
           "text" : "⬆️",
-          "name" : "label1",
-          "font_size" : 36
+          "font_size" : 36,
+          "name" : "label_up"
         },
         "selected" : false
       },
@@ -317,7 +317,7 @@
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
-          "name" : "bt_add_action",
+          "image_name" : "iob:ios7_filing_outline_24",
           "corner_radius" : 3,
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "frame" : "{{502, 466}, {80, 32}}",
@@ -327,7 +327,7 @@
           "title" : "save hours",
           "action" : "self.bt_save_hours_action",
           "class" : "Button",
-          "image_name" : "iob:ios7_filing_outline_24",
+          "name" : "bt_save_hours",
           "font_size" : 15
         },
         "selected" : false
@@ -343,7 +343,7 @@
           "value" : false,
           "tint_color" : "RGBA(0.445755,0.445755,0.445755,1.000000)",
           "class" : "Switch",
-          "name" : "switch_mail_hours",
+          "name" : "switch_share_hours",
           "uuid" : "BC6F0A7B-4993-4F22-B9F1-0DAD98294FB7"
         },
         "selected" : false
@@ -355,13 +355,13 @@
         "frame" : "{{616, 70}, {76, 20}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 14,
+          "name" : "label2",
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "D14C40AB-4D4A-44B4-A6FD-BC859204FDC0",
           "class" : "Label",
           "alignment" : "left",
-          "text" : "mail hours",
-          "name" : "label2",
+          "text" : "share",
+          "font_size" : 14,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -381,8 +381,8 @@
           "alignment" : "center",
           "text" : "unterkante",
           "corner_radius" : 0,
-          "font_size" : 18,
-          "name" : "label3"
+          "name" : "label3",
+          "font_size" : 18
         },
         "selected" : false
       }
