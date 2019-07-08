@@ -146,7 +146,7 @@ class MyTaskDataSource(ui.ListDataSource):
 		
 	def tableview_delete(self, tableview, section, row):
 		# Called when the user confirms deletion of the given row.
-		print(f"Task delete called! {section} {row}")	    	
+#		print(f"Task delete called! {section} {row}")	    	
 		pass
 		
 	def tableview_move_row(self, tableview, from_section, from_row, to_section, to_row):
@@ -278,26 +278,17 @@ class MyCalDataSource(ui.ListDataSource):
 		
 	def tableview_delete(self, tableview, section, row):
 		# Called when the user confirms deletion of the given row.
-		print(f"delete called! {section} {row}")	    	
+#		print(f"delete called! {section} {row}")	    	
 		a=self.itemlist[row]
-        
-		#self.LogMessage(f"{a['date']} {a['time']} {a['title']}")        
-		#print(a)
-        
+                
 		time=datetime.datetime.strptime(f"{a['date']} {a['time']}", "%Y-%m-%d %H:%M")
-        
 		# self.LogMessage(time.strftime("%d.%m.%Y %H:%M:%S"))
 		# print(f"\ntableview_delete: {a['date']} {a['time']} {a['titl']} ", time.strftime("%d.%m.%Y %H:%M:%S"))
         
 # TODO ERROR when deleting last entry in TiTry.py removeIDAtTime
-		print(f"MyCalDataSource delete {a['task']}={a['id']}")        
+#		print(f"MyCalDataSource delete {a['task']}={a['id']}")        
 		self.myCalender.removeIDAtTime(a['id'] , time)		
 		ui.ListDataSource.tableview_delete(self,tableview,section,row)
-		
-		# TODO set flag (ShowTableView.CalChanged=True) to True if an Delete has ocurred -> in DataSources.py 
-		# not a good design! 
-		# this class already knows the calender -> the calender not the UI should be aware if there were changes, that need saving
-		
 		
 	def tableview_move_row(self, tableview, from_section, from_row, to_section, to_row):
 		# Called when the user moves a row with the reordering control (in editing mode).

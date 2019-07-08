@@ -495,6 +495,10 @@ class Calender:
         self.__prefix=prefix
         self.__dirty=False 
 
+    def GetPrefix(self) -> str :
+        return self.__prefix
+        
+        
     def append(self, act: Action) :
         """Eine Action anfügen ohne Prüfung z.B. auf Doppelte Einträge bzw. Einträge mit zu geringem Abstand
            Neuer Name analog list.append wegen Konsistenz
@@ -697,7 +701,7 @@ class Calender:
     
         spamwriter = csv.writer(filehandle,delimiter=";")
         # Durch dict iterieren und den Wert = Liste mit TaskName und Minuten in csv schreiben
-        spamwriter.writerow(("Minuten","Aktivität","Projekt"))
+        spamwriter.writerow(("Minutes","Task","Project"))
         for k, v in erg.items():
             spamwriter.writerow(v)
 

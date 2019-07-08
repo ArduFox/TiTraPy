@@ -5,6 +5,10 @@
 # part of TiTraPy
 # contains code for UI and initialization
 #
+# Changes in V 00.74
+# - Cleaing Up UI and showing some elements only if prefix in ("test", "DEV")
+# - Button Save is aware of information shown in panel / tableview and changes title and saves appropriate data
+#
 # Changes in V 00.73
 # - using the new Calender methods for reading and saving tasks, projects, calender
 # - at the end of the file, the Calender instance will be set to prefix DEV. All saved files will therfore start with DEV.
@@ -40,26 +44,26 @@
 import console, os, ui
 import datetime
 from datetime import timedelta
-from datetime import date
+#from datetime import date
 
-import random
+#import random
 #import json
-import re
+#import re
 #import csv
-import os
+#import os
 import sys
 import shutil
 
 import TiTra
 import DataSources as MDS
 
-version = '00.73'
+version = '00.74'
 
 # for get_available_memory
 from ctypes import *
 from objc_util import ObjCClass
 
-import ui
+#import ui
 
 class MyView (ui.View):
     '''from pythonista ui documentation
@@ -97,7 +101,7 @@ class MyView (ui.View):
         # You might want to save data here.
         
         
-        print("My_View.will_close called at ",datetime.datetime.now().strftime("%H:%M:%S"))
+        print("My_View.will_close saving Calender at ",datetime.datetime.now().strftime("%H:%M:%S"))
         if None != self.cal :
             cal.SaveCal()
 #            print("Calender gespeichert: cal.csv")
@@ -174,9 +178,16 @@ class ShowTableView(object):
         
         listOfDirs=root.split('/')
         l=len(listOfDirs)-1
-        
+        pre=self.myCalender.GetPrefix()
+        if pre in ("test", "DEV") :
+            pass
+        else:
+            self.view["bt_BackupMonth"].hidden=True
+            self.view["bt_save_all"].hidden=True
+            self.view["bt_CopyPy"].hidden=True
+                                            
         version_button = ui.ButtonItem()
-        version_button.title = f"{listOfDirs[l-1]}/{listOfDirs[l]} V {version}"
+        version_button.title = f"{listOfDirs[l-1]}/{listOfDirs[l]} V {version} : {pre}"
         version_button.tint_color = 'red'
 #        version_button.background_color=(1,1,0.90)
 #        version_button.font=self.ui_lmsg.font
@@ -243,18 +254,13 @@ class ShowTableView(object):
         tv1.reload_data()
 #        tv1.font=('<system>',12)
         self.view['bt_add'].enabled=True
-        self.view['bt_save_hours'].enabled=False
+#        self.view['bt_save_hours'].enabled=False
+        self.view['bt_save_hours'].title="Save Cal"        
         self.view['label_up'].hidden=False
         self.view['label_left'].hidden=False        
         self.get_available_memory()
 
 
-    def bt_cal_action(self, sender):
-        ''' fill "tableview1" with List of calender entries = actions
-        '''
-        pass
-        
-        
     def bt_cal2_action(self, sender):
         ''' fill "tableview2" with list of calender entries = actions
         '''
@@ -295,12 +301,11 @@ class ShowTableView(object):
         self.selected_row=-1        
         tv1.reload_data()
         self.view['bt_save_hours'].enabled=True
+        if self.state==2 :
+            self.view['bt_save_hours'].title="Save Hours"                
         self.view['bt_add'].enabled=False
         self.view['label_up'].hidden=True
         self.view['label_left'].hidden=True
-        self.get_available_memory()
-        if self.state==2 :
-            self.save_cal_work()
         self.state=3
         
     def bt_dur_week_action(self,sender):
@@ -325,12 +330,11 @@ class ShowTableView(object):
         self.selected_row=-1        
         tv1.reload_data()
         self.view['bt_save_hours'].enabled=True
+        if self.state==2 :
+            self.view['bt_save_hours'].title="Save Hours"                        
         self.view['bt_add'].enabled=False
         self.view['label_up'].hidden=True
         self.view['label_left'].hidden=True        
-        self.get_available_memory()
-        if self.state==2 :
-            self.save_cal_work()
         self.state=4
                
     def bt_dur_month_action(self, sender):
@@ -357,12 +361,11 @@ class ShowTableView(object):
         self.selected_row=-1        
         tv1.reload_data()
         self.view['bt_save_hours'].enabled=True
+        if self.state==2 :        
+            self.view['bt_save_hours'].title="Save Hours"                        
         self.view['bt_add'].enabled=False
         self.view['label_up'].hidden=True
         self.view['label_left'].hidden=True        
-        self.get_available_memory()
-        if self.state==2 :
-            self.save_cal_work()
         self.state=5
         
     def bt_save_hours_action(self, sender):
@@ -400,13 +403,13 @@ class ShowTableView(object):
             fname=f"{start.strftime('%y-%m-%d')}_day_hours.csv"
                     
         else :
-            self.LogMessage(f"cant save this view")                 
+            self.LogMessage(f"saving the calender")                 
+            self.myCalender.SaveCal()            
             return
                   
         with open(fname,"w") as f:
             lc.WriteDurationsToCSV(f)        
-        # generate csv file
-        # with open ... as f:           
+
         self.LogMessage(f"File {fname} with hours written")
         if self.view['switch_share_hours'].value:
             console.open_in(fname)
@@ -443,7 +446,8 @@ class ShowTableView(object):
         print("Alles gespeichert: task.json, prj.json, cal.csv ",datetime.datetime.now().strftime("%H:%M:%S"))
                                 
     def save_cal_work(self) :
-        '''Speichert den Calender in cal.work.csv
+        ''' DEPRECIATED
+           Speichert den Calender in cal.work.csv
            nachdem das stabil läuft, könnte auch direkt in den Originalkalender geschrieben werden
            NACHTEIL: sehr häufiges Schreiben, Fehleranfällig?'''
 
@@ -481,11 +485,13 @@ class ShowTableView(object):
         self.LogMessage(f"SaveAndRemoveMonth {self.view['datepicker'].date}")
                                 
     def bt_read_all_action(self,sender) :
-        """Alle Daten aus den Standarddateien lesen
+        """DEPRECIATED
+           Alle Daten aus den Standarddateien lesen
            NICHT vollständig realisiert!
            Sollte auch noch vorher alles löschen!
            und die globalen Variablen mit den Listen aller Projekte neu füllen
         """
+        return
         now=datetime.datetime.today()
         now=now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         
@@ -500,13 +506,6 @@ class ShowTableView(object):
             self.myCalender.ReadCalFromCSV(f)
             
         self.LogMessage("NICHT gelöscht, alles gelesen: task.json, prj.json, cal.csv")
-        
-    def bt_InitTest_action(self, sender):
-        InitForTest()
-        self.bt_cal_action(sender)
-
-    def bt_picture_action(self, sender):
-        pass
         
     def bt_add_action(self,sender) :
         """Füge eine neue Aktion hinzu und finde aus der aktuellen Selektion 
@@ -604,8 +603,6 @@ class ShowTableView(object):
         '''
         # print(f"\n Gewähltes Datum {sender.date}")
         # Wichtig hier in der zugehörigen View anhand des Namens die Subview finden!
-        label = self.view['l_date']
-        label.text=sender.date.strftime("%d.%m.%Y")
         
         if self.state == 2 :
             self.bt_cal_action(sender)
@@ -635,8 +632,6 @@ class ShowTableView(object):
         self.selected_row=sender.selected_row
         self.LogMessage('selected_row {}'.format(sender.selected_row))
         
-        # console.alert('info', 'selected_row {} = {}'.format(sender.selected_row, info))
-        						
     @ui.in_background
     def tv1_action(self, sender):
         info = sender.items[sender.selected_row]
@@ -751,7 +746,7 @@ if os.path.exists("prefix.txt"):
 #    print (f"\n** prefix.txt gefunden prefix='{prefix}'\n") 
     cal=TiTra.Calender(prefix)
 else :    
-    cal=TiTra.Calender("test")
+    cal=TiTra.Calender("DEV")
 
 # here can result a problem, if done in other sequence
 cal.LoadTasks()
