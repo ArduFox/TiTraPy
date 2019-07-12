@@ -5,6 +5,11 @@
 # part of TiTraPy
 # contains code for UI and initialization
 #
+# TODO
+#
+# Changes in V 00.74b
+# - *.csv contains minutes AND hours 
+#
 # Changes in V 00.74
 # - Cleaing Up UI and showing some elements only if prefix in ("test", "DEV")
 # - Button Save is aware of information shown in panel / tableview and changes title and saves appropriate data
@@ -57,7 +62,7 @@ import shutil
 import TiTra
 import DataSources as MDS
 
-version = '00.74'
+version = '00.74b'
 
 # for get_available_memory
 from ctypes import *
@@ -185,7 +190,8 @@ class ShowTableView(object):
             self.view["bt_BackupMonth"].hidden=True
             self.view["bt_save_all"].hidden=True
             self.view["bt_CopyPy"].hidden=True
-                                            
+            self.view["l_msg"].hidden=True
+                                                        
         version_button = ui.ButtonItem()
         version_button.title = f"{listOfDirs[l-1]}/{listOfDirs[l]} V {version} : {pre}"
         version_button.tint_color = 'red'
@@ -301,7 +307,7 @@ class ShowTableView(object):
         self.selected_row=-1        
         tv1.reload_data()
         self.view['bt_save_hours'].enabled=True
-        if self.state==2 :
+        if self.state==1 :
             self.view['bt_save_hours'].title="Save Hours"                
         self.view['bt_add'].enabled=False
         self.view['label_up'].hidden=True
@@ -330,7 +336,7 @@ class ShowTableView(object):
         self.selected_row=-1        
         tv1.reload_data()
         self.view['bt_save_hours'].enabled=True
-        if self.state==2 :
+        if self.state==1 :
             self.view['bt_save_hours'].title="Save Hours"                        
         self.view['bt_add'].enabled=False
         self.view['label_up'].hidden=True
@@ -361,7 +367,7 @@ class ShowTableView(object):
         self.selected_row=-1        
         tv1.reload_data()
         self.view['bt_save_hours'].enabled=True
-        if self.state==2 :        
+        if self.state==1 :        
             self.view['bt_save_hours'].title="Save Hours"                        
         self.view['bt_add'].enabled=False
         self.view['label_up'].hidden=True
@@ -582,10 +588,8 @@ class ShowTableView(object):
     def bt_now_action(self,sender):
         '''Button now clicked, sets Datepicker to today()
         '''
-        label = self.view['l_date']
         d=datetime.datetime.today()
         self.view["datepicker"].date=d
-        label.text=d.strftime("%d.%m.%Y")
                 
         if self.state == 2 :
             self.bt_cal_action(sender)

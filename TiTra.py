@@ -2,6 +2,9 @@
 #
 # PyTiTra_Classes.py
 #
+# Implements classes with "bussiness logic" and data modell for Time Tracking
+#
+# No GUI Implementation and not depended on IOS pythonista. Works and is tested in python and Jupyter Notebook
 
 # https://realpython.com/documenting-python-code/#why-documenting-your-code-is-so-important
 
@@ -687,10 +690,12 @@ class Calender:
             if _a._id in minu :
                 # print(f"{index}: aufaddieren {minu[_a._id]} t={minu[_a._id][0]}")
                 t= minu[_a._id][0] + round(td.total_seconds()/60)
-                minu[_a._id]= (t, _a._task._name, _a._task._projectName)
+                h= round(t/60*10)/10
+                minu[_a._id]= (t, h, _a._task._name, _a._task._projectName)
             
             else :
-                minu[_a._id]= ((round(td.total_seconds()/60)), _a._task._name, _a._task._projectName)
+                t=round(td.total_seconds()/60)
+                minu[_a._id]= (t, round(t/60*10)/10, _a._task._name, _a._task._projectName)
                 # print(f"{index}: neu erzeugt: {minu[_a._id]}")
         return minu
 
@@ -698,10 +703,12 @@ class Calender:
     def WriteDurationsToCSV(self, filehandle):
 
         erg = self.CalcDurations();
+
+        # how can i sort this dict with values, that are lists?        
     
         spamwriter = csv.writer(filehandle,delimiter=";")
         # Durch dict iterieren und den Wert = Liste mit TaskName und Minuten in csv schreiben
-        spamwriter.writerow(("Minutes","Task","Project"))
+        spamwriter.writerow(("Minutes","Hours","Task","Project"))
         for k, v in erg.items():
             spamwriter.writerow(v)
 
@@ -716,8 +723,8 @@ class Calender:
         l=list()
         for k,v in dl.items() :
             if k != "Date" and k!= "0" and k !=0 :
-                l.append({"title":f"{v[1]}", 'hour':round(v[0]/6)/10, 
-                'prj':f"{v[2]}" })
+                l.append({"title":f"{v[2]}", 'hour':round(v[0]/6)/10, 
+                'prj':f"{v[3]}" })
 #        l =sorted(l, key = lambda i: (i['prj']))
 
         # negative Stundenzahl als Sortierkriterium

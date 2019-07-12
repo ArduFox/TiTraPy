@@ -1,5 +1,9 @@
 # TiTraPy
-TimeTracker in python for pythonista on IOS
+**Ti**me **Tra**cker in python for pythonista on IOS
+
+Main file is TiTraPy.py, which uses pythonista environment and libs in IOS
+
+TiTra.py contains classes for the "business logic" and can be tested and used in standard python emvironments
 
 # State
 
@@ -19,7 +23,7 @@ Do they ever change? Don't think so
 
 # ToDo
 
-* Make class Calender containing alls Tasks, Projects and Actions
+* Make class Calender containing all Tasks, Projects and Actions
 * New Name for class ShowTView >> TiTraPyGUI & :ok: rename pyui file
 * rework test.py - test everything and translate / give useful feedback about tests
 * :ok: Add Tool to download the 3 main files (Titra.py, TiTraPy.py, TiTraPy.pui, DataSources.py, TiTra.py,README.md) from this git 
