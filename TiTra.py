@@ -130,6 +130,12 @@ class Task:
         return s
 
     @classmethod
+    def GetAllTasksList(cls) ->list:
+        """Return the List of AllTasks __all_tasks
+        """
+        return cls.__all_tasks
+      
+    @classmethod
     def UITasksList(cls) ->list:
         """Alle Tasks, die es gibt als UI angenehme Liste ausgeben
         return
@@ -697,6 +703,8 @@ class Calender:
                 t=round(td.total_seconds()/60)
                 minu[_a._id]= (t, round(t/60*10)/10, _a._task._name, _a._task._projectName)
                 # print(f"{index}: neu erzeugt: {minu[_a._id]}")
+        if 0 in minu:
+            del minu[0]
         return minu
 
 

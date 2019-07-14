@@ -11,14 +11,14 @@
           "flex" : "RB",
           "data_source_items" : "Tasks & Reports\ntableview1",
           "enabled" : true,
-          "data_source_delete_enabled" : true,
+          "row_height" : 26,
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_number_of_lines" : 1,
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "data_source_font_size" : 14,
-          "name" : "tableview1",
-          "row_height" : 26
+          "data_source_delete_enabled" : true,
+          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+          "name" : "tableview1"
         },
         "selected" : false
       },
@@ -72,15 +72,15 @@
           "font_size" : 10,
           "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
           "frame" : "{{467, 466}, {150, 32}}",
-          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
-          "number_of_lines" : 17,
-          "text" : "Label kkkkkkkk",
           "class" : "Label",
+          "text" : "MessageBoard for debugging",
+          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
           "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
+          "number_of_lines" : 17,
           "name" : "l_msg",
           "font_name" : "AppleSDGothicNeo-UltraLight"
         },
-        "selected" : true
+        "selected" : false
       },
       {
         "nodes" : [
@@ -182,14 +182,14 @@
           "flex" : "RB",
           "data_source_items" : "calender\ntableview2",
           "enabled" : true,
-          "row_height" : 26,
+          "name" : "tableview2",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_number_of_lines" : 54,
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-          "data_source_delete_enabled" : true,
-          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "data_source_font_size" : 14,
-          "name" : "tableview2"
+          "data_source_delete_enabled" : true,
+          "row_height" : 26,
+          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)"
         },
         "selected" : false
       },
@@ -293,7 +293,7 @@
         "frame" : "{{616, 70}, {76, 20}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "label2",
+          "name" : "l_share",
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "D14C40AB-4D4A-44B4-A6FD-BC859204FDC0",
           "class" : "Label",
@@ -314,7 +314,7 @@
       "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
       "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-      "name" : "TiTra"
+      "name" : "TimeTracker for pythonistas"
     },
     "selected" : false
   }
