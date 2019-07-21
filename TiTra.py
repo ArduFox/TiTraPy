@@ -5,7 +5,9 @@
 # Implements classes with "bussiness logic" and data modell for Time Tracking
 #
 # No GUI Implementation and not depended on IOS pythonista. Works and is tested in python and Jupyter Notebook
-
+#
+# fixed error when deleting last action in calender
+#
 # https://realpython.com/documenting-python-code/#why-documenting-your-code-is-so-important
 
 import pprint
@@ -343,6 +345,15 @@ class Project:
         l=sorted(l, key = lambda i: (i['prj'], i['name'])) 
         return l
 
+    @classmethod
+    def UIProjectList(cls) -> list:
+        erg_list=list()
+        for _id, _p in cls.__all_projects.items() :
+            erg_list.append(_p._name)
+            
+        return erg_list
+        
+                
     def find_task(self,key) :
         'Fíndet eine Task des Projektes anhand seines Namens'
         return self.__tasks[key]
@@ -369,7 +380,6 @@ class Project:
         # print (odict)
         return odict
 
-    @classmethod
     def DeleteAllProjects(cls) :
         
         cls.__all_projects.clear()
@@ -546,11 +556,11 @@ class Calender:
             if self.__actions[i]._start < time :
                 break
             if self.__actions[i]._start == time :
-#                if self.__actions[i]._task._id == id_ :
                 if self.__actions[i]._id== id_ :
+                    a=self.__actions[i]
                     self.__actions.remove(self.__actions[i])
                     self.__dirty=True
-                    return self.__actions[i]
+                    return a
         'Wenn die Schleife komplett durchläuft dann wurde nichts gefunden'
 
         return None

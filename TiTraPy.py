@@ -8,10 +8,14 @@
 #
 # TODO
 #
+# Changes in V 00.76
+# - console.hud used to show success at saving calender & hours.csv. 
+#   NOTE: console.hide_activity dismisses the hud. return of hud dont resets activity
 #
 # Changes in V 00.75
 # - saved *.csv of durations contains now hours
 # - code reformatted PEP8 and cleaned
+# - fixed stupid error in TiTra.Calender.removeIDAtTime, when deleting very last item in Calender.
 #
 # Changes in V 00.74
 # - CleaNing Up UI and showing some elements only if prefix in ("test", "DEV")
@@ -102,9 +106,12 @@ class MyView(ui.View):
 		print("My_View.will_close saving Calender at ",
 								datetime.datetime.now().strftime("%H:%M:%S"))
 		if None != self.cal:
+			console.show_activity()
 			cal.SaveCal()
-			#            print("Calender gespeichert: cal.csv")
 			self.CalChanged = False
+			console.hud_alert("calender saved",'success')
+			#            print("Calender gespeichert: cal.csv")
+			console.hide_activity()
 
 	def draw(self):
 		# This will be called whenever the view's content needs to be drawn.
@@ -380,7 +387,7 @@ class ShowTableView(object):
 	def bt_save_hours_action(self, sender):
 		'''save the content of the actual view of hours per day/week/month to csv.file
         '''
-
+		#console.show_activity()
 		start = self.view["datepicker"].date
 
 		if self.state == 5:  # month
@@ -414,12 +421,18 @@ class ShowTableView(object):
 		else:
 			self.LogMessage(f"saving the calender")
 			self.myCalender.SaveCal()
+			console.hud_alert("calender saved",'success',1)
+			#   NOTE: console.hide_activity dismisses the hud. return of hud dont resets activity
+			# console.hide_activity()
 			return
 
 		with open(fname, "w") as f:
 			lc.WriteDurationsToCSV(f)
-
+			
 		self.LogMessage(f"File {fname} with hours written")
+		console.hud_alert("file saved",'success',1)
+		#console.hide_activity()
+			
 		if self.view['switch_share_hours'].value:
 			console.open_in(fname)
 
