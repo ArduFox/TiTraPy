@@ -1,6 +1,6 @@
 # Documentation and user manual for **TiTraPy**
 
-**Ti**me**Tra**cking**Py**thon Tool / Application for phytonista
+**Ti**me**Tra**cking**Py**thon Tool / Application for phytonistas
 
 # Goals
 
@@ -45,7 +45,7 @@ Selecting other dates results in updating the panes with the appropriate data.
 
 
 
-# Documentation of Classes in TiTra.py
+# Documentation of Classes in TiTra.py  -> needs to be updated
 
 
 

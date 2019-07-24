@@ -1,0 +1,299 @@
+[
+  {
+    "nodes" : [
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 83}, {150, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "name" : "l_name",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "AAD76F9A-D3F4-49A2-9426-41B310C1F003",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Name",
+          "font_size" : 16,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{177, 83}, {241, 32}}",
+        "class" : "TextField",
+        "attributes" : {
+          "name" : "tf_name",
+          "frame" : "{{412, 368}, {200, 32}}",
+          "spellchecking_type" : "default",
+          "class" : "TextField",
+          "uuid" : "AEBBD12E-F76C-4664-8739-C90B1EA06937",
+          "alignment" : "left",
+          "text" : "",
+          "autocorrection_type" : "default",
+          "font_size" : 17,
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 123}, {150, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "AAD76F9A-D3F4-49A2-9426-41B310C1F003",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Color (html)",
+          "name" : "l_color",
+          "font_size" : 16
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 163}, {150, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "AAD76F9A-D3F4-49A2-9426-41B310C1F003",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Symbol (unused)",
+          "name" : "l_symbol",
+          "font_size" : 16
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{177, 123}, {201, 32}}",
+        "class" : "TextField",
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{412, 368}, {200, 32}}",
+          "spellchecking_type" : "default",
+          "class" : "TextField",
+          "uuid" : "AEBBD12E-F76C-4664-8739-C90B1EA06937",
+          "alignment" : "left",
+          "text" : "",
+          "autocorrection_type" : "default",
+          "name" : "tf_color",
+          "font_size" : 17
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{177, 163}, {241, 32}}",
+        "class" : "TextField",
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{412, 368}, {200, 32}}",
+          "spellchecking_type" : "default",
+          "class" : "TextField",
+          "uuid" : "AEBBD12E-F76C-4664-8739-C90B1EA06937",
+          "alignment" : "left",
+          "text" : "",
+          "autocorrection_type" : "default",
+          "name" : "tf_symbol",
+          "font_size" : 17
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 41}, {34, 34}}",
+        "class" : "Button",
+        "attributes" : {
+          "action" : "self.bt_left",
+          "font_size" : 15,
+          "frame" : "{{472, 368}, {80, 32}}",
+          "title" : "",
+          "uuid" : "03468DF3-5BD4-45D1-8901-FC41D0339B6D",
+          "class" : "Button",
+          "name" : "bt_left",
+          "image_name" : "iob:arrow_left_b_32"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{406, 41}, {34, 34}}",
+        "class" : "Button",
+        "attributes" : {
+          "action" : "self.bt_right",
+          "image_name" : "iob:arrow_right_b_32",
+          "frame" : "{{472, 368}, {80, 32}}",
+          "title" : "",
+          "uuid" : "03468DF3-5BD4-45D1-8901-FC41D0339B6D",
+          "class" : "Button",
+          "font_size" : 15,
+          "name" : "bt_right"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 6}, {150, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "B5F88E85-93D7-4F45-94F9-CE51C0EEE904",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Projects",
+          "name" : "label1",
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{406, 6}, {128, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "6C17F718-2BDA-4458-BC58-B7BA92E48FDD",
+          "class" : "Label",
+          "alignment" : "center",
+          "text" : "# of ##",
+          "name" : "l_count",
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 254}, {122, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "action" : "self.bt_new_task",
+          "border_width" : 1,
+          "frame" : "{{472, 368}, {80, 32}}",
+          "title" : "New Project",
+          "uuid" : "D0E8992C-A5E2-4EFC-9F3B-EFE470C5157E",
+          "class" : "Button",
+          "corner_radius" : 4,
+          "name" : "b_new",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{426, 83}, {56, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_size" : 18,
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "528EFC49-190E-4EE6-86DD-84F6B0290D7B",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Label",
+          "name" : "l_id",
+          "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{195, 254}, {80, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "action" : "self.bt_new_task",
+          "border_width" : 1,
+          "frame" : "{{472, 368}, {80, 32}}",
+          "title" : "delete",
+          "uuid" : "D0E8992C-A5E2-4EFC-9F3B-EFE470C5157E",
+          "class" : "Button",
+          "corner_radius" : 4,
+          "name" : "b_del",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{386, 123}, {32, 32}}",
+        "class" : "Label",
+        "attributes" : {
+          "font_name" : "<System>",
+          "frame" : "{{437, 368}, {150, 32}}",
+          "uuid" : "528EFC49-190E-4EE6-86DD-84F6B0290D7B",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "",
+          "font_size" : 18,
+          "name" : "l_colorbox"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 302}, {122, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "uuid" : "72F5D7B0-420D-4176-8567-71F4F1751CAB",
+          "name" : "EditProjects",
+          "corner_radius" : 16,
+          "frame" : "{{472, 368}, {80, 32}}",
+          "tint_color" : "RGBA(0.728774,0.000000,0.000000,1.000000)",
+          "border_width" : 2,
+          "border_color" : "RGBA(1.000000,0.000000,0.000000,1.000000)",
+          "title" : "Edit Tasks",
+          "action" : "self.bt_edit_tasks",
+          "class" : "Button",
+          "image_name" : "iob:arrow_left_a_24",
+          "font_size" : 15
+        },
+        "selected" : false
+      }
+    ],
+    "frame" : "{{0, 0}, {540, 540}}",
+    "class" : "View",
+    "attributes" : {
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "enabled" : true,
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "name" : "Projects",
+      "flex" : ""
+    },
+    "selected" : false
+  }
+]

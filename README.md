@@ -7,10 +7,7 @@ TiTra.py contains classes for the "business logic" and can be tested and used in
 
 # State
 
-Testing new repository to publish my ongoing work in progress
-
 Code and Documentation are mixed in German and English, but mostly German!
-
 Started the first [stubble](doc.md) of user manual and code documenation in doc.md
 
 # urls to raw files
@@ -23,7 +20,9 @@ Do they ever change? Don't think so
 
 # ToDo
 
-* Make class Calender containing all Tasks, Projects and Actions
+* Publish to 
+* :ok: Stubble of a tool to edit tasks and projects -> TasksProjects.py
+* :ok: Make class Calender containing all Tasks, Projects and Actions
 * New Name for class ShowTView >> TiTraPyGUI & :ok: rename pyui file
 * rework test.py - test everything and translate / give useful feedback about tests
 * :ok: Add Tool to download the 3 main files (Titra.py, TiTraPy.py, TiTraPy.pui, DataSources.py, TiTra.py,README.md) from this git 
@@ -34,6 +33,24 @@ Do they ever change? Don't think so
 * :ok: write a short but instructive user manual - even if it will bei soon outdated
 
 # Status
+
+## 24.07.2019 Version 00.76
+
+Done some work on code and GUI
+
+- console.hud used to show success at saving calender & hours.csv. 
+- code reformatted PEP8 and cleaned
+- fixed stupid error in TiTra.Calender.removeIDAtTime, when deleting very last item in Calender.
+- Button Save is aware of information shown in panel / tableview and changes title and saves appropriate data
+- using the new TiTra.Calender methods for reading and saving tasks, projects, calender
+- at the end of the file, the Calender instance will be set to prefix DEV. All saved files will therfore start with DEV.
+- enabling / disabling buttons and hiding labels depending whats to see in right / second tableview
+- Using custom view for main view to trap will_change() for saving the calender just before app exits
+- added controls for saving and sharing calculated hours per day/week/month
+- added class variable myCalender in ShowTView, to contain the instance of TiTra.Calender
+
+and there is now an additional application
+* Working Stubble for editing tasks and projects = `TasksProjects.py`. Its already possible to change names and colors, to create new instances and to change the associated project of tasks
 
 ## 29.06.2019
 

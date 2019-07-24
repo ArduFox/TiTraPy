@@ -113,12 +113,25 @@ class Task:
 
     @classmethod
     def RemoveTaskid(cls,id) :
-        'Einen Task anhand seiner id entfernen und löschen'
-        'noch nicht implementiert'
+        '''Remove Task by given id. not yet implemented !!!
+           Remove it from associated Project
+           What to do with associated actions?
+        '''
 
+        # TODO implement RemoveTaskid
+        
         print(f"\nRemoveTaskid({id})  NOT YET IMPLEMENTED!\n")
         help(cls.RemoveTaskid)
 
+    def RemoveTask(self) :
+        '''Remove Task by given id. NOT YET implemented !!!
+           Remove it from associated Project
+           What to do with associated actions?
+        '''      
+        # TODO implement RemoveTask
+        pass
+        
+        
     @classmethod
     def AllTasksStr(cls)->str :
         """Alle Tasks, die es gibt ausgeben
@@ -318,6 +331,22 @@ class Project:
         # https://realpython.com/python-dicts/
         self.__tasks.pop(task._name,"")
 
+                  
+    def RemoveProject(self) :
+      '''Remove this Project and remove it from all associated tasks
+         NOT YET IMPLEMENTED
+      '''
+      # TODO Implement RemoveProject
+      pass
+        
+        
+    def RenameProject(self,new_name) :
+      '''Rename this project and update all associated tasks
+         NOT YET implemented
+      '''
+      # TODO Implement Rename Project
+      pass
+      
     def __str__(self):
         return "Project({}, {}, {} \n {} )".format(self._name, self._emoij, self._farbe, self.__tasks)
 
@@ -326,7 +355,25 @@ class Project:
 
         for k, t in self.__tasks.items():
             print(f"Task : {k} <{t._emoij}>  prj={t._projectName}")
+      
+    @classmethod              
+    def GetAllProjectsDict(cls) -> dict():
+      '''returns the dict with all projects
+      '''
+      return cls.__all_projects
 
+    @classmethod
+    def GetAllProjectsList(cls)->list():
+      '''returns a sorted (by name) list of Project Objects -> they have no id!
+      '''
+      
+      l=list()  
+      for k, _p in cls.__all_projects.items():
+            l.append(_p)
+
+      l=sorted(l, key = lambda i: (i._name)) 
+      return l
+        
     def UITasksList(self) ->list:
         """UI freundliche Liste mit allen Tasks als String erstellen
             return

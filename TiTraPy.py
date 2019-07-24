@@ -2,7 +2,7 @@
 #
 # TiTraPy.py
 # 
-# part of TiTraPy
+# part of TiTraPy = TimeTracker for pythonistas
 # contains code for UI and initialization
 # uses pythonista specific libraries especially for GUI in iOS
 #
@@ -59,7 +59,7 @@ import shutil
 import TiTra
 import DataSources as MDS
 
-version = '00.75'
+version = '00.76'
 
 # for get_available_memory
 from ctypes import *
