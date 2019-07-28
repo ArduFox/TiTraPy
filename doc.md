@@ -12,10 +12,11 @@
 
 ## editing and creating of tasks and projects
 
-Right now, there is no GUI for that purpose.
-
 In the to be published code to test the base classes will be examples how to manage tasks and projects by calling the class methods in python code. 
 Its quite simple - i beliefe - but needs to be more usable via gui
+
+Right now there is a work in progress app to edit tasks and projects `TasksProjects.py` with two GUI file `Tasks.pyui` and `Project.pyui` 
+
 
 ## The App
 
@@ -47,6 +48,8 @@ Selecting other dates results in updating the panes with the appropriate data.
 
 # Documentation of Classes in TiTra.py  -> needs to be updated
 
+# TiTra
+
 
 
 # API
@@ -59,101 +62,122 @@ Selecting other dates results in updating the panes with the appropriate data.
   * [Methods](#methods)
 * [Class: Calender](#class-calender)
   * [Methods](#methods)
-* [Functions](#functions)
 
 
 ## Class: Task
 
-Beschreibt eine Tätigkeit bzw. Teilprojekt bzw. Aufgabe, die zu konkreten Zeiten getand werden kann bzw. auf die Zeiten gebucht werden können
+'Beschreibt eine Tätigkeit bzw. Teilprojekt bzw. Aufgabe, die zu konkreten 
+Zeiten getan werden kann bzw. auf die Zeiten gebucht werden können
 
 ## Methods
 
 
-#### `SetProject(self,prj)`
+#### `SetProject(self, prj)`
 
   Projektnamen eintragen oder ändern.
   Hier wird geprüft, ob das Projekt sich ändert und in diesem
   Fall wird der Task aus dem anderen Projekt entfernt werden
 
-#### `SetName(self,NewName) `
+#### `RemoveProject(self)`
 
-  Name des Tasks ändern
+
+#### `UpdateProjectName(self, new_name: str)`
+
+  Update ONLY the projectName member
+
+#### `SetName(self, NewName)`
+
+  Change name of task
 
 #### `NextID(cls)`
 `@classmethod`
 
   Gibt die nächste ID-Nummer zurück, die für den nächsten Task vergeben wird
 
-#### `FindTaskid(cls,id) `
+#### `FindTaskid(cls, id)`
 `@classmethod`
 
-  Finde den Task mit der <id>
-
-#### `FindTaskName(cls,name) `
-`@classmethod`
-
-  Finde den ERSTEN Task mit dem <name>
-
-#### `RemoveTaskid(cls,id) `
-`@classmethod`
-
-  Einen Task anhand seiner id entfernen und löschen
-
-#### `AllTasksStr(cls)->str `
-`@classmethod`
-
-  Alle Tasks, die es gibt ausgeben
+  find task with <id>
   return
-      String mit allen Tasks
+    None if found nothing
 
-#### `UITasksList(cls) ->list`
+#### `FindTaskName(cls, name)`
 `@classmethod`
 
-  Alle Tasks, die es gibt als UI angenehme Liste ausgeben
+  find first task with <name>
+  return
+    None if found nothing
+
+#### `RemoveTask(self)`
+
+  Remove Task by given id. 
+  Remove it from associated Project
+  What to do with associated actions?
+
+#### `AllTasksStr(cls) -> str`
+`@classmethod`
+
+  Construct beautiful string of all tasks
+              
+          
+
+#### `GetAllTasksList(cls) -> list`
+`@classmethod`
+
+  Return the List of AllTasks __all_tasks
+          
+
+#### `UITasksList(cls) -> list`
+`@classmethod`
+
+  construct list of dicts of all tasks for usage in UI
   return
       list of dict of all tasks
 
-#### `NewAction(self,time) `
+#### `NewAction(self, time)`
 
-  Neue Action mit definierter Zeit anlegen
+  create new action with this task at given <time>
+  return created action        
 
-#### `StartActionNow(self) `
+#### `StartActionNow(self)`
 
-  Neue Action jetzt anlegen
+  create new action with this task now
+  return created action        
 
-#### `StopAction(cls,time) `
+#### `StopAction(cls, time)`
 `@classmethod`
 
-  stopper Action mit definierter Zeit  anlegen um eine Aktivität zu beenden 
+  create stopper action with id == 0 at given <time>
   return
-    angelegte Action oder
-    None, falls Task mit id=0 nicht gefunden wurde
-    wäre 0 im Fehlerfall ein besserer Rückgabecode? TODO 
+    created action
+    None, if task with id==0 dont exists
 
 #### `attr_dict(self)`
 
   Kopiert und ändert das dict mit den Attributen der Klasse, so dass JSON damit klar kommt
 
-#### `WriteAllTasksToJSON(cls,filehandle) -> str`
+#### `WriteAllTasksToJSON(cls, filehandle) -> str`
 `@classmethod`
 
-  Schreibt alle Tasks in eine Datei - Bereits doppeltes Schreiben in Dateien entfernt
+  create JSON with all tasks
+  return
+     JSON String 
 
-#### `ReadAllTasksFromJSON(cls, filehandle) `
+#### `ReadAllTasksFromJSON(cls, filehandle)`
 `@classmethod`
 
-  Liest Tasks aus einer JSON Datei ein und legt diese an
+  Read all tasks from JSON file
   return
   Dictionary of new generated Tasks
 
-#### `DeleteAllTasks(cls) `
+#### `DeleteAllTasks(cls)`
 `@classmethod`
 
 
-#### `CopyDictAllTasks(cls) -> dict `
+#### `CopyDictAllTasks(cls) -> dict`
 `@classmethod`
 
-  Erstellt eine Kopie des internen Dictionarys über alle tasks
+  Deep copy __all_tasks into new dict
   return
       dict with all tasks
 ## Class: Project
@@ -163,25 +187,52 @@ Beschreibt ein Projekt, zu dem mehrere Taten gehören können
 ## Methods
 
 
-#### `addTask(self,task)`
+#### `addTask(self, task)`
 
   Fügt einen Task zu einem Project hinzu, d.h. ein weiterer Eintrag im Dictionary. KEINE CHECKS
 
-#### `removeTask(self,task)`
+#### `removeTask(self, task)`
 
   Löscht einen Task aus einem Project KEINE CHECKS
+
+#### `RemoveProject(self)`
+
+  Remove this Project and remove it from all associated tasks
+           
+        
+
+#### `RenameProject(self, new_name)`
+
+  Rename this project and update all associated tasks
+        
 
 #### `print_tasks(self)`
 
   Hübscher Ausdruck aller Tasks im Project
 
-#### `UITasksList(self) ->list`
+#### `GetAllProjectsDict(cls) -> dict()`
+`@classmethod`
+
+  returns the dict with all projects
+        
+
+#### `GetAllProjectsList(cls) -> list()`
+`@classmethod`
+
+  returns a sorted (by name) list of Project Objects -> they have no id!
+        
+
+#### `UITasksList(self) -> list`
 
   UI freundliche Liste mit allen Tasks als String erstellen
   return
       list of dicts of strings of all tasks of this project
 
-#### `find_task(self,key) `
+#### `UIProjectList(cls) -> list`
+`@classmethod`
+
+
+#### `find_task(self, key)`
 
   Fíndet eine Task des Projektes anhand seines Namens
 
@@ -192,32 +243,31 @@ Beschreibt ein Projekt, zu dem mehrere Taten gehören können
 #### `attr_dict(self)`
 
   Kopiert und ändert das self.__dict__ mit den Attributen der Klasse, so dass JSON damit klar kommt
+  return
+    modifizierte Kopie des self.__dict__
 
-#### `DeleteAllProjects(cls) `
-`@classmethod`
+#### `DeleteAllProjects(cls)`
 
 
-#### `WriteAllProjectsToJSON(cls,filehandle) -> str`
+#### `WriteAllProjectsToJSON(cls, filehandle) -> str`
 `@classmethod`
 
   Schreibt alle Projects in eine Datei - Bereits doppeltes Schreiben in Dateien entfernt
+  return
+     JSON String In der aktuellen Arbeitsversion 
 
-#### `ReadAllProjectsFromJSON(cls, filehandle) `
+#### `ReadAllProjectsFromJSON(cls, filehandle)`
 `@classmethod`
 
-  Liest Projekte aus einer JSON Datei ein und legt diese an
+  Read projects from JSON file
+  return
+    Dictionary mit den neuen Projekten
 ## Class: Action
-
-Definiert eine Aktion mit einem Startdatum
-VORSICHT: da __eq__ und __ne__ hier neu definiert sind und nur die Startzeit vergleichen
-funktioniert z.B. der Vergleich None != Action nicht!
-
-__eq__ __ne__ umgebaut und einen Test auf None vorgeschaltet
 
 ## Methods
 
 
-#### `hms(self) -> str `
+#### `hms(self) -> str`
 
   return
 ## Class: Calender
@@ -227,31 +277,35 @@ Sammelt die Actions und verwaltet die Einträge und kann vermutlich auch zukünf
 ## Methods
 
 
-#### `append(self, act: Action) `
+#### `GetPrefix(self) -> str`
+
+
+#### `append(self, act: Action)`
 
   Eine Action anfügen ohne Prüfung z.B. auf Doppelte Einträge bzw. Einträge mit zu geringem Abstand
   Neuer Name analog list.append wegen Konsistenz
   Kein Test ob act != None -> das geht nämlich nicht!
 
-#### `add(self, act: Action) `
+#### `add(self, act: Action)`
 
   TODO to be discontinued
 
-#### `remove(self, act: Action) `
+#### `remove(self, act: Action)`
 
   Eine Action aus der Liste der Aktionen entfernen
 
-#### `removeAtTime(self, time: datetime) `
+#### `removeAtTime(self, time: datetime)`
 
   Die Action zu einer bestimmten Zeit aus der Liste der Aktionen entfernen
 
-#### `removeIDAtTime(self, id_, time: datetime) `
+#### `removeIDAtTime(self, id_, time: datetime) -> Task`
 
-  Finde genau die Action, mit genau der Uhrzeit und lösche sie
+  delete the action with given id and time
   return:
-      die gefundene Action
+      found action
+      None if nothing found
 
-#### `removeBetween(self, fro: datetime, til:datetime) -> int `
+#### `removeBetween(self, fro: datetime, til: datetime) -> int`
 
   Die Action zwischen zwei Zeitpunkten o <= action < o aus der Liste der Aktionen entfernen
   Benutzt findBetween
@@ -266,36 +320,46 @@ Sammelt die Actions und verwaltet die Einträge und kann vermutlich auch zukünf
 
   sortiere die Liste der Actions nach _start (=Zeit)
 
-#### `findExact(self, time: datetime) `
+#### `findExact(self, time: datetime)`
 
   Finde den ersten Eintrag, die erste Action, mit genau der Uhrzeit / oder besser Zeitdifferenz <= 1 Sekunde?
   return:
       die gefundene Action
 
-#### `findFuzzy(self, time: datetime, seconds_diff=10*60) `
+#### `findFuzzy(self, time: datetime, seconds_diff=10 * 60)`
 
-  Sammle Actions mit ungefähr der Uhrzeit d.h. Abstand < Parameter seconds_diff 
+  collect action around given time 
+  return:
+      Neues Calender Objekt mit den gefundenen Actions, reverse order
 
-#### `findBetween(self, start: datetime, end: datetime) `
+#### `findBetween(self, start: datetime, end: datetime)`
 
   Sammle Actions mit self._start >= start und self._start < end
+  Könnte auch als Implementierung von fuzzy dienen
+   return:
+       Neues Calender Objekt mit den gefundenen Actions, NON reverse order
 
-#### `findTask(self, search_task ) `
+#### `findTask(self, search_task)`
 
   Sammle Actions mit dieser Task, anhand Task._id
+  return:
+      Neues Calender Objekt mit den gefundenen Actions, NON reverse order
 
-#### `CalcDurations(self) -> dict `
+#### `CalcDurations(self) -> dict`
 
   Zeiten in einem kompletten Kalenderobject je Task sammeln, addieren und auf Minuten runden
   return
       Dictionary mit Task._id als Index und als Wert eine Liste Minuten, Task._name, Task._projektName
 
-#### `UICalcDurations(self) -> list `
+#### `WriteDurationsToCSV(self, filehandle)`
+
+
+#### `UICalcDurations(self) -> list`
 
   Addding times for actions in this calender and
   build a list of dict, that fits the needs of the Pythonista UI
 
-#### `MonthReport(self, date: datetime)  -> dict `
+#### `MonthReport(self, date: datetime) -> dict`
 
   Erstellt einen Monatsreport für den Monat, der in <date> angegeben wird
   Sollte ich an geeigneter Stelle auch den Monat integrieren in das dict?
@@ -303,43 +367,82 @@ Sammelt die Actions und verwaltet die Einträge und kann vermutlich auch zukünf
   return
       dict with tasks and their monthly duration in minutes
 
-#### `SaveAndRemoveMonth(self, date: datetime, path:str)  `
+#### `SaveAndRemoveMonth(self, date: datetime, path: str)`
 
   Speichert die Actions für den Monat, der in <date> angegeben wird in einem CSV
   und löscht diese dann aus dem Calender >> NOCH NICHT IMPLEMENTIERT <<
   return
       ?
 
-#### `listActionsOfToday(self) -> list `
+#### `listActionsOfToday(self) -> list`
 
 
-#### `listActionsOfDay(self, day:datetime) -> list `
+#### `listActionsOfDay(self, day: datetime) -> list`
 
 
-#### `UIActionsOfDayList(self, day:datetime) -> list `
+#### `UIActionsOfDayList(self, day: datetime) -> list`
 
+  create list of actions at given day in UI friendly format
+  return
+     created list
 
-#### `StartActionName(self,name,time) `
+#### `StartActionName(self, name, time)`
 
-  Neue Action anhand Name in Calender einfügen
+  Neue Action anhand Name in Calender einfügen'
+  return
+    neu angelegt Action bzw. None
 
-#### `StartActionNameTodayHM(self,name,hm) `
+#### `StartActionNameTodayHM(self, name, hm)`
 
   Neue Action anhand Name in Calender für heute mit Uhrzeit HH:MM einfügen
+  return
+    neu angelegt Action bzw. None
 
-#### `WriteCalToCSV(self,filehandle) -> int `
+#### `SaveCal(self) -> int`
+
+  Save the Calender Data to CSV
+  filename <prefix>.cal.csv
+  
+  check if __dirty
+  check if file exists, then copy to *bak.csv
+
+#### `WriteCalToCSV(self, filehandle) -> int`
 
   Schreibt den Calender d.h. alle Action Einträge als csv Datei raus
   return
      Anzahl der geschriebenen Sätze
 
-#### `ReadCalFromCSV(self,filehandle)`
+#### `LoadCal(self)`
+
+
+#### `ReadCalFromCSV(self, filehandle)`
 
   Liest einen Calender aus einem CSV d.h. alle Action Einträge werden neu angelegt
-# Functions
+  Voraussetzung ist, dass die entsprechenden Tasks schon vorhanden sind!
 
+#### `SaveTasks(self) -> int`
 
-#### `InitTaskProjects(deb)`
+  Save the tasks data to json
+  filename <prefix>.tasks.json
+  
+  check if file exists, then copy to *bak.json
 
+#### `LoadTasks(self) -> int`
 
-#### `ReadTasksProjects() `
+  Load the tasks data from json
+  filename <prefix>.tasks.json
+
+#### `SaveProjects(self) -> int`
+
+  Save the tasks data to json
+  filename <prefix>.prj.json
+  
+  check if file exists, then copy to *bak.csv
+
+#### `LoadProjects(self) -> int`
+
+  Load the projects data from json
+  filename <prefix>.tasks.json
+
+## `ReadTasksProjects()`
+

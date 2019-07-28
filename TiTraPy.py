@@ -18,7 +18,7 @@
 # - fixed stupid error in TiTra.Calender.removeIDAtTime, when deleting very last item in Calender.
 #
 # Changes in V 00.74
-# - CleaNing Up UI and showing some elements only if prefix in ("test", "DEV")
+# - Cleaing Up UI and showing some elements only if prefix in ("test", "DEV")
 # - Button Save is aware of information shown in panel / tableview and changes title and saves appropriate data
 #
 # Changes in V 00.73
@@ -73,7 +73,6 @@ class MyView(ui.View):
        I need it to implement will_close() to save the data when ui is exited
        
        Lessons learned
-       - ui.loadview is not a method of View but returns a View instance!!
        - View is the only ui class that can be subclassed - tells the doc
        - How can I load a pyui file in my own class
          In the GUI Editor use the field Custom View Class at the bottom
@@ -591,7 +590,7 @@ class ShowTableView(object):
 		self.bt_cal2_action(sender)
 
 	def bt_CopyPy_action(self, sender):
-		CopyFileList(("TiTra.py", "TiTraPy.py", "DataSources.py", "TiTraPy.pyui"))
+		CopyFileList(("TiTra.py", "TiTraPy.py", "DataSources.py", "TiTraPy.pyui", "TasksProjects.py", "Tasks.pyui", "Projects.pyui"))
 		self.LogMessage("Dateien von Entwicklung in Produktion kopiert")
 
 	@ui.in_background
