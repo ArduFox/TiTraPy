@@ -5,20 +5,20 @@
         "nodes" : [
 
         ],
-        "frame" : "{{384, 156}, {370, 437}}",
+        "frame" : "{{543, 156}, {370, 437}}",
         "class" : "TableView",
         "attributes" : {
           "flex" : "RB",
           "data_source_items" : "Tasks & Reports\ntableview1",
           "enabled" : true,
-          "row_height" : 26,
+          "data_source_font_size" : 14,
+          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_number_of_lines" : 1,
-          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-          "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
-          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
-          "name" : "tableview1"
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "name" : "tableview1",
+          "row_height" : 26
         },
         "selected" : false
       },
@@ -72,13 +72,13 @@
           "font_size" : 10,
           "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
           "frame" : "{{467, 466}, {150, 32}}",
-          "class" : "Label",
-          "text" : "MessageBoard for debugging",
           "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
           "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "number_of_lines" : 17,
+          "text" : "MessageBoard for debugging",
+          "class" : "Label",
           "name" : "l_msg",
-          "font_name" : "AppleSDGothicNeo-UltraLight"
+          "font_name" : "DamascusLight"
         },
         "selected" : false
       },
@@ -86,7 +86,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{780, 90}, {100, 30}}",
+        "frame" : "{{813, 639}, {100, 30}}",
         "class" : "Button",
         "attributes" : {
           "border_width" : 2,
@@ -107,7 +107,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{780, 128}, {100, 40}}",
+        "frame" : "{{813, 677}, {100, 30}}",
         "class" : "Button",
         "attributes" : {
           "uuid" : "54B6B933-686C-40DD-B40D-EE82A349E951",
@@ -130,7 +130,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{780, 42}, {100, 40}}",
+        "frame" : "{{813, 601}, {100, 30}}",
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
@@ -159,12 +159,12 @@
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
           "image_name" : "iob:ios7_clock_outline_24",
           "corner_radius" : 3,
-          "background_color" : "RGBA(0.853774,0.853774,0.853774,1.000000)",
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "frame" : "{{502, 466}, {80, 32}}",
           "tint_color" : "RGBA(0.089623,0.032590,0.032590,1.000000)",
           "border_width" : 2,
           "border_color" : "RGBA(0.389151,0.389151,0.389151,1.000000)",
-          "title" : "Jetzt",
+          "title" : "now!",
           "action" : "self.bt_now_action",
           "class" : "Button",
           "name" : "bt_now",
@@ -182,14 +182,14 @@
           "flex" : "RB",
           "data_source_items" : "calender\ntableview2",
           "enabled" : true,
-          "name" : "tableview2",
+          "row_height" : 26,
+          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_number_of_lines" : 54,
-          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "data_source_font_size" : 14,
           "data_source_delete_enabled" : true,
-          "row_height" : 26,
-          "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)"
+          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "name" : "tableview2"
         },
         "selected" : false
       },
@@ -197,7 +197,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{384, 119}, {370, 29}}",
+        "frame" : "{{543, 119}, {370, 29}}",
         "class" : "SegmentedControl",
         "attributes" : {
           "flex" : "RB",
@@ -251,7 +251,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{475, 60}, {123, 40}}",
+        "frame" : "{{543, 59}, {123, 40}}",
         "class" : "Button",
         "attributes" : {
           "uuid" : "15F16776-797F-404C-B56E-BF4CA1AF1D0B",
@@ -274,7 +274,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{701, 64}, {51, 31}}",
+        "frame" : "{{769, 63}, {51, 31}}",
         "class" : "Switch",
         "attributes" : {
           "frame" : "{{487, 369}, {51, 31}}",
@@ -290,7 +290,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{616, 70}, {76, 20}}",
+        "frame" : "{{684, 69}, {76, 20}}",
         "class" : "Label",
         "attributes" : {
           "name" : "l_share",
@@ -301,6 +301,24 @@
           "text" : "share",
           "font_size" : 14,
           "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{384, 156}, {151, 437}}",
+        "class" : "View",
+        "attributes" : {
+          "border_width" : 1,
+          "custom_class" : "BoxPlotView",
+          "frame" : "{{462, 334}, {100, 100}}",
+          "class" : "View",
+          "corner_radius" : 0,
+          "uuid" : "4C2AD9DE-8F44-437C-9827-1DDC7E0E2588",
+          "border_color" : "RGBA(0.905660,0.905660,0.905660,1.000000)",
+          "name" : "BoxPlotView"
         },
         "selected" : false
       }

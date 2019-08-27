@@ -2,7 +2,7 @@
 #
 # part of TiTraPy = TimeTracker for pythonistas
 #
-# Stubble to edit Tasks and Projects and save the .json files when done
+# Stubble to edit Tasks and Projects and save the .json files when done 
 #
 # new in V 00.30
 # - added and integrated colorpicker from https://github.com/jsbain/uicomponents/blob/master/colorpicker.py
