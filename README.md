@@ -11,7 +11,7 @@ Main file is TiTraPy.py, which uses pythonista environment and libs in IOS
 Code and Documentation are mixed in German and English, but mostly German!
 Programms are useful and stable - so i believe and experience when i use them.
 
-I started the first [stubble](doc.md) of user a manual and code documenation in [doc.md](doc.md)
+I started the first [attempt](doc.md) of user a manual and code documenation in [doc.md](doc.md)
 
 # Files
 
@@ -39,10 +39,10 @@ Do they ever change? Don't think so
 # ToDo
 
 * systematically complete test code for TiTra.py. rework test.py translate and give useful feedback about tests
-* add fall back code, if opening / reading `*.json`or `*.csv` files fails and fill in some example entries at `today()`
-* remove remaining debug `prints` and other code stubs used for developement from TyTraPy
+* :ok: add fall back code, if opening / reading `*.json`or `*.csv` files fails and fill in some example entries at `today()`
+* :ok: remove remaining debug `prints` and other code stubs used for developement from TyTraPy
 * complete docstrings
-* update and edit documentation. Add some screen shots.
+* :ok: update and edit documentation. Add some screen shots.
 * different layout for iPhone 
 * :ok: Stubble of a tool to edit tasks and projects -> TasksProjects.py
 * :ok: Make class Calender containing all Tasks, Projects and Actions
@@ -54,6 +54,19 @@ Do they ever change? Don't think so
 * :ok: write a short but instructive user manual - even if it will bei soon outdated
 
 # State and changes
+
+## Changes in V 00.80
+ 
+- when selecting action in cal_view time is set to that of selected action
+
+## Changes in V 00.77
+
+- Better handling of errors in reading tasks, projects and calenders - not finished yet: handle tasks without projects!
+- added GPL Licenc
+- eliminated debugging prints
+- added adaptive column chart of actions of day with labels of time and task
+- problems when writing german umlauts to csv solved 
+
 
 ## 24.07.2019 Version 00.76
 
