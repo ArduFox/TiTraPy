@@ -360,7 +360,7 @@ class ShowTableView(object):
     listOfDirs = root.split('/')
     l = len(listOfDirs) - 1
     pre = self.myCalender.GetPrefix()
-    if pre in ("test", "DEV"):
+    if pre in ( "DEV"):
       pass
     else:
       self.view["bt_BackupMonth"].hidden = True
@@ -432,7 +432,7 @@ class ShowTableView(object):
     tv1 = self.view['tableview1']
     tv1.data_source = tv1.delegate = lst
     tv1.data_source.delete_enabled = tv1.editing = False
-    lst.action = self.tv2_action
+    lst.action = self.tv_task_action
     self.state = 1
     self.selected_row = -1
     tv1.reload_data()
@@ -458,7 +458,7 @@ class ShowTableView(object):
     tv2 = self.view['tableview2']
     tv2.data_source = tv2.delegate = lst
     tv2.data_source.delete_enabled = tv2.editing = False
-    lst.action = self.tv2_action
+    lst.action = self.tv_cal_action
     #        self.state=2
     #        self.selected_row=-1
     tv2.reload_data()
@@ -788,18 +788,21 @@ class ShowTableView(object):
     self.LogMessage("Dateien von Entwicklung in Produktion kopiert")
 
   @ui.in_background
-  def tv2_action(self, sender):
+  def tv_cal_action(self, sender):
+    info = sender.items[sender.selected_row]
+    
+    d = self.view["datepicker"].date
+    ts=info['time']
+    d=d.replace(hour=int(ts[0:2]), minute=int(ts[3:5]) )
+    self.LogMessage('selected_row {} new date {}'.format(sender.selected_row, d.strftime("%a %d.%m %H:%M")))
+    self.view["datepicker"].date = d
+    
+  @ui.in_background
+  def tv_task_action(self, sender):
     info = sender.items[sender.selected_row]
     self.selected = info
     self.selected_row = sender.selected_row
-    
-    d = self.view["datepicker"].date
-    ts=self.selected['time']
-    d=d.replace(hour=int(ts[0:2]), minute=int(ts[3:5]) )
-    self.LogMessage('selected_row {} new date {}'.format(self.selected_row, d.strftime("%a %d.%m %H:%M")))
-    self.view["datepicker"].date = d
-    
-    
+        
 
   @ui.in_background
   def tv1_action(self, sender):
