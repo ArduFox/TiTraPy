@@ -5,19 +5,30 @@
 # part of TiTraPy
 # contains my own DataSources for TableView
 #
-# 21. Juni 2019
+# 22. August 2019
 #
-
-#TODO error when deleting last action in day -- NOT ALWAYS -- not with id==0 ?? Maybe only when task.id = max??
-
-# delete called! 0 6
-
-# Traceback (most recent call last):
-#  File "/private/var/mobile/Containers/Shared/AppGroup/24F5E5AD-C71D-4B25-92EF-6D14C753D158/Pythonista3/Documents/TiTra.prod/DataSources.py", line 280, in tableview_delete
-#    self.myCalender.removeIDAtTime(a['id'] , time)
-#  File "/private/var/mobile/Containers/Shared/AppGroup/24F5E5AD-C71D-4B25-92EF-6D14C753D158/Pythonista3/Documents/TiTra.prod/TiTra.py", line 521, in removeIDAtTime
-#    return self.__actions[i]
-#IndexError: list index out of range
+#
+# -----------------------------------------------------------------------------
+#    Licence & Copyright
+# -----------------------------------------------------------------------------
+#
+#    Copyright 2019 ArduFox (Wolfgang Fuchs)
+#
+#    This file is part of TiTraPy.
+#
+#    TiTraPy is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    TiTraPy is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with TiTraPy.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 
 import ui
@@ -30,7 +41,7 @@ import TiTra
 
  
 
-# =============================== MyTaskDataSource ================================
+# =============================== MyTaskDataSource ============================
 
 
 

@@ -8,8 +8,36 @@
 # Works and is tested in python and Jupyter Notebook
 #
 # fixed error when deleting last action in calender
+# 
+# - making sure there is always a task["0"] with ._id==0 and at least one project[...]
+# - error handling in ReadCalFomCSV added to handle unknown task
+# - problems when writing german umlauts solved by adding 
+#   encoding='utf8',errors="ignore" to open file
+#   Why is this only appearing in CSV and not on JSON?
 #
 # https://realpython.com/documenting-python-code/#why-documenting-your-code-is-so-important
+#
+# -------------------------------------------------------------------------------------
+#    Licence & Copyright
+# -------------------------------------------------------------------------------------
+#
+#    Copyright 2019 ArduFox (Wolfgang Fuchs)
+#
+#    This file is part of TiTraPy.
+#
+#    TiTraPy is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    TiTraPy is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with TiTraPy.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 #import pprint
 
@@ -26,7 +54,7 @@ import csv
 
 
 class Task:
-  ''''Beschreibt eine Tätigkeit bzw. Teilprojekt bzw. Aufgabe, die zu konkreten 
+  '''Beschreibt eine Tätigkeit bzw. Teilprojekt bzw. Aufgabe, die zu konkreten 
     Zeiten getan werden kann bzw. auf die Zeiten gebucht werden können'''
 
   # Soll ich hier eine statische Liste aller tasks führen?
@@ -92,8 +120,12 @@ class Task:
   def FindTaskid(cls, id):
     '''find task with <id>
         return
-          None if found nothing'''
-    return cls.__all_tasks[id]
+          None if found nothing
+        '''
+        
+    # https://realpython.com/python-keyerror/
+    
+    return cls.__all_tasks.get(id)
 
   @classmethod
   def FindTaskName(cls, name):
@@ -229,7 +261,7 @@ class Task:
 
   @classmethod
   def ReadAllTasksFromJSON(cls, filehandle):
-    """Read all tasks from JSON file
+    """Read all tasks from JSON file and make sure, there is always a task["0"]
            return
            Dictionary of new generated Tasks"""
 
@@ -250,8 +282,14 @@ class Task:
       # print(f"{_t['_id']}: {nt}")
       max_id = max(nt._id, max_id)  # TODO 
 
+    if None == new_tasks[0]:
+      nt = Task("stop/pause", "X", "gray")
+      nt._id = 0
+      new_tasks[0] = nt
+
     if Task.NextID() <= max_id:
       print(f"\nReadAllTasksFromJSON: max_id={max_id} > .NextID() !! \n")
+      Task.__task_num=max_id+1
 
     return new_tasks
 
@@ -377,11 +415,12 @@ class Project:
     return erg_list
 
   def find_task(self, key):
-    'Fíndet eine Task des Projektes anhand seines Namens'
+    '''return the task with given keys in this project
+    '''
     return self.__tasks[key]
 
   def len(self) -> int:
-    'return Anzahl der Tasks im Project'
+    '''return number of tasks in this project'''
     return len(self.__tasks)
 
   def attr_dict(self):
@@ -451,6 +490,14 @@ class Project:
         # print(f"{tid} = {_t._name}")
         _t.SetProject(np)
 
+    # TODO check if all tasks are associated to one Project 
+    
+    # check if there is at least one project 
+    
+    if len(new_prj) == 0 :
+      np = Project("default", ".", "grey")
+      new_prj["default"] = np      
+    
     return new_prj
 
 
@@ -649,11 +696,9 @@ class Calender:
     return foundCal
 
   def findBetween(self, start: datetime, end: datetime):
-    '''Sammle Actions mit self._start >= start und self._start < end
-        Könnte auch als Implementierung von fuzzy dienen
+    '''collect actions with self._start >= start und self._start < end
          return:
-             Neues Calender Objekt mit den gefundenen Actions, NON reverse order'''
-    # TODO translate DOCSTRING
+             new calender object with only found actions, NON reverse order'''
 
     if self.__notsorted:
       self.sort()
@@ -671,10 +716,9 @@ class Calender:
     return foundCal
 
   def findTask(self, search_task):
-    '''Sammle Actions mit dieser Task, anhand Task._id
+    '''collect all actions with given Task._id <search_task>
          return:
-             Neues Calender Objekt mit den gefundenen Actions, NON reverse order'''
-    # TODO translate DOCSTRING
+             new calender object with only found actions, NON reverse order'''
 
     # print ("** findTask {} ".format(search_task._name))
 
@@ -695,7 +739,6 @@ class Calender:
             return
                 Dictionary mit Task._id als Index und als Wert eine Liste Minuten, Task._name, Task._projektName
         """
-    # TODO translate DOCSTRING
 
     if self.__notsorted:
       self.sort()
@@ -724,6 +767,8 @@ class Calender:
     return minu
 
   def WriteDurationsToCSV(self, filehandle):
+    '''Call CalcDuration and write csv to <filehandle>
+    '''
 
     erg = self.CalcDurations()
 
@@ -734,6 +779,7 @@ class Calender:
     spamwriter.writerow(("Minutes", "Hours", "Task", "Project"))
     for k, v in erg.items():
       spamwriter.writerow(v)
+
 
   def UICalcDurations(self) -> list:
     """Addding times for actions in this calender and
@@ -761,13 +807,11 @@ class Calender:
     return l
 
   def MonthReport(self, date: datetime) -> dict:
-    """ Erstellt einen Monatsreport für den Monat, der in <date> angegeben wird
-            Sollte ich an geeigneter Stelle auch den Monat integrieren in das dict?
-            Ginge ja
+    """ Create monthly report in month of <date> 
             return
                 dict with tasks and their monthly duration in minutes
         """
-    # TODO translate DOCSTRING            
+            
     mstart = date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     mend = mstart + timedelta(weeks=0, days=32, hours=0, minutes=0, seconds=0)
     mend = mend.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -778,12 +822,13 @@ class Calender:
     return d
 
   def SaveAndRemoveMonth(self, date: datetime, path: str):
-    """ Speichert die Actions für den Monat, der in <date> angegeben wird in einem CSV
-            und löscht diese dann aus dem Calender >> NOCH NICHT IMPLEMENTIERT <<
+    """ save actions in month of <date>  in own CSV at given <path>
+        and remove them from calender
+        
+        useful for cleanup of to large calenders
             return
                 ?
         """
-    # TODO translate DOCSTRING            
     mstart = date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     mend = mstart + timedelta(weeks=0, days=32, hours=0, minutes=0, seconds=0)
     mend = mend.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -865,10 +910,10 @@ class Calender:
     return dlist
 
   def StartActionName(self, name, time):
-    '''Neue Action anhand Name in Calender einfügen'
+    '''create new action with given task <name> at given <time>'
         return
-          neu angelegt Action bzw. None'''
-    # TODO translate DOCSTRING          
+          new action'''
+          
     _t = Task.FindTaskName(name)
 
     if None != _t:
@@ -879,10 +924,10 @@ class Calender:
     return (None)
 
   def StartActionNameTodayHM(self, name, hm):
-    '''Neue Action anhand Name in Calender für heute mit Uhrzeit HH:MM einfügen
+    '''create new action with given task <name> today at given hh:mm'
         return
-          neu angelegt Action bzw. None'''
-    # TODO translate DOCSTRING
+          new action'''
+
     _t = Task.FindTaskName(name)
 
     if None != _t:
@@ -919,16 +964,16 @@ class Calender:
       if os.path.exists(self.__prefix + ".cal.csv"):
         shutil.copy2(self.__prefix + ".cal.csv",
                      self.__prefix + ".cal.bak.csv")
-      with open(self.__prefix + ".cal.csv", "w") as f:
+      with open(self.__prefix + ".cal.csv", "w",encoding='utf8',errors="ignore") as f:
         i = self.WriteCalToCSV(f)
         self.__dirty = False
         return i
 
   def WriteCalToCSV(self, filehandle) -> int:
-    """Schreibt den Calender d.h. alle Action Einträge als csv Datei raus
+    """write calender with all actions into given <filehandle> as csv
             return
-               Anzahl der geschriebenen Sätze"""
-    # TODO translate DOCSTRING
+               number of written actions"""
+               
     if self.__notsorted:
       self.sort()
 
@@ -940,6 +985,9 @@ class Calender:
 
     #        for index in range(0,len(self.__actions)-1) :
     #            _a=self.__actions[index]
+    
+    # TODO SaveCalender cant write german umlauts "äöüÄÖÜß" !!! Maybe this a problem of file open!
+    
     for _a in self.__actions:
       writer.writerow((_a._start, _a._task._name, _a._task._projectName,
                        _a._task._id))
@@ -948,13 +996,16 @@ class Calender:
     return written
 
   def LoadCal(self):
-    with open(self.__prefix + ".cal.csv", "r") as f:
+    with open(self.__prefix + ".cal.csv", "r",encoding='utf8',errors="ignore") as f:
       self.ReadCalFromCSV(f)
 
   def ReadCalFromCSV(self, filehandle):
-    '''Liest einen Calender aus einem CSV d.h. alle Action Einträge werden neu angelegt
-        Voraussetzung ist, dass die entsprechenden Tasks schon vorhanden sind!'''
-    # TODO translate DOCSTRING
+    '''Read calender - all actions - out of csv file with given <filehandle>
+       and build up all necessary objects into this calender
+       
+       what happens if in action referenced task cant be found? ignored!
+    '''
+    
     # https://realpython.com/python-csv/
     # https://docs.python.org/3/library/csv.html
 
@@ -965,12 +1016,14 @@ class Calender:
         # print(row)
         _t = Task.FindTaskid(int(row['ID']))
         dt = datetime.datetime.strptime(row['Zeit'], "%Y-%m-%d %H:%M:%S")
-        _a = _t.NewAction(dt)
-
-        'if _a != None : # ?? Testen ob Task wirklich gefunden wurde '
-
-        self.add(_a)
-
+        
+        if None != _t :
+          _a = _t.NewAction(dt)
+          self.add(_a)
+        else :
+          print (f"** ERROR in TiTra.ReadCalFromCSV: action with taskid {row['ID']} at {row['Zeit']} unknown and NOT created")
+          
+          
     except csv.Error as e:
       print('file {}, line {}: {}'.format(filehandle, reader.line_num, e))
       exit(1)
@@ -993,6 +1046,8 @@ class Calender:
     '''Load the tasks data from json
             filename <prefix>.tasks.json
         '''
+        
+    # TODO test what happens, when a non existing file should be read!
     with open(self.__prefix + ".tasks.json", 'r') as f:
       at = Task.ReadAllTasksFromJSON(f)
       return len(at)
