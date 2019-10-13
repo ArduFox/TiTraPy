@@ -77,6 +77,8 @@
           "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "alignment" : "left",
           "number_of_lines" : 17,
+          "text" : "MessageBoard for debugging",
+          "class" : "Label",
           "name" : "l_msg",
           "font_name" : "DamascusLight"
         },
@@ -352,6 +354,24 @@
           "text" : "since 01.01.2019",
           "font_size" : 12,
           "font_name" : "<System>"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{384, 156}, {151, 437}}",
+        "class" : "View",
+        "attributes" : {
+          "border_width" : 1,
+          "custom_class" : "BoxPlotView",
+          "frame" : "{{462, 334}, {100, 100}}",
+          "class" : "View",
+          "corner_radius" : 0,
+          "uuid" : "4C2AD9DE-8F44-437C-9827-1DDC7E0E2588",
+          "border_color" : "RGBA(0.905660,0.905660,0.905660,1.000000)",
+          "name" : "BoxPlotView"
         },
         "selected" : false
       }

@@ -1,16 +1,34 @@
 # TiTraPy
-**Ti**me **Tra**cker in python for pythonista on IOS
+**Ti**me **Tra**cker in python for pythonista on IOS on iPad.
+
+**The screen layout is right no to big for iPhones**
 
 Main file is TiTraPy.py, which uses pythonista environment and libs in IOS
 
-TiTra.py contains classes for the "business logic" and can be tested and used in standard python emvironments
 
-# State
+# In Developement
 
 Code and Documentation are mixed in German and English, but mostly German!
-Started the first [stubble](doc.md) of user manual and code documenation in doc.md
+Programms are useful and stable - so i believe and experience when i use them.
 
-# urls to raw files
+I started the first [attempt](doc.md) of user a manual and code documenation in [doc.md](doc.md)
+
+# Files
+
+## Main Application TiTraPy
+* `TiTraPy.py` contains the user interface and the main application, only usable in pythonista environment
+* `TiTraPy.pyui` contains the definition of the ui
+* `DataSource.py` implements the data source classes for the table views
+* `TiTra.py` contains classes for the "business logic" to manage tasks, actions and a calender. It can be tested and used in standard python environments.
+* `tests.py` implements test routines for TiTra.py - not fully implemented yet
+* `*.json` `*.csv` contain the data for tasks, projects and the calender
+
+## Task & Project Editor
+* `TasksProjects.py` implements a editor for tasks and project (files). Work in progress but already usefull and everthing necessary is working already.
+* `Tasks.pyui` and `Projects.pyui`contain the ui definition
+
+
+# urls to raw files in my github repository
 
 Do they ever change? Don't think so
 
@@ -20,19 +38,35 @@ Do they ever change? Don't think so
 
 # ToDo
 
-* Publish to 
+* systematically complete test code for TiTra.py. rework test.py translate and give useful feedback about tests
+* :ok: add fall back code, if opening / reading `*.json`or `*.csv` files fails and fill in some example entries at `today()`
+* :ok: remove remaining debug `prints` and other code stubs used for developement from TyTraPy
+* complete docstrings
+* :ok: update and edit documentation. Add some screen shots.
+* different layout for iPhone 
 * :ok: Stubble of a tool to edit tasks and projects -> TasksProjects.py
 * :ok: Make class Calender containing all Tasks, Projects and Actions
 * New Name for class ShowTView >> TiTraPyGUI & :ok: rename pyui file
-* rework test.py - test everything and translate / give useful feedback about tests
 * :ok: Add Tool to download the 3 main files (Titra.py, TiTraPy.py, TiTraPy.pui, DataSources.py, TiTra.py,README.md) from this git 
 * :ok: DataSources dont have access to global var g_cal for delete entries! New class variable in ShowTView!
-* :ok: Transport File [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) to this git or integrate in own code
-* :ok: remove ShowTView Files
-* :ok: collect and publish code for testing classes in TiTra.py
+* :ok: Implement [VersionInStatusBar](https://github.com/cvpe/Pythonista-scripts/blob/dfbf9c4ee8172138b4b64c760f89cea1ed5562df/VersionInStatusBar.py) into my own code
+* :ok: collect and publish code for testing classes in TiTra.py from my Jupyter Notebook
 * :ok: write a short but instructive user manual - even if it will bei soon outdated
 
-# Status
+# State and changes
+
+## Changes in V 00.80
+ 
+- when selecting action in cal_view time is set to that of selected action
+
+## Changes in V 00.77
+
+- Better handling of errors in reading tasks, projects and calenders - not finished yet: handle tasks without projects!
+- added GPL Licenc
+- eliminated debugging prints
+- added adaptive column chart of actions of day with labels of time and task
+- problems when writing german umlauts to csv solved 
+
 
 ## 24.07.2019 Version 00.76
 
@@ -70,29 +104,7 @@ and there is now an additional application
     * cleaning up the ui
     * added controls for saving and mailing calculated hours per day/week/month
     * added non working stubble of code to realy save the hours
-
-
-## 21.06.2019
-
-* TiTraPy.py enthält jetzt den aktuellen Code für die UI und die Anwendung und die DOCStrings darin sind verbessert and mostly in english
-* DataSources.py enthält meine drei DataSources
-* BEIDES GETESTET :ok: 
-
-## 18.06.2019 Nutzung im realen Leben
-
-Ich nutze das Tool bereits im realen Leben und notiere, was mir auffällt
-
-* Save nach schließen über X funktioniert nicht zuverlässig. In der Console sehe ich den print aus der Routine aber nach wieder öffnen sind neue Einträge nicht mehr da. Wenn ich aktiv den save button nutze, dann klappt es
-* Blöd ist auch, dass ich nach X auf die Console zurückfalle und zwei aktive Anwendungen sehe.
-* Bei mehrfachem Aufruf des Shortcuts kann ich auch mehrere TiTras hintereinander sehen / schließen
-* In der Section / Titel sollte auch das Datum angezeigt werden. Dafür ggf. über parent nach oben bis Datepicker hangeln
-* save work funktioniert mit den beiden Tabellen auch nicht mehr sinnvoll
-* Die beiden Tabellen stilistisch etwas unterschiedlich gestalten
-* für iPhone ein alternatives Layout erstellen mit beiden Tabellen untereinander
-* Anleitung.md als Minibedienungsanleitung erstellen
-* Ansonsten ist die Anwendung stabil
-* Pflege und Änderung von Tasks und Projekten zunächst als eigene Anwendung? Das würde es erstmal einfacher machen
-    * Darin sollte das Nullprojekt obligatorisch sein und nur anders gestaltet werden können.
+    
 
 
 ## 15 & 16.06.2019 ShowTView
@@ -102,124 +114,4 @@ Ich nutze das Tool bereits im realen Leben und notiere, was mir auffällt
 * Views sehen jetzt richtig hübsch aus inkl **swipe delete** für Calender
 * Neue Funktionen removeIDAtTime und UICalcDuration  -  läuft :+1:
 * Speicherfunktionen [`get_available_memory(self):`](https://gist.github.com/lukaskollmer/a09c0278d2d224b9f4839a895ebb9988) von Lukas Kollmer in den Code integriert, sie schreiben sauber ins visuelle Log - es wird immer wieder Speicher freigegeben!
-* Weniger Glück hatte ich mit `VersionInStatusBar` das ich "nur" importiere. Die prints zeigen mir, dass der Code ausgeführt wird aber aus irgendeinem Grund taucht das zusätzliche Label nicht auf
-* Drei eigene Klassen abgeleitet aus `ui.ListDataSource` entwickelt. Diese setzen in der Cell eiegen zusätzliche Labels ein, um ein mehrspaltiges Layout hinzubekommen. Außerdem wird in jeder zweiten Zeile der Hintergrund eingefärbt - schön - und Stunden > 15 % rot eingefärbt und ein Section Titel mit Inhalt inkl. Summe der Stunden angezeigt
-    * MyTaskDataSource für die Tasks - hat noch keinen geeigneten Input aus
-    * MyCalDataSource für den Calender bzw. die Actions
-    * MyDurDataSource für die errechneten Dauern
 
-
-
-## 14.06.2019 ShowTView
-
-* Experimentiere in pythonista mit der UI und lerne dazu
-    * Für TableView die eine eigene Subklasse der Datenklasse "ListDataSource" erstellt, die dann auch eine Subview mit zusätzlichem Label für die Dauer anlegt. Damit ist beispielweise auch eine abwechselnde Unterlegung der Zeilen mit Hintergrundfarben möglich.
-    * Weiß auch wie ich Farben und Fonts von Zellen der Tableview ändere
-* Ein schwach [strukturtiertes Git](https://github.com/tdamdouni/Pythonista) mit sehr viel Pythonista Code gefunden - einiges auch schon bekannt inkl. der Beispielprogramme aus Pythonista bzw. aus der Doku
-* Memory Funktionen [aus dem git](https://github.com/tdamdouni/Pythonista/tree/master/memory) integrieren - frisst meine App den Speicher?
-
-### Weitere Erkenntnisse und todos
-
-* Der Calender enthält nicht auch die Tasks und Projekte. Es könnte nützlich sein dort alles enthalten zu haben und ggf. mindestens die classmethoden auch via Calender Instanzmethoden aufrufen zu können. Dann könnte mit einer Referenz auf einen Calender (der braucht dann ggf. auch einen Namen eines Unterverzeichnisses!) alles in einer „Schachtel“ komplett übergeben werden
-* MyListDataSource braucht eine Referenz auf die Instanz von ShowTView, um z.B. auch das Logging nutzen zu können.
-* MyListDataSource sollte ggf. besser auf das ursprüngliche Dict von Calender / Report zugreifen als auf das verstümmelte der ListView dings. Andererseits werde ich in meiner MyListDataSource sowieso mich teilweise oder stark von der Listview lösen
-* MyListDataSource muss auch auf den Calender / die Tasks zugreifen können
-* Für Löschen von Actions ist es nötig neben Zeiten auch IDs zu kennen und zu beachten
-* Eingabe von Action geht besser, wenn man Calender & Tasks gleichzeitig sieht: Andere Ansicht oder zusätzliche TableView?
-* Button jetzt, der Datum und Uhrzeit auf jetzt setzt ODER addActionNow als Button
-
-#### Sinnvolle Ansichten:
-1. Editieren Kalender inkl. Taskliste und Calenderansicht + Termine im Apple Kalender? Da würde ggf. ein Textfeld für Datum und ein TimePicker ausreichen. Zugriff auf den Apple Calender gibt es nicht als Modul in pythonista aber [hier](https://github.com/tdamdouni/Pythonista/blob/master/_2016/pythonista-scripts-lukaskollmer/ical/ical.py) gibt es ein Skript, das das leisten soll
-2. Anschauen Berichte zu Zeiten + speichern der Ergebnisse + ggf. email (csv und Text)
-4. Editieren von Tasks und Projects und sonstige Wartungsfunktionen
-
-
-## 10.06.2019 pythonista und TiTra
-
-* ShowTView.py und .pyui angelegt und läuft auch schon
-* Transferiere die Dateien per Mail / Webserver hierer
-* Eine Produktionsvariante angelegt und die Dateien haben Gamma-Stand erreicht, d.h kurz for Beta Version. Will ich schon produktiv in der LBS nutzen
-
-todo
-
-* Kopiertool verfeinern und Test auf vorhanden und jünger im Zielverzeichnis einbauen! Wo hatte ich das hier am PC?
-* README.md auch auf den PI und das iPad transportieren
-
-
-## 09.06.2019 pythonista und TiTra
-
-* pythonista läuft mit einer ersten einfachen UI - noch zu wenig dokumentiert
-* Habe zusätzlich Funktionen in TiTra eingefügt und getestet, die Listen aus Dicts ausgeben als Basis für die Listviews
-    * :white_check_mark: ✔️ classmethod Task.UITasksList()
-    * :white_check_mark: ✔️ method Projet.UITasksList
-    * :white_check_mark: ✔️ method Calender.UIActionsOfDayList(self, day:datetime)    
-* Daher gibt es auch eine neue Datei TiTra_UITests.py
-
-:recycle: BackupTool in pythonista ändern, so dass ein zip von TiTra gemacht und vom Server angeboten wird!
-
-:recycle: Ich sollte mal überlegen und programmieren, wie ich die Dateien auf github öffentlich bereitstelle und von dort auf iPad lade. Denn dort sind sie sowieso gespeichert!
-
-
-## 08.06.2019 TiTra.py und Freunde
-
-* SaveAndRemoveMonth realisiert und getestet
-* prints und Docstrings verbessert
-
-## 02.06.2019 TiTra.py und Freunde davon
-
-* TiTra Klassen und Tools in eigener Datei gekapselt
-* Juypter Notebook (TiTra Games) angelegt und darin interaktiv die Klassen getestet
-    * Erste Erfahrungen mit assert
-    * Gezielte Test gebaut
-    * Gelernt, wie man Module neu lädt und Dateien kopiert
-    * Erste Grafik aufgebaut, die einen Tag in Boxen zeichnet und darstellt als SVG
-    * 
-* Auf den privaten *iPad* geladen und dort läuft `TiTra_test.py` auch wunderbar in Phytonista!
-
-
-
-## Anforderungen an die Anwendung
-
-* Start Stop Aktivität
-* Aktivitäten in zwei Levels: 
-    * Projekt
-    * Tätigkeit
-* Editieren von Tätigkeiten:
-    * Ändern der zuegeordneten Aktivität
-    * Ändern Start oder Endezeitpunkt
-    * Wahl des bearbeiteten Tages
-    * Ändern auch in vergangenen Tagen
-* Ändern von Projekten und Tätigkeiten. Namensänderung wirkt sich auf alle erstellen Zeiteinträge aus
-* Start z.B. um 9:00 der Standardaktivität
-* Ende aller Aktivität z.B. um 23:00 ?? Will ich das wirklich? Als stets aktiver "Stopper" oder einmal am Tag beim Wechsel auf den nächsten?
-* Liste der heute bebuchten Aktivitäten mit Summe der Zeiten
-* Export in z.B. CSV der Zeiten für definierten Zeitraum. Standard sind Woche und Monat
-
-## Lösungen
-
-* JSON Datenbanken mit zwei Tabellen
-    * Projekte und Tätigkeit
-        * Mit den Eigenschaften: Projektname, Farbe, Emoji, Name, ID?
-    * Aktivitäten mit
-        * Starttermin (Tag und Stunde Minute), ID oder Name
-
-* Anzeige der Listen der bisherigen Tageseinträge, anklickbar, änderbar
-* Anzeigen der Liste der Tätigkeiten, anklickbar, änderbar
-
-## Speicherung
-
-* JSON oder csv als Format
-    * Mir scheint JSON robuster und ggf. einfacher erweiterbar / aufwärtskompatibel, falls ich die Klassen erweitere
-    * Ich verstehe aber noch zu wenig, wie JSON jenseits von einfachen Strukturen funktioniert
-    
-* Grundprinzipien wären dann
-    * Es können keine Referenzen gespeichert werden, sondern nur IDs. D.h. diese IDs müsste ich generieren, aus den Referenzen auslesen (da werden meist Adressen angezeigt?).
-    * Beim Einlesen sollte ich die IDs wieder durch Referenzen ersetzen, d.h. ich brauche dict die das leisten für alle Objekte einer Klasse
-    * Beim Schreiben wird eine für JSON verwendbare Struktur, nach ähnlicher Systematik wie `__str__` geschaffen, d.h. eine Liste oder ein Dict ohne Referenzen geliefert.
-    * Beim Lesen müssten diese Strukturen dann per Iterator wieder die Objektstruktur aufbauen
-        * Dabei ist die Reihenfolge wichtig
-        * Objekte auf die referenziert werden zuerst:
-            1. Task
-            2. Project
-        * Objekte, die selbst referenzieren später 
-            1. Action
