@@ -1,7 +1,7 @@
 # TiTraPy
 **Ti**me **Tra**cker in python for pythonista on IOS on iPad.
 
-**The screen layout is right no to big for iPhones**
+**The screen layout is right now to big for iPhones**
 
 Main file is TiTraPy.py, which uses pythonista environment and libs in IOS
 
@@ -54,6 +54,18 @@ Do they ever change? Don't think so
 * :ok: write a short but instructive user manual - even if it will bei soon outdated
 
 # State and changes
+
+## Changes in V 00.82
+- Fixed Error in Area Plot - didnt draw just one entry
+- added label telling the number of calender entries loaded as info
+- in TasksProjects: Adding new tasks enabled
+- added hours this day at bottom right of bar chart
+- at delete of action BoxPlotView will be updated
+- button to start TaskProject Editor added
+ 
+## Changes in V 00.81
+- new custom view with class shows diagram of hours in week
+
 
 ## Changes in V 00.80
  
