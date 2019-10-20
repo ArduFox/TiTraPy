@@ -27,14 +27,23 @@ I started the first [attempt](doc.md) of user a manual and code documenation in 
 * `TasksProjects.py` implements a editor for tasks and project (files). Work in progress but already usefull and everthing necessary is working already.
 * `Tasks.pyui` and `Projects.pyui`contain the ui definition
 
+# State of development and changes
 
-# urls to raw files in my github repository
+## Changes in V 00.82
+- Fixed Error in Area Plot - didnt draw just one entry
+- added label telling the number of calender entries loaded as info
+- in TasksProjects: Adding new tasks enabled
+- added hours this day at bottom right of bar chart
+- at delete of action BoxPlotView will be updated
+- button to start TaskProject Editor added
+ 
+## Changes in V 00.81
+- new custom view with class shows diagram of hours in week
 
-Do they ever change? Don't think so
 
-* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py)
-* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py)
-* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.pyui](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.pyui)
+## Changes in V 00.80  - first pre release
+ 
+- when selecting action in cal_view time is set to that of selected action
 
 # ToDo
 
@@ -53,23 +62,6 @@ Do they ever change? Don't think so
 * :ok: collect and publish code for testing classes in TiTra.py from my Jupyter Notebook
 * :ok: write a short but instructive user manual - even if it will bei soon outdated
 
-# State and changes
-
-## Changes in V 00.82
-- Fixed Error in Area Plot - didnt draw just one entry
-- added label telling the number of calender entries loaded as info
-- in TasksProjects: Adding new tasks enabled
-- added hours this day at bottom right of bar chart
-- at delete of action BoxPlotView will be updated
-- button to start TaskProject Editor added
- 
-## Changes in V 00.81
-- new custom view with class shows diagram of hours in week
-
-
-## Changes in V 00.80
- 
-- when selecting action in cal_view time is set to that of selected action
 
 ## Changes in V 00.77
 
@@ -126,4 +118,15 @@ and there is now an additional application
 * Views sehen jetzt richtig hübsch aus inkl **swipe delete** für Calender
 * Neue Funktionen removeIDAtTime und UICalcDuration  -  läuft :+1:
 * Speicherfunktionen [`get_available_memory(self):`](https://gist.github.com/lukaskollmer/a09c0278d2d224b9f4839a895ebb9988) von Lukas Kollmer in den Code integriert, sie schreiben sauber ins visuelle Log - es wird immer wieder Speicher freigegeben!
+
+
+# urls to raw files in my github repository
+
+Do they ever change? Don't think so
+
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTra.py)
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.py)
+* [https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.pyui](https://raw.githubusercontent.com/ArduFox/TiTraPy/master/TiTraPy.pyui)
+
+
 
