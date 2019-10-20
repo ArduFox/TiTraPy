@@ -8,13 +8,13 @@
         "frame" : "{{19, 83}, {150, 32}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "l_name",
+          "font_size" : 16,
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "AAD76F9A-D3F4-49A2-9426-41B310C1F003",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Name",
-          "font_size" : 16,
+          "name" : "l_name",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -26,7 +26,7 @@
         "frame" : "{{177, 83}, {241, 32}}",
         "class" : "TextField",
         "attributes" : {
-          "name" : "tf_name",
+          "font_size" : 17,
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
           "class" : "TextField",
@@ -34,7 +34,7 @@
           "alignment" : "left",
           "text" : "",
           "autocorrection_type" : "default",
-          "font_size" : 17,
+          "name" : "tf_name",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -52,8 +52,8 @@
           "class" : "Label",
           "alignment" : "left",
           "text" : "Color (html)",
-          "name" : "l_color",
-          "font_size" : 16
+          "font_size" : 16,
+          "name" : "l_color"
         },
         "selected" : false
       },
@@ -70,8 +70,8 @@
           "class" : "Label",
           "alignment" : "left",
           "text" : "Symbol unused",
-          "name" : "l_symbol",
-          "font_size" : 16
+          "font_size" : 16,
+          "name" : "l_symbol"
         },
         "selected" : false
       },
@@ -88,8 +88,8 @@
           "class" : "Label",
           "alignment" : "left",
           "text" : "Project",
-          "name" : "l_prj",
-          "font_size" : 16
+          "font_size" : 16,
+          "name" : "l_prj"
         },
         "selected" : false
       },
@@ -108,8 +108,8 @@
           "alignment" : "left",
           "text" : "",
           "autocorrection_type" : "default",
-          "name" : "tf_color",
-          "font_size" : 17
+          "font_size" : 17,
+          "name" : "tf_color"
         },
         "selected" : false
       },
@@ -128,8 +128,8 @@
           "alignment" : "left",
           "text" : "",
           "autocorrection_type" : "default",
-          "name" : "tf_symbol",
-          "font_size" : 17
+          "font_size" : 17,
+          "name" : "tf_symbol"
         },
         "selected" : false
       },
@@ -141,12 +141,12 @@
         "class" : "Button",
         "attributes" : {
           "action" : "self.bt_left",
-          "font_size" : 15,
+          "name" : "bt_left",
           "frame" : "{{472, 368}, {80, 32}}",
           "title" : "",
           "uuid" : "03468DF3-5BD4-45D1-8901-FC41D0339B6D",
           "class" : "Button",
-          "name" : "bt_left",
+          "font_size" : 15,
           "image_name" : "iob:arrow_left_b_32"
         },
         "selected" : false
@@ -164,8 +164,8 @@
           "title" : "",
           "uuid" : "03468DF3-5BD4-45D1-8901-FC41D0339B6D",
           "class" : "Button",
-          "font_size" : 15,
-          "name" : "bt_right"
+          "name" : "bt_right",
+          "font_size" : 15
         },
         "selected" : false
       },
@@ -176,7 +176,7 @@
         "frame" : "{{177.00000000000003, 203}, {240.99999999999997, 32}}",
         "class" : "TextField",
         "attributes" : {
-          "font_size" : 17,
+          "name" : "tf_project",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
           "class" : "TextField",
@@ -184,7 +184,7 @@
           "alignment" : "left",
           "text" : "",
           "autocorrection_type" : "default",
-          "name" : "tf_project",
+          "font_size" : 17,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -197,7 +197,7 @@
         "class" : "Button",
         "attributes" : {
           "uuid" : "03468DF3-5BD4-45D1-8901-FC41D0339B6D",
-          "image_name" : "iob:arrow_down_b_32",
+          "name" : "b_dropdown",
           "corner_radius" : 4,
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "frame" : "{{472, 368}, {80, 32}}",
@@ -206,7 +206,7 @@
           "title" : "",
           "action" : "self.bt_select_project",
           "class" : "Button",
-          "name" : "b_dropdown",
+          "image_name" : "iob:arrow_down_b_32",
           "font_size" : 15
         },
         "selected" : false
@@ -218,13 +218,13 @@
         "frame" : "{{406, 6}, {128, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 20,
+          "name" : "label1",
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "B5F88E85-93D7-4F45-94F9-CE51C0EEE904",
           "class" : "Label",
           "alignment" : "right",
           "text" : "Tasks",
-          "name" : "label1",
+          "font_size" : 20,
           "font_name" : "AppleSDGothicNeo-Bold"
         },
         "selected" : false
@@ -236,13 +236,13 @@
         "frame" : "{{444, 41}, {83, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "l_count",
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "6C17F718-2BDA-4458-BC58-B7BA92E48FDD",
           "class" : "Label",
           "alignment" : "center",
           "text" : "# of ##",
-          "name" : "l_count",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -273,13 +273,13 @@
         "frame" : "{{426, 83}, {56, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "l_id",
           "frame" : "{{437, 368}, {150, 32}}",
           "uuid" : "528EFC49-190E-4EE6-86DD-84F6B0290D7B",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label",
-          "name" : "l_id",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -288,7 +288,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{195, 254}, {80, 32}}",
+        "frame" : "{{177, 254}, {80, 32}}",
         "class" : "Button",
         "attributes" : {
           "action" : "self.bt_delete",
@@ -316,8 +316,8 @@
           "class" : "Label",
           "alignment" : "left",
           "text" : "",
-          "font_size" : 18,
-          "name" : "l_colorbox"
+          "name" : "l_colorbox",
+          "font_size" : 18
         },
         "selected" : false
       },
@@ -329,7 +329,7 @@
         "class" : "Button",
         "attributes" : {
           "uuid" : "72F5D7B0-420D-4176-8567-71F4F1751CAB",
-          "name" : "EditProjects",
+          "image_name" : "iob:arrow_right_a_24",
           "corner_radius" : 16,
           "frame" : "{{472, 368}, {80, 32}}",
           "tint_color" : "RGBA(0.728774,0.000000,0.000000,1.000000)",
@@ -338,7 +338,7 @@
           "title" : "Edit Projects",
           "action" : "self.bt_edit_proj",
           "class" : "Button",
-          "image_name" : "iob:arrow_right_a_24",
+          "name" : "EditProjects",
           "font_size" : 15
         },
         "selected" : false
@@ -347,7 +347,7 @@
         "nodes" : [
 
         ],
-        "frame" : "{{283, 254}, {80, 32}}",
+        "frame" : "{{338, 254}, {80, 32}}",
         "class" : "Button",
         "attributes" : {
           "action" : "self.bt_save_all",
@@ -358,10 +358,10 @@
           "uuid" : "D0E8992C-A5E2-4EFC-9F3B-EFE470C5157E",
           "class" : "Button",
           "corner_radius" : 4,
-          "font_size" : 15,
-          "name" : "b_save_all"
+          "name" : "b_save_all",
+          "font_size" : 15
         },
-        "selected" : false
+        "selected" : true
       },
       {
         "nodes" : [
@@ -393,27 +393,27 @@
         "frame" : "{{426, 123}, {40, 40}}",
         "class" : "Button",
         "attributes" : {
-          "name" : "bt_color",
           "action" : "self.bt_color",
+          "font_size" : 15,
           "frame" : "{{230, 254}, {80, 32}}",
           "tint_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "title" : "",
           "uuid" : "1CA36352-EE41-4B0A-8DD8-527EF0A11401",
           "class" : "Button",
-          "font_size" : 15,
+          "name" : "bt_color",
           "image_name" : "iob:ios7_eye_24"
         },
-        "selected" : true
+        "selected" : false
       }
     ],
     "frame" : "{{0, 0}, {540, 540}}",
     "class" : "View",
     "attributes" : {
-      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "enabled" : true,
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
       "name" : "Tasks and Projects",
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "flex" : ""
     },
     "selected" : false

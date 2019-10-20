@@ -6,6 +6,20 @@
 # contains code for UI and initialization
 # uses pythonista specific libraries especially for GUI in iOS
 #
+# Ideas: 
+# - remove UI elements for debugging and development
+# - Semaphor file? to prevent duplicate start of TiTra
+# - is logic to use different calender files (DEV) really helpful?
+# - enable to use emoij in tasks -> which encoding to use -> some apple specific, called ???
+#
+#
+# Changes in V 00.82
+# - Fixed Error in Area Plot - doesnt draw just one entry
+# - added label telling the number of calender entries loaded as info
+# - in TasksProjects: Adding tasks enabled
+# - added hours this day at bottom right of bar chart
+# - at delete of action BoxPlotView will be updated
+# - button to start TaskProject Editor added
 # 
 # Changes in V 00.81
 # - new custom view with class shows diagram of hours in week
@@ -91,8 +105,6 @@
 #    along with TiTraPy.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
-
 import console, os, ui
 import datetime
 from datetime import timedelta
@@ -106,10 +118,13 @@ import random
 import sys
 import shutil
 
+import importlib
+import importlib.util
+
 import TiTra
 import DataSources as MDS
 
-version = '00.81'
+version = '00.82'
 
 # for get_available_memory
 from ctypes import *
@@ -203,6 +218,11 @@ class MyView(ui.View):
     # Called when the on-screen keyboard appears/disappears
     # Note: The frame is in screen coordinates.
     pass
+    
+  def UpdateBoxChart(self):
+    now = self['datepicker'].date
+    self["BoxPlotView"].SetActions(self.cal.UIActionsOfDayList(now))		
+    self["BoxPlotView"].set_needs_display()    
 
 
 import ui
@@ -275,15 +295,23 @@ class BoxPlotView(ui.View):
     # while next entry
     #   len = this.minute - start
     #   draw previous name, color, len, starttime
-
+    
     i = 0
+    minutes=0
+    prev_id=0
+    
     for ta in self._actions:
       _t = TiTra.Task.FindTaskid(int(ta["id"]))
       i += 1
 
       if mi_start != 0:
         h = float(ta["minute"] - mi_start) / self._divisor
-
+        
+        if prev_id != 0:
+          minutes+= ta["minute"] - mi_start
+        #else:
+        #  print(f"{mi_start} / {minutes} 0 found")
+          
         ui.fill_rect(30, y, 20, h)
         ui.draw_string(time_str, rect=(2, y - 5, 0, 0), font=('<system>', 10))
         #            ui.draw_string(str(h),        rect=(52,y-5,0,0),font=('<system>', 7))
@@ -300,10 +328,19 @@ class BoxPlotView(ui.View):
       time_str = ta["time"]
       name_str = _t._name
       mi_start = ta["minute"]
+      prev_id=int(ta["id"])
 
       if i == len(self._actions):
         ui.draw_string(
-          ta["time"], rect=(0, y - 5, 0, 0), font=('<system>', 10))
+          ta["time"], rect=(2, y - 5, 0, 0), font=('<system>', 10))
+          
+        if prev_id != 0:          
+          minutes+= ta["minute"] - mi_start
+        
+        # about 34px wide so position is width -34
+        ui.draw_string(f"{float(minutes/60):4.1f} h",
+           rect=(self.width - 34, y - 5, 0, 0), font=('<system>', 10))        
+        
 
       # if this is last entry of the day
       # this will not be drawn, but the time should be 
@@ -400,9 +437,9 @@ class BoxAreaPlotView(ui.View):
             to redraw its content, call set_needs_display().
         '''
 
-    #TODO doesnt draw in a spiral with smallest in the center - just alternate to right / to bottom
+    #Idea doesnt draw in a spiral with smallest in the center - just alternate to right / to bottom
     
-    if len(self._actions) < 2:
+    if len(self._actions) < 1:
       return
 
     y = 0
@@ -509,6 +546,7 @@ class ShowTableView(object):
 
     self.view.setCalender(self.myCalender)
 
+    # TODO test if its better to 'present' at the end of init
     self.view.present('fullscreen')
 
     root, ext = os.path.splitext(sys.argv[0])  # script path without .py
@@ -552,6 +590,10 @@ class ShowTableView(object):
     now = self.view['datepicker'].date
     self.view["BoxPlotView"].SetActions(
       self.myCalender.UIActionsOfDayList(now))
+      
+    # TODO Update entries
+    self.view['l_Calender'].text=f"{cal.len()} calender entries loaded"
+    
     self.GetBoxAreaData(None)
 
     self.bt_task_action(None)
@@ -979,6 +1021,34 @@ class ShowTableView(object):
   
 #    print(f"\nDurations for total {total_h} h\n", l)
 
+  def bt_edit_tasks(self, sender):
+    
+    # https://docs.python.org/3/library/imp.html
+    # Fast path: see if the module has already been imported.
+    try:
+      mod = sys.modules["TasksProjects"]
+      importlib.reload(mod)
+      #os.abort()      # hm that aborts evem before i see the editor
+      # how to wait for completion?
+      
+    except KeyError:
+      import TasksProjects
+      
+    # TODO test exiting this app after calling Editor
+    # exit(0) doesnt do the trick and sys.exit() neither
+    # os.abort() works 
+
+    
+    # can i do view.wait_modal()?
+    # not here, the Editor view is loaded and presented in TaskProjects 
+    # - probably its no good idea to wait_modal() in the __init__ method
+    # integrate into TiTraPy -> still dont like it
+    
+    
+    # works to exit the app in bt_Exit(), but has no effect here
+    self.view.close()  
+    
+            
   @ui.in_background
   def tv_cal_action(self, sender):
     info = sender.items[sender.selected_row]
@@ -1105,7 +1175,7 @@ if os.path.exists("prefix.txt"):
 else:
   cal = TiTra.Calender("test")
 
-# here can result a problem, if done in other sequence
+# can result a problem, if done in other sequence
 cal.LoadTasks()
 cal.LoadProjects()
 cal.LoadCal()

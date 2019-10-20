@@ -4,6 +4,9 @@
 #
 # Stubble to edit Tasks and Projects and save the .json files when done 
 #
+# new in V 00.31
+# - enabled adding tasks
+#
 # new in V 00.30
 # - added and integrated colorpicker from https://github.com/jsbain/uicomponents/blob/master/colorpicker.py
 #
@@ -46,7 +49,7 @@ import ui, dialogs, console
 
 import TiTra
 
-version = '00.30'
+version = '00.31'
 
 # https://gist.github.com/danrcook/5b35e47628d28daec1d5ec7e909b4f95
 
@@ -418,7 +421,7 @@ class TPEditor(object):
           i += 1
       # self.__index=?      find Project("?") in newly sorted list
     else:
-      #t = TiTra.Task("?")
+      t = TiTra.Task("?")
       self._allTasks = TiTra.Task.GetAllTasksList()
       self.__len = len(self._allTasks)
       self._index = self.__len - 1
@@ -443,6 +446,7 @@ class TPEditor(object):
     self.bt_save(None)
 
   def bt_new_project(self, sender):
+    # TODO remove unused method
     pass
 
   def bt_save(self, sender):
@@ -539,6 +543,7 @@ class TPEditor(object):
     print(
       f"Files saved {datetime.datetime.now()} {self.__cal.GetPrefix()}: Tasks ({len(self._allTasks)}) & Projects ({len(self._allProjects)})"
     )
+    console.hud_alert("Please remember to restart TiTraPy after saving!", 'success')
     # looks like hud_alert is non blocking 
 
   def bt_select_project(self, sender):

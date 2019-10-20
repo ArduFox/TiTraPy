@@ -190,6 +190,7 @@ class MyCalDataSource(ui.ListDataSource):
 		self.total=0
 		self.myCalender=calender
 		
+		
 	def tableview_number_of_sections(self, tableview):
 		# Return the number of sections (defaults to 1)
 		return 1
@@ -295,11 +296,11 @@ class MyCalDataSource(ui.ListDataSource):
 		time=datetime.datetime.strptime(f"{a['date']} {a['time']}", "%Y-%m-%d %H:%M")
 		# self.LogMessage(time.strftime("%d.%m.%Y %H:%M:%S"))
 		# print(f"\ntableview_delete: {a['date']} {a['time']} {a['titl']} ", time.strftime("%d.%m.%Y %H:%M:%S"))
-        
-# TODO ERROR when deleting last entry in TiTry.py removeIDAtTime
-#		print(f"MyCalDataSource delete {a['task']}={a['id']}")        
+		
 		self.myCalender.removeIDAtTime(a['id'] , time)		
 		ui.ListDataSource.tableview_delete(self,tableview,section,row)
+		
+		tableview.superview.UpdateBoxChart()
 		
 	def tableview_move_row(self, tableview, from_section, from_row, to_section, to_row):
 		# Called when the user moves a row with the reordering control (in editing mode).
