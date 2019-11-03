@@ -4,10 +4,20 @@
 #
 # Stubble to edit Tasks and Projects and save the .json files when done 
 #
-# new in V 00.31
+#
+# changes in V 00.33
+# - now changes in edit fields are reckognized and copied to objects
+# - helper bt_changed removed
+#
+# changes in V 00.32
+# - if started multiple times (via Button TiTraPy) tasks and projects are not 
+#   loaded multiple times
+# - weed out some debugging prints
+#
+# changes in V 00.31
 # - enabled adding tasks
 #
-# new in V 00.30
+# changes in V 00.30
 # - added and integrated colorpicker from https://github.com/jsbain/uicomponents/blob/master/colorpicker.py
 #
 # new in V 00.22
@@ -15,13 +25,13 @@
 # - feed Back via HUD, when deleting items and when saving items
 # - button at drop down box is in color of project -> looks not always good
 # - implementation for delete looks good, 
-#   but self.__len gets mixed up when successive delete and new action occur -> test needed
+#   but self.__len gets mixed up when successive delete and new action occur fixed
 #
-# new in V 00.21
+# changes in V 00.21
 # - Propagate name changes in project into all tasks of that project  -> done in TiTra.py 
 #   including update of key in Project._all_projects dict()
 #
-# new in V 00.20
+# changes in V 00.20
 # - jump to the project selected in tasks or to the new created project
 # - new task & new project do work
 # - detect if changes in mask / fields are made  by comparing values and copy textfields to object instances
@@ -31,7 +41,6 @@
 # TODO
 # - Delete task / project. Project only deletable when without tasks? Tasks only deletable when unused in actions?
 # - test delete project more - seems to work
-# - make colored box a button and open a color picker when clicked.
 # - when editing color textfield update imidiatly the color box 
 #   -> needs delegate of textfield with knowledge with ui element to set the bg_color
 #
@@ -49,7 +58,7 @@ import ui, dialogs, console
 
 import TiTra
 
-version = '00.31'
+version = '00.32'
 
 # https://gist.github.com/danrcook/5b35e47628d28daec1d5ec7e909b4f95
 
@@ -78,8 +87,8 @@ class ColorPicker(ui.View):
     r, g, b, a = ui.parse_color(color)
     h, s, v = colorsys.rgb_to_hsv(r, g, b)
     self.current = (h, s, v)
-    self.N = 12  # grid for hue and saturation
-    self.Nb = 18  # grid for value
+    self.N = 16  # grid for hue and saturation
+    self.Nb = 16  # grid for value
     self.__debugprint = True
 
   def draw(self):
@@ -107,10 +116,12 @@ class ColorPicker(ui.View):
     #    k0 = 
     #draw H/S grid
     for i in range(0, N):
+      print (f"{i}:{N}")
       for j in range(0, N):
-        ui.set_color(colorsys.hsv_to_rgb(i * 1.0 / N, j * 1.0 / N, v))
+        ui.set_color(colorsys.hsv_to_rgb(i * 1.0 / N, j * 1.0 / (N-1), v))
         ui.set_blend_mode(ui.BLEND_NORMAL)
         ui.fill_rect(round(i * dx), round(j * dx), round(dx), round(dx))
+        
 
     #draw V slider
     for k in range(0, Nb):
@@ -162,6 +173,10 @@ class ColorPicker(ui.View):
   def touch_moved(self, touch):
     #set color
     #  self dx=size/(N+2)
+    
+    # TODO why dont i reach full red ff0000
+    # in y direction i need to draw N+1 squares and do here the opposite math
+    
     square_size = min(self.width, self.height)
     N = self.N
     Nb = self.Nb
@@ -344,6 +359,7 @@ class TPEditor(object):
     value_change = SliderValueChangeDelegate(self)
     self.slider.delegate = value_change
     self.view.add_subview(self.slider)
+    self.view['tf_project'].enabled=False
     self.populate()
 
   def populate(self):
@@ -382,7 +398,7 @@ class TPEditor(object):
           self.view['tf_color'].text != self._allProjects[self._index]._farbe):
 
         self._dirty = True
-        self.bt_save(None)
+        self.copy_dialog2object(None)
     else:
       if (self.view['tf_name'].text != self._allTasks[self._index]._name or
           self.view['tf_symbol'].text != self._allTasks[self._index]._emoij or
@@ -391,7 +407,7 @@ class TPEditor(object):
           self.view['tf_color'].text != self._allTasks[self._index]._farbe):
 
         self._dirty = True
-        self.bt_save(None)
+        self.copy_dialog2object(None)
 
   def bt_right(self, sender):
     if self._index < self.__len - 1:
@@ -408,6 +424,8 @@ class TPEditor(object):
       self.slider.set_value(self._index)
 
   def bt_new_task(self, sender):
+    
+    self.check_and_copy()
     if self.view.name == "Projects":
       p = TiTra.Project("?")
       self._allProjects = TiTra.Project.GetAllProjectsList()
@@ -422,6 +440,13 @@ class TPEditor(object):
       # self.__index=?      find Project("?") in newly sorted list
     else:
       t = TiTra.Task("?")
+      t.SetProject(self._allProjects[0])
+      # TODO find first project and add task to this project
+      # task with no project is no good
+      self.view['tf_project'].text = self._allProjects[0]._name
+      self.view['b_dropdown'].bg_color = self._allProjects[0]._farbe
+      self.copy_dialog2object(None)
+      
       self._allTasks = TiTra.Task.GetAllTasksList()
       self.__len = len(self._allTasks)
       self._index = self.__len - 1
@@ -429,7 +454,7 @@ class TPEditor(object):
     # _index 0 to (len -1)
     # labels and label over slider always shows (_index = value) +1   -->. 1 to len 
 
-    print(f"new {self.view.name}: len={self.__len} i={self._index}")
+    # print(f"new {self.view.name}: len={self.__len} i={self._index}")
     self.slider.set_value(self._index)
     self.slider.set_max(self.__len - 1)
     self.populate()
@@ -438,20 +463,18 @@ class TPEditor(object):
     v = ColorPicker(self.view['tf_color'].text, frame=(0, 0, 360, 360))
     v.present('sheet')
     v.wait_modal()
-    print(v.GetColor())
+    # print(v.GetColor())
     self.view['tf_color'].text = v.GetColor()
     self.view['bt_color'].bg_color = v.GetColor()
 
     self._dirty = True
-    self.bt_save(None)
+    self.copy_dialog2object(None)
 
-  def bt_new_project(self, sender):
-    # TODO remove unused method
-    pass
-
-  def bt_save(self, sender):
+  def copy_dialog2object(self, sender):
     '''save changes in the textfield to tasks or project object / instance
+       not used direct via button but called from check_and_copy
     '''
+
     if self.view.name == "Projects":
       if self._allProjects[self._index]._name != self.view['tf_name'].text:
         self._allProjects[self._index].RenameProject(self.view['tf_name'].text)
@@ -460,7 +483,6 @@ class TPEditor(object):
       self._allProjects[self._index]._emoij = self.view['tf_symbol'].text
       self._allProjects[self._index]._farbe = self.view['tf_color'].text
       self.view['l_colorbox'].bg_color = self._allProjects[self._index]._farbe
-      print(f"")
     else:
       self._allTasks[self._index]._name = self.view['tf_name'].text
       self._allTasks[self._index]._emoij = self.view['tf_symbol'].text
@@ -477,11 +499,13 @@ class TPEditor(object):
 
       self._allTasks[self._index]._farbe = self.view['tf_color'].text
       self.view['l_colorbox'].bg_color = self._allTasks[self._index]._farbe
-    print(
-      f"save {self.view.name}: {self.view['tf_name'].text} len={self.__len} i={self._index}"
-    )
+#    print(
+#      f"save {self.view.name}: {self.view['tf_name'].text} len={self.__len} i={self._index}"
+#    )
+
 
   def bt_delete(self, sender):
+    
     if self.view.name == "Projects":
       self.__len = len(self._allProjects)
       # find project instance
@@ -523,7 +547,8 @@ class TPEditor(object):
       if r == 1:
         console.hud_alert(
           f"task '{self._allTasks[self._index]._name}' deleted", 'success')
-
+          
+#        print (f"bt_delete task: _index={self._index} name={self._allTasks[self._index]._name}")
         self._allTasks[self._index].RemoveTask()
         self._allTasks = TiTra.Task.GetAllTasksList()
         self._index = 0
@@ -532,9 +557,16 @@ class TPEditor(object):
         self.slider.set_max(self.__len - 1)
         self.populate()
 
+  def bt_field(self,sender):
+    # is called after enter is pressed in textfield or cursor jumped to other 
+    # field no matter if there have been changes
+    print(f"bt_field text=<< {sender.text} >>")
+    self.check_and_copy()
+
   def bt_save_all(self, sender):
-    '''save tasks and projects
+    '''save tasks and projects into json files
     '''
+    self.check_and_copy()    
     print(f"save_all  before hud {datetime.datetime.now()}")
     console.hud_alert("tasks and projects saved", 'success')
     print(f"save_all -after- hud {datetime.datetime.now()}")
@@ -543,7 +575,7 @@ class TPEditor(object):
     print(
       f"Files saved {datetime.datetime.now()} {self.__cal.GetPrefix()}: Tasks ({len(self._allTasks)}) & Projects ({len(self._allProjects)})"
     )
-    console.hud_alert("Please remember to restart TiTraPy after saving!", 'success')
+    # console.hud_alert("Please remember to restart TiTraPy after saving!", 'success')
     # looks like hud_alert is non blocking 
 
   def bt_select_project(self, sender):
@@ -563,10 +595,12 @@ class TPEditor(object):
       self.view['tf_project'].text = erg
       self.view['b_dropdown'].bg_color = self._allTasks[
         self._index]._project._farbe
+      self.copy_dialog2object(None)
 
   def bt_edit_tasks(self, sender):
     '''Return to editing tasks
     '''
+    self.check_and_copy()    
     self.view = self.t_view
     self.slider = self.t_slider
     self._index = 0
@@ -577,7 +611,10 @@ class TPEditor(object):
 
   def bt_edit_proj(self, sender):
     '''Change to editing projects
+       and jump to the project, the actual task belongs to
     '''
+    self.check_and_copy()
+    # TODO do i need to reload the .pyui?    
     v = ui.load_view('Projects.pyui')
 
     v.background_color = 'lightcyan'
@@ -627,8 +664,12 @@ else:
   cal = TiTra.Calender("test")
 
 # here can result a problem, if done in other sequence
-cal.LoadTasks()
-cal.LoadProjects()
+if len(TiTra.Task.GetAllTasksList()) == 0:
+  cal.LoadTasks()
+  
+if len(TiTra.Project.GetAllProjectsList()) == 0 :
+  cal.LoadProjects()
+  
 # cal.LoadCal()
 
 TPEditor(cal)

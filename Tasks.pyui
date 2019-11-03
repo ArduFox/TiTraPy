@@ -26,6 +26,7 @@
         "frame" : "{{177, 83}, {241, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "font_size" : 17,
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -69,11 +70,11 @@
           "uuid" : "AAD76F9A-D3F4-49A2-9426-41B310C1F003",
           "class" : "Label",
           "alignment" : "left",
-          "text" : "Symbol unused",
+          "text" : "Symbol (unused)",
           "font_size" : 16,
           "name" : "l_symbol"
         },
-        "selected" : false
+        "selected" : true
       },
       {
         "nodes" : [
@@ -100,6 +101,7 @@
         "frame" : "{{177, 123}, {201, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "font_name" : "<System>",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -120,6 +122,7 @@
         "frame" : "{{177, 163}, {241, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "font_name" : "<System>",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -176,6 +179,7 @@
         "frame" : "{{177.00000000000003, 203}, {240.99999999999997, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "name" : "tf_project",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -199,7 +203,7 @@
           "uuid" : "03468DF3-5BD4-45D1-8901-FC41D0339B6D",
           "name" : "b_dropdown",
           "corner_radius" : 4,
-          "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+          "background_color" : "RGBA(0.838710,1.000000,1.000000,1.000000)",
           "frame" : "{{472, 368}, {80, 32}}",
           "tint_color" : "RGBA(0.023585,0.023585,0.023585,1.000000)",
           "border_width" : 1,
@@ -331,10 +335,11 @@
           "uuid" : "72F5D7B0-420D-4176-8567-71F4F1751CAB",
           "image_name" : "iob:arrow_right_a_24",
           "corner_radius" : 16,
+          "background_color" : "RGBA(0.709677,1.000000,1.000000,1.000000)",
           "frame" : "{{472, 368}, {80, 32}}",
-          "tint_color" : "RGBA(0.728774,0.000000,0.000000,1.000000)",
+          "tint_color" : "RGBA(0.000000,0.306604,0.306604,1.000000)",
           "border_width" : 2,
-          "border_color" : "RGBA(1.000000,0.000000,0.000000,1.000000)",
+          "border_color" : "RGBA(0.000000,0.304245,0.304245,1.000000)",
           "title" : "Edit Projects",
           "action" : "self.bt_edit_proj",
           "class" : "Button",
@@ -361,13 +366,13 @@
           "name" : "b_save_all",
           "font_size" : 15
         },
-        "selected" : true
+        "selected" : false
       },
       {
         "nodes" : [
 
         ],
-        "frame" : "{{296, 310}, {238, 24}}",
+        "frame" : "{{19, 6}, {238, 24}}",
         "class" : "Label",
         "attributes" : {
           "uuid" : "F2AD9BD5-8245-4232-9374-61D9A4079287",
@@ -409,11 +414,11 @@
     "frame" : "{{0, 0}, {540, 540}}",
     "class" : "View",
     "attributes" : {
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
-      "enabled" : true,
-      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "enabled" : true,
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "name" : "Tasks and Projects",
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "flex" : ""
     },
     "selected" : false

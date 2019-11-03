@@ -26,6 +26,7 @@
         "frame" : "{{177, 83}, {241, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "name" : "tf_name",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -82,6 +83,7 @@
         "frame" : "{{177, 123}, {201, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "font_name" : "<System>",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -102,6 +104,7 @@
         "frame" : "{{177, 163}, {241, 32}}",
         "class" : "TextField",
         "attributes" : {
+          "action" : "self.bt_field",
           "font_name" : "<System>",
           "frame" : "{{412, 368}, {200, 32}}",
           "spellchecking_type" : "default",
@@ -321,17 +324,40 @@
           "name" : "b_save_all",
           "image_name" : "iob:archive_24"
         },
-        "selected" : true
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{19, 6}, {238, 24}}",
+        "class" : "Label",
+        "attributes" : {
+          "uuid" : "F2AD9BD5-8245-4232-9374-61D9A4079287",
+          "corner_radius" : 3,
+          "frame" : "{{195, 254}, {150, 32}}",
+          "tint_color" : "RGBA(0.878431,0.878431,0.878431,1.000000)",
+          "border_width" : 1,
+          "border_color" : "RGBA(0.878431,0.878431,0.878431,1.000000)",
+          "alignment" : "center",
+          "text" : "Label",
+          "text_color" : "RGBA(0.878431,0.878431,0.878431,1.000000)",
+          "font_name" : "<System>",
+          "class" : "Label",
+          "name" : "l_version",
+          "font_size" : 12
+        },
+        "selected" : false
       }
     ],
     "frame" : "{{0, 0}, {540, 540}}",
     "class" : "View",
     "attributes" : {
-      "name" : "Projects",
-      "enabled" : true,
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "enabled" : true,
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "name" : "Projects",
       "flex" : ""
     },
     "selected" : false

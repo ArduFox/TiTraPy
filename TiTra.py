@@ -490,7 +490,6 @@ class Project:
         # print(f"{tid} = {_t._name}")
         _t.SetProject(np)
 
-    # TODO check if all tasks are associated to one Project 
     
     # check if there is at least one project 
     

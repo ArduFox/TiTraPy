@@ -144,7 +144,7 @@ class MyTaskDataSource(ui.ListDataSource):
 		
 	def tableview_can_delete(self, tableview, section, row):
 		# Return True if the user should be able to delete the given row.
-		return True
+		return False
 		
 	def tableview_can_move(self, tableview, section, row):
 		# Return True if a reordering control should be shown for the given row (in editing mode).
@@ -205,7 +205,8 @@ class MyCalDataSource(ui.ListDataSource):
 		# to get different cell types, pass subtitle or value1, or value2
 		# to ui.TableViewCell() pass in as a string
 		
-		# TODO Brauche ich die cell aus der Mutterklasse als Basis? Ja sonst habe ich gar keine Cell
+		# Brauche ich die cell aus der Mutterklasse als Basis? 
+		# Ja sonst habe ich gar keine Cell
 		
 		cell = ui.ListDataSource.tableview_cell_for_row(self,tableview,section,row)
 		#
@@ -273,7 +274,7 @@ class MyCalDataSource(ui.ListDataSource):
 	def tableview_title_for_header(self, tableview, section):
 		# Return a title for the given section.
 		# If this is not implemented, no section headers will be shown.
-		return f"Action Entries of today - swipe delete works"
+		return f"Action Entries of today - swipe to delete"
 		
 	def tableview_can_delete(self, tableview, section, row):
 		# Return True if the user should be able to delete the given row.

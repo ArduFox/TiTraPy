@@ -1,17 +1,30 @@
-# coding: utf-8
-#
-# TiTraPy.py
+# TiTraPy.py 
 #
 # part of TiTraPy = TimeTracker for pythonistas
 # contains code for UI and initialization
 # uses pythonista specific libraries especially for GUI in iOS
 #
+#
 # Ideas: 
 # - remove UI elements for debugging and development
 # - Semaphor file? to prevent duplicate start of TiTra
-# - is logic to use different calender files (DEV) really helpful?
-# - enable to use emoij in tasks -> which encoding to use -> some apple specific, called ???
+# - is the logic to use different calender files (DEV) really helpful?
 #
+# NOTE:
+#  TiTraPy and TaskProject Editor share the same name space / collection of 
+#  objects in memory. So every change in TaskProjects will directly affect
+#  the objects in TiTraPy, even without reload of the task and project files.
+#  Not shure if i like or hate this side effect
+#
+# Changes in V00.84
+# - chatching crash in BoxPlot.draw division by zero
+# - emoji are usable in tasks
+# - no more delete possible in tableview tasks
+#
+# Changes in V 00.83
+# - fixed error in TaskProject of multiply loaded tasks and projects 
+# - More helping hints in TP Editor
+# - TP Editor recognizes changes in edit fields and copies them into objects 
 #
 # Changes in V 00.82
 # - Fixed Error in Area Plot - doesnt draw just one entry
@@ -124,7 +137,7 @@ import importlib.util
 import TiTra
 import DataSources as MDS
 
-version = '00.82'
+version = '00.84'
 
 # for get_available_memory
 from ctypes import *
@@ -281,7 +294,7 @@ class BoxPlotView(ui.View):
     # Do not call this method directly, instead, if you need your view
     # to redraw its content, call set_needs_display().
 
-    if len(self._actions) < 2:
+    if len(self._actions) < 2 or self._divisor==0:
       return
 
     y = 10
@@ -474,7 +487,7 @@ class BoxAreaPlotView(ui.View):
       if vertical:
 
         if self.LeftWidth == 0:
-          print("LeftWidth==0 return >> ")
+          # print("LeftWidth==0 return >> ")
           return
 
         y2 = round(ta["area"] / self.LeftWidth)
@@ -500,7 +513,7 @@ class BoxAreaPlotView(ui.View):
 
       else:
         if self.LeftHeight == 0:
-          print("LeftHeight==0 return >> ")
+          #print("LeftHeight==0 return >> ")
           return
 
         x2 = round(ta["area"] / self.LeftHeight)
@@ -591,7 +604,6 @@ class ShowTableView(object):
     self.view["BoxPlotView"].SetActions(
       self.myCalender.UIActionsOfDayList(now))
       
-    # TODO Update entries
     self.view['l_Calender'].text=f"{cal.len()} calender entries loaded"
     
     self.GetBoxAreaData(None)
@@ -646,6 +658,7 @@ class ShowTableView(object):
     self.view['label_left'].hidden = False
     self.view['switch_share_hours'].hidden = True
     self.view['l_share'].hidden = True
+    self.view['bt_edit_tasks'].hidden=False    
 
     self.get_available_memory()
 
@@ -696,6 +709,7 @@ class ShowTableView(object):
       self.view['bt_add'].enabled = False
       self.view['label_up'].hidden = True
       self.view['label_left'].hidden = True
+      self.view['bt_edit_tasks'].hidden=True
     self.state = 3
 
   def bt_dur_week_action(self, sender):
@@ -728,6 +742,7 @@ class ShowTableView(object):
       self.view['bt_add'].enabled = False
       self.view['label_up'].hidden = True
       self.view['label_left'].hidden = True
+      self.view['bt_edit_tasks'].hidden=True      
     self.state = 4
 
   def bt_dur_month_action(self, sender):
@@ -761,6 +776,7 @@ class ShowTableView(object):
       self.view['bt_add'].enabled = False
       self.view['label_up'].hidden = True
       self.view['label_left'].hidden = True
+      self.view['bt_edit_tasks'].hidden=True      
     self.state = 5
 
   def bt_save_hours_action(self, sender):
@@ -800,13 +816,14 @@ class ShowTableView(object):
 
     else:
       self.LogMessage(f"saving the calender")
-      self.myCalender.SaveCal()
+      count=self.myCalender.SaveCal()
+      self.view['l_Calender'].text=f"{count} calender entries saved"
       console.hud_alert("calender saved", 'success', 1)
       #   NOTE: console.hide_activity dismisses the hud. return of hud dont resets activity
       # console.hide_activity()
       return
 
-    with open(fname, "w") as f:
+    with open(fname, "w", encoding="utf-8") as f:
       lc.WriteDurationsToCSV(f)
 
     self.LogMessage(f"File {fname} with hours written")
@@ -832,9 +849,12 @@ class ShowTableView(object):
       self.bt_dur_month_action(None)
 
   def bt_save_all_action(self, sender):
-    """Save all data to the .json and .csv files via memberfunctions of Titra.Calender
+    """DEPRECIATED
+    Save all data to the .json and .csv files via memberfunctions of Titra.Calender
         """
-    self.myCalender.SaveTasks()
+        
+    #TODO remove this method
+    count=self.myCalender.SaveTasks()
     self.myCalender.SaveProjects()
 
     #   SaveCalender had problems writing german umlauts "äöüÄÖÜß" !!!
@@ -1010,6 +1030,10 @@ class ShowTableView(object):
     total_h = 0
     for h in l:
       total_h += h["hour"]
+      
+    if total_h == 0:
+      total_h=1;     # no hours in sum of data -> all durations are 0 
+                     # -> dont throw division by zero error
 
     for h in l:
       h['percent'] = h['hour'] / total_h
@@ -1046,7 +1070,10 @@ class ShowTableView(object):
     
     
     # works to exit the app in bt_Exit(), but has no effect here
-    self.view.close()  
+    
+    # self.view.close()  # kind of closes the Task Editor view
+    # can i navigate in TaskEditor the view hierarchy up to TiTraPy, if its 
+    # is there, and can i close this view?
     
             
   @ui.in_background
