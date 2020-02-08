@@ -11,14 +11,14 @@
           "flex" : "RB",
           "data_source_items" : "Tasks & Reports\ntableview1",
           "enabled" : true,
-          "row_height" : 26,
+          "name" : "tableview1",
+          "data_source_number_of_lines" : 1,
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_font_size" : 14,
-          "data_source_delete_enabled" : true,
-          "data_source_number_of_lines" : 1,
-          "name" : "tableview1"
+          "row_height" : 26,
+          "data_source_delete_enabled" : true
         },
         "selected" : false
       },
@@ -68,15 +68,15 @@
         "frame" : "{{6, 601}, {746, 105}}",
         "class" : "Label",
         "attributes" : {
-          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
+          "number_of_lines" : 17,
           "font_size" : 10,
           "text_color" : "RGBA(0.073113,0.000000,0.000000,1.000000)",
           "frame" : "{{467, 466}, {150, 32}}",
-          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
-          "number_of_lines" : 17,
-          "text" : "MessageBoard for debugging",
-          "alignment" : "left",
           "class" : "Label",
+          "text" : "MessageBoard for debugging",
+          "uuid" : "AC0EA79B-CB09-4A34-9D5C-D24C8478025D",
+          "alignment" : "left",
+          "background_color" : "RGBA(0.966981,0.966981,0.966981,1.000000)",
           "name" : "l_msg",
           "font_name" : "DamascusLight"
         },
@@ -182,14 +182,14 @@
           "flex" : "RB",
           "data_source_items" : "calender\ntableview2",
           "enabled" : true,
-          "name" : "tableview2",
+          "data_source_delete_enabled" : true,
+          "data_source_number_of_lines" : 54,
           "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
           "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
           "uuid" : "E8FF35CE-DD14-4490-92D8-F5D7AD1F3C5F",
           "data_source_font_size" : 14,
-          "data_source_delete_enabled" : true,
-          "row_height" : 26,
-          "data_source_number_of_lines" : 54
+          "name" : "tableview2",
+          "row_height" : 26
         },
         "selected" : false
       },
@@ -202,14 +202,14 @@
         "attributes" : {
           "flex" : "RB",
           "action" : "self.seg_view_action",
-          "segments" : "Tasks|Hours Day|Hours Week|Hours Month",
+          "segments" : "tasks|day hours|week hours|month hours|year hours",
           "frame" : "{{452, 370}, {120, 29}}",
           "tint_color" : "RGBA(0.299528,0.299528,0.299528,1.000000)",
           "class" : "SegmentedControl",
           "uuid" : "26B23118-1221-45FB-B534-E81FA3E1B1C4",
           "name" : "segmentedcontrol"
         },
-        "selected" : false
+        "selected" : true
       },
       {
         "nodes" : [
@@ -329,10 +329,10 @@
         "frame" : "{{384, 19}, {151, 129}}",
         "class" : "View",
         "attributes" : {
-          "name" : "BoxAreaPlot",
-          "frame" : "{{462, 334}, {100, 100}}",
           "custom_class" : "BoxAreaPlotView",
+          "frame" : "{{462, 334}, {100, 100}}",
           "class" : "View",
+          "name" : "BoxAreaPlot",
           "uuid" : "1BAB475E-6875-47D3-8D13-0D0C23EE8E02"
         },
         "selected" : false
@@ -395,7 +395,7 @@
           "name" : "bt_edit_tasks",
           "image_name" : "iob:wrench_24"
         },
-        "selected" : true
+        "selected" : false
       }
     ],
     "frame" : "{{0, 0}, {1024, 768}}",

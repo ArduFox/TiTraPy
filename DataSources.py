@@ -30,6 +30,7 @@
 #    along with TiTraPy.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# wider label hour *****
 
 import ui
 import datetime
@@ -378,10 +379,10 @@ class MyDurDataSource(ui.ListDataSource):
 		label2 = ui.Label(name='l_hour')
 		label2.text = f"{self.itemlist [row] ['hour']} h"
 		label2.alignment=ui.ALIGN_RIGHT
-		label2.x = 300
+		label2.x = 280  # 300
 		label2.y = 2
 		label2.height=tableview.row_height -4
-		label2.width=50
+		label2.width=87 # 50
 		label2.font=("<system>",16)
 #		label2.bg_color=(0.95, 1.0 ,1.0,1.0)
 		if float(self.itemlist [row] ['hour'])> self.total *.15 :

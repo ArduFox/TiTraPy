@@ -16,8 +16,11 @@
 #  the objects in TiTraPy, even without reload of the task and project files.
 #  Not shure if i like or hate this side effect
 #
+# Changes in V00.85
+# - year view added - update after EACH date change - label for hours is not wide enough
+#
 # Changes in V00.84
-# - chatching crash in BoxPlot.draw division by zero
+# - catching crash in BoxPlot.draw division by zero
 # - emoji are usable in tasks
 # - no more delete possible in tableview tasks
 #
@@ -36,7 +39,6 @@
 # 
 # Changes in V 00.81
 # - new custom view with class shows diagram of hours in week
-#
 #
 #
 # ===== Release V 00.80 ==================================================== 
@@ -137,7 +139,7 @@ import importlib.util
 import TiTra
 import DataSources as MDS
 
-version = '00.84'
+version = '00.85'
 
 # for get_available_memory
 from ctypes import *
@@ -778,6 +780,41 @@ class ShowTableView(object):
       self.view['label_left'].hidden = True
       self.view['bt_edit_tasks'].hidden=True      
     self.state = 5
+    
+  def bt_dur_year_action(self, sender):
+    ''' fill "tableview1" with list of duration of tasks in the month, the selected day is in
+        '''
+    start = self.view["datepicker"].date
+    #        self.view["datepicker"].font=("<system>",12). # WHAT is THIS ??
+
+    mstart = start.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+    mend = mstart.replace(year=mstart.year+1, day=1, hour=0, minute=0, second=0, microsecond=0)
+
+    # print(f"mstart = {mstart} mend = {mend}")
+
+    lc = self.myCalender.findBetween(mstart, mend)
+    l = lc.UICalcDurations()
+
+    self.LogMessage(f"dur_year_action len {len(l)}")
+    lst = MDS.MyDurDataSource("yearly", l)
+
+    #lst.font=("<system>",12)
+    lst.highlight_color = (1.0, 0.9, 0.3, 1.0)
+    tv1 = self.view['tableview1']
+    tv1.data_source = tv1.delegate = lst
+    tv1.data_source.delete_enabled = tv1.editing = False
+    self.selected_row = -1
+    tv1.reload_data()
+    self.view['bt_save_hours'].enabled = True
+    if self.state == 1:
+      self.view['bt_save_hours'].title = "Save Hours"
+      self.view['switch_share_hours'].hidden = False
+      self.view['l_share'].hidden = False
+      self.view['bt_add'].enabled = False
+      self.view['label_up'].hidden = True
+      self.view['label_left'].hidden = True
+      self.view['bt_edit_tasks'].hidden=True      
+    self.state = 6
 
   def bt_save_hours_action(self, sender):
     '''save the content of the actual view of hours per day/week/month to csv.file
@@ -785,7 +822,15 @@ class ShowTableView(object):
     #console.show_activity()
     start = self.view["datepicker"].date
 
-    if self.state == 5:  # month
+    if self.state == 6:  # year
+      mstart = start.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+      mend = mstart.replace(year=mstart.year+1, day=1, hour=0, minute=0, second=0, microsecond=0)
+    
+      lc = self.myCalender.findBetween(mstart, mend)
+      self.LogMessage(f"save year of {mstart.strftime('%a %d.%m.%y')}")
+      fname = f"{mstart.strftime('%y-%m-%d')}_year_hours.csv"
+
+    elif  self.state == 5:  # month
       mstart = start.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
       mend = mstart + timedelta(
         weeks=0, days=32, hours=0, minutes=0, seconds=0)
@@ -847,7 +892,9 @@ class ShowTableView(object):
       self.bt_dur_week_action(None)
     elif i == 3:
       self.bt_dur_month_action(None)
-
+    elif i == 4:
+      self.bt_dur_year_action(None)
+      
   def bt_save_all_action(self, sender):
     """DEPRECIATED
     Save all data to the .json and .csv files via memberfunctions of Titra.Calender
@@ -984,6 +1031,9 @@ class ShowTableView(object):
       self.bt_dur_week_action(sender)
     elif self.state == 5:
       self.bt_dur_month_action(sender)
+    elif self.state == 6:
+      self.bt_dur_year_action(sender)
+      
     self.bt_cal2_action(sender)
 
   def dapi_action(self, sender):
@@ -1000,6 +1050,9 @@ class ShowTableView(object):
       self.bt_dur_week_action(sender)
     elif self.state == 5:
       self.bt_dur_month_action(sender)
+    elif self.state == 6:
+      self.bt_dur_year_action(sender)     # no good idea to calc year at each turn of date wheel!
+      
     self.bt_cal2_action(sender)
 
     now = self.view['datepicker'].date
