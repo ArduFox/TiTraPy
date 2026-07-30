@@ -7,7 +7,7 @@
 # No GUI Implementation and not depended on IOS pythonista. 
 # Works and is tested in python and Jupyter Notebook
 #
-# fixed error when deleting last action in calender
+# fixed error when deleting last action in calendar
 # 
 # - making sure there is always a task["0"] with ._id==0 and at least one project[...]
 # - error handling in ReadCalFomCSV added to handle unknown task
@@ -558,7 +558,7 @@ class Calender:
 
   def __init__(self, prefix="tt"):
     '''
-        Init the calender
+        Init the calendar
 
         attributes:
             private: 
@@ -697,7 +697,7 @@ class Calender:
   def findBetween(self, start: datetime, end: datetime):
     '''collect actions with self._start >= start und self._start < end
          return:
-             new calender object with only found actions, NON reverse order'''
+             new calendar object with only found actions, NON reverse order'''
 
     if self.__notsorted:
       self.sort()
@@ -717,7 +717,7 @@ class Calender:
   def findTask(self, search_task):
     '''collect all actions with given Task._id <search_task>
          return:
-             new calender object with only found actions, NON reverse order'''
+             new calendar object with only found actions, NON reverse order'''
 
     # print ("** findTask {} ".format(search_task._name))
 
@@ -781,7 +781,7 @@ class Calender:
 
 
   def UICalcDurations(self) -> list:
-    """Addding times for actions in this calender and
+    """Addding times for actions in this calendar and
         build a list of dict, that fits the needs of the Pythonista UI
         """
 
@@ -822,9 +822,9 @@ class Calender:
 
   def SaveAndRemoveMonth(self, date: datetime, path: str):
     """ save actions in month of <date>  in own CSV at given <path>
-        and remove them from calender
+        and remove them from calendar
         
-        useful for cleanup of to large calenders
+        useful for cleanup of to large calendars
             return
                 ?
         """
@@ -969,7 +969,7 @@ class Calender:
         return i
 
   def WriteCalToCSV(self, filehandle) -> int:
-    """write calender with all actions into given <filehandle> as csv
+    """write calendar with all actions into given <filehandle> as csv
             return
                number of written actions"""
                
@@ -999,8 +999,8 @@ class Calender:
       self.ReadCalFromCSV(f)
 
   def ReadCalFromCSV(self, filehandle):
-    '''Read calender - all actions - out of csv file with given <filehandle>
-       and build up all necessary objects into this calender
+    '''Read calendar - all actions - out of csv file with given <filehandle>
+       and build up all necessary objects into this calendar
        
        what happens if in action referenced task cant be found? ignored!
     '''
